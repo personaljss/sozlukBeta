@@ -20,11 +20,9 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.LoginResult;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.UserInfo;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserInfoViewModel;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiClient;
+import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
+import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
 
@@ -37,9 +35,7 @@ public class ActivationDialog extends AppCompatDialogFragment {
     private EditText activationCodeEt;
     private ProgressBar progressBar;
     private TextView textView;
-    private UserInfoViewModel userInfoViewModel;
     private AlertDialog.Builder builder;
-    private static Activity activity;
 
     DialogInterface.OnClickListener negativeButtonListener;
     DialogInterface.OnClickListener positiveButtonListener;
@@ -50,10 +46,10 @@ public class ActivationDialog extends AppCompatDialogFragment {
         builder=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=getLayoutInflater();
         View view=inflater.inflate(R.layout.activation_fragment_dialog,null);
-        activity=getActivity();
 
-        userInfoViewModel=new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        int userCode=userInfoViewModel.getUserCode().getValue();
+
+
+        int userCode= UserData.getUserCode();
 
         negativeButtonListener=new DialogInterface.OnClickListener() {
             @Override
@@ -69,16 +65,16 @@ public class ActivationDialog extends AppCompatDialogFragment {
                 //disabling cancel button
                 progressBar.setVisibility(View.VISIBLE);
 
-                Retrofit retrofit= LoginApiClient.getInstance();
+                Retrofit retrofit= ApiClientRetrofit.getInstance();
                 Call<LoginResult> call=retrofit.create(LoginApiInterface.class)
-                        .postActivation(userInfoViewModel.getUserCode().getValue()
+                        .postActivation(UserData.getUserCode()
                                 ,activationCodeEt.getText().toString());
 
                 call.enqueue(new Callback<LoginResult>() {
                     @Override
                     public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                         if(response.isSuccessful()){
-                            validateActivation(response.body(),userInfoViewModel);
+                            validateActivation(response.body());
                         }else{
                             Log.e("activationFragment", "response is not successful");
                         }
@@ -113,16 +109,15 @@ public class ActivationDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    private void validateActivation(LoginResult loginResult, UserInfoViewModel userInfoViewModel){
+    private void validateActivation(LoginResult loginResult){
         //404: sistem hatası, 0: aktivasyon başarılı, 1: kod eşleşmiyor
-        Toast.makeText(activity, loginResult.getComment(),Toast.LENGTH_LONG).show();
         if(loginResult.getResult()==0){
-            goToMainActivity(new UserInfo(userInfoViewModel.getUserCode().getValue()));
+            goToMainActivity();
         }
     }
 
-    private void goToMainActivity(UserInfo userInfo){
-        Intent intent=new Intent(getActivity(), MainActivity.class).putExtra("UserInfo",userInfo);
+    private void goToMainActivity(){
+        Intent intent=new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
 

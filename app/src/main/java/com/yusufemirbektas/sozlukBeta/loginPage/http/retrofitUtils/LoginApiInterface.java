@@ -1,7 +1,5 @@
 package com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils;
 
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.LoginResult;
-
 import java.util.Map;
 
 import retrofit2.Call;
@@ -11,9 +9,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface LoginApiInterface {
-    static final String LOGIN_PHP="%5bL%5dloginProcess.php";
-    static final String REGISTER_PHP="%5bL%5dregisterProcess.php";
-    static final String ACTIVATE_PHP="%5bL%5dactivationProcess.php";
+    String LOGIN_PHP="%5bL%5dloginProcess.php";
+    String REGISTER_PHP="%5bL%5dregisterProcess.php";
+    String ACTIVATE_PHP="%5bL%5dactivationProcess.php";
     @FormUrlEncoded
     @POST(LOGIN_PHP)
     Call<LoginResult> postLogin(@FieldMap Map<String,String> loginParams);

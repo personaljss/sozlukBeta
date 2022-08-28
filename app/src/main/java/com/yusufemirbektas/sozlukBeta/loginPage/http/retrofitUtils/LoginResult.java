@@ -1,4 +1,4 @@
-package com.yusufemirbektas.sozlukBeta.loginPage.UserData;
+package com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils;
 
 import com.google.gson.annotations.SerializedName;
 //0: hatasız login, 1: aktiveli login, 2: geçersiz girdi, 3: yanlış girdi, 404: sistemsel hata

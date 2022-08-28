@@ -20,9 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.LoginResult;
+import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiClient;
+import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 
 import retrofit2.Call;
@@ -63,7 +63,7 @@ public class SignupTabFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 signupBtn.setText("");
                 //posting the signup info
-                Retrofit retrofit= LoginApiClient.getInstance();
+                Retrofit retrofit= ApiClientRetrofit.getInstance();
                 Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
                         .postSignup(emailET.getText().toString(),userNameET.getText().toString()
                                 ,passwordET.getText().toString(), passwordCheckET.getText().toString());

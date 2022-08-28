@@ -26,14 +26,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.UserInfo;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserInfoViewModel;
+import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiClient;
+import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.LoginResult;
+import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +49,7 @@ public class LoginTabFragment extends Fragment {
     ProgressBar progressBar;
 
     UserNameViewModel userNameViewModel;
-    UserInfoViewModel userInfoViewModel;
+
 
     public static final String SHARED_PREFS="sharedPrefs";
     public static final String USER_NAME="userName";
@@ -66,8 +65,6 @@ public class LoginTabFragment extends Fragment {
         setShowHidePassword(passwordET,showHidePassword);
 
         upDateEditTexts();
-
-        userInfoViewModel=new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
 
         userNameViewModel=new ViewModelProvider(getActivity()).get(UserNameViewModel.class);
         userNameViewModel.getUserName().observe(getActivity(), new Observer<String>() {
@@ -94,7 +91,7 @@ public class LoginTabFragment extends Fragment {
         loginButton.setText("");
 
         //posting login info to the server
-        Retrofit retrofit= LoginApiClient.getInstance();
+        Retrofit retrofit= ApiClientRetrofit.getInstance();
         Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
                 .postLogin(usernameET.getText().toString(),passwordET.getText().toString());
 
@@ -135,15 +132,14 @@ public class LoginTabFragment extends Fragment {
         progressBar=root.findViewById(R.id.progress_bar);
     }
 
-    private void goToMainActivity(UserInfo userInfo){
-        Intent intent = new Intent(getActivity(), MainActivity.class)
-                .putExtra("UserInfo",userInfo);
+    private void goToMainActivity(){
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
-    private void goToActivationActivity(UserInfo userInfo){
-        Intent intent = new Intent(getActivity(), ActivationActivity.class)
-                .putExtra("UserInfo",userInfo);
+    private void goToActivationActivity(){
+        Intent intent = new Intent(getActivity(), ActivationActivity.class);
         startActivity(intent);
     }
 
@@ -171,14 +167,16 @@ public class LoginTabFragment extends Fragment {
         try {
             Toast.makeText(getContext(),loginResult.getComment(),Toast.LENGTH_LONG).show();
             if(loginResult.getResult()==0){
+                //save the user code
+                UserData.setUserCode(loginResult.getUserCode());
                 //save the data
                 saveLoginData(usernameET.getText().toString(),passwordET.getText().toString());
                 //if login is successful go to main activity;
-                goToMainActivity(new UserInfo(loginResult.getUserCode()));
+                goToMainActivity();
             }else if(loginResult.getResult()==1){
                 //if activation is required go to activation activity
-                goToActivationActivity(new UserInfo(loginResult.getUserCode()));
-                userInfoViewModel.setUserCode(loginResult.getUserCode());
+                UserData.setUserCode(loginResult.getUserCode());
+                goToActivationActivity();
                 //when I solve the bugs, I will use it
                 //openActivationDialog();
             }
