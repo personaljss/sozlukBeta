@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/ic_baseline_share"
+            android:contentDescription="sends a share Intent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:contentDescription="like buttons"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/shareButton"
+            android:layout_above="@id/commentButton"
+            android:layout_marginVertical="30dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/likeButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_margin="0dp"
+                android:background="#ffffff"
+                app:srcCompat="@drawable/ic_p11" />
+
+            <TextView
+                android:id="@+id/likeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234" />
+
+            <ImageButton
+                android:id="@+id/dislikeButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_margin="0dp"
+                android:background="#ffffff"
+                app:srcCompat="@drawable/ic_p11" />
+
+        </RadioGroup>
+
+
+
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/ic_baseline_add_comment_24" />
+
+
+        <android.widget.Button
+            android:id="@+id/tag1Button"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="70dp"
+            android:layout_alignTop="@id/shareButton"
+            android:background="@drawable/tag_button"
+            android:text="Tag#1" />
+
+        <android.widget.Button
+            android:id="@+id/tag2Button"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_toEndOf="@id/tag1Button"
+            android:layout_alignTop="@id/shareButton"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/tag_button"
+            android:text="Tag#2" />
+
+        <android.widget.Button
+            android:id="@+id/entryHeaderButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/radioGroup"
+            android:layout_toEndOf="@id/radioGroup"
+            android:background="#ffffff"
+            android:backgroundTint="#ffffff"
+            android:text="Yeni Başlık babalar"/>
+
+        <android.widget.Button
+            android:id="@+id/entryContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/radioGroup"
+            android:layout_below="@id/entryHeaderButton"
+            android:background="#ffffff"
+            android:text="adsqasdadsasdasdasdasdasdasd"/>
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
