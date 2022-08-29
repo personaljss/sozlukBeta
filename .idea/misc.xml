@@ -4,13 +4,26 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/button_bg.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/curved_white_background.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_home.xml" value="0.256" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_settings.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_bg.xml" value="0.306" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_photo_bg.xml" value="0.165" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_photo_shaping.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_tabs_bg.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/tests_cardview_bg.xml" value="0.2795" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activation_fragment_dialog.xml" value="0.1" />
-        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_login.xml" value="0.21481481481481482" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_main.xml" value="0.21557971014492755" />
-        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_profile.xml" value="0.25" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/login_tab_fragment.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_entries_fragment.xml" value="0.3020833333333333" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_entries_tab_fragment.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_test_item.xml" value="0.33" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_tests_fragments.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_tests_tab_fragment.xml" value="0.365625" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/signup_tab_fragment.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/test_item_for_recycler_view.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/button_bg.xml" value="0.3135" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/curved_white_background.xml" value="0.352" />
         <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/edittext_bg.xml" value="0.3535" />

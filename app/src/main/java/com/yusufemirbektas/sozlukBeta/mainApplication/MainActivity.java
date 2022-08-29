@@ -13,7 +13,6 @@ import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.mainApplication.profile.activity.ProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String USERINFO_EXTRA="UserInfo";
 
     TextView textView;
     Button profileNavigationButton;

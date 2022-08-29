@@ -53,9 +53,6 @@ public class LoginTabFragment extends Fragment {
 
     public static final String SHARED_PREFS="sharedPrefs";
     public static final String USER_NAME="userName";
-    public static final String PASSWORD="password";
-    public static final String USER_CODE="usercode";
-    public static final String DEVICE_TOKEN="devicetoken";
 
     @Nullable
     @Override
