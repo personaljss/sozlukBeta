@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecycledForumActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/forumRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:scrollbars="vertical"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        android:foreground="?attr/selectableItemBackground"
+        app:menu="@menu/forum_bottom_toolbar"
+        app:itemTextColor="@color/black"
+        app:labelVisibilityMode="unlabeled"/>
+
+</FrameLayout>
