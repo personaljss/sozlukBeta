@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/forum_button"
+        android:icon="@drawable/ic_forum_button_v1"
+        android:title="Forum Button"/>
+    <item android:id="@+id/message_button"
+        android:icon="@drawable/ic_message"
+        android:title="Message"/>
+    <item android:id="@+id/comment_button"
+        android:icon="@drawable/ic_baseline_add_comment_24"
+        android:title="Comment Button"/>
+    <item android:id="@+id/profile_button"
+        android:icon="@drawable/ic_forum_button_v1"
+        android:title="Profile Button"/>
+
+
+</menu>
