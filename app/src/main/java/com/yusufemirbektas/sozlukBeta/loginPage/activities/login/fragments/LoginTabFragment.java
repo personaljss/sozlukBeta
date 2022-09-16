@@ -63,6 +63,9 @@ public class LoginTabFragment extends Fragment {
 
         upDateEditTexts();
 
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //goToMainActivity();
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
         userNameViewModel=new ViewModelProvider(getActivity()).get(UserNameViewModel.class);
         userNameViewModel.getUserName().observe(getActivity(), new Observer<String>() {
             @Override

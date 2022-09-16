@@ -10,9 +10,14 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.profile.dataModels.Test;
 import java.util.List;
 
 public class ProfileDataViewModel extends ViewModel{
+    MutableLiveData<Integer> userCode=new MutableLiveData<>();
     MutableLiveData<Header> header=new MutableLiveData<>();
     MutableLiveData<List<Entry>> entries=new MutableLiveData<>();
     MutableLiveData<List<Test>> tests=new MutableLiveData<>();
+
+    public MutableLiveData<Integer> getUserCode(){return userCode;}
+
+    public void setUserCode(int userCode){this.userCode.setValue(userCode);}
 
     public MutableLiveData<Header> getHeader() {
         return header;

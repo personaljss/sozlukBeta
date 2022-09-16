@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/activity_profile_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -66,6 +68,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <ProgressBar
+            android:id="@+id/pp_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </ProgressBar>
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -74,7 +82,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="15dp"
-        android:text="nickname"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/inner_constraint_relativeLayout_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
@@ -88,7 +96,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="15dp"
-        android:text="puan: 0"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@id/scores_relativeLayout"
         app:layout_constraintEnd_toEndOf="@+id/nickname_textView"
         app:layout_constraintHorizontal_bias="0"

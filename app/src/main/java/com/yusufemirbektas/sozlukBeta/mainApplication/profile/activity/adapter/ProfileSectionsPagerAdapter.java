@@ -1,5 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.profile.activity.adapter;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -9,6 +11,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.profile.activity.fragments
 import com.yusufemirbektas.sozlukBeta.mainApplication.profile.activity.fragments.tests.TestsTabFragment;
 
 public class ProfileSectionsPagerAdapter extends FragmentStateAdapter {
+
     public ProfileSectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -16,7 +19,7 @@ public class ProfileSectionsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment=new Fragment();
+        Fragment fragment = null;
         switch (position){
             case 0:
                 fragment=new TestsTabFragment();

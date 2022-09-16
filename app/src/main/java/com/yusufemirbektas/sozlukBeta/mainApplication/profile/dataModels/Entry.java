@@ -28,7 +28,10 @@ public class Entry {
     @SerializedName("dislikepoint")
     private int dislikePoint;
 
-    public Entry(int subjectID, int commentID, String comment, String dateTime, int userCode, String nickName, int likePoint, int dislikePoint) {
+    @SerializedName("subjectName")
+    private String subjectName;
+
+    public Entry(int subjectID, int commentID, String comment, String dateTime, int userCode, String nickName, int likePoint, int dislikePoint, String subjectName) {
         this.subjectID = subjectID;
         this.commentID = commentID;
         this.comment = comment;
@@ -37,41 +40,9 @@ public class Entry {
         this.nickName = nickName;
         this.likePoint = likePoint;
         this.dislikePoint = dislikePoint;
+        this.subjectName = subjectName;
     }
 
-    public void setSubjectID(int subjectID) {
-        this.subjectID = subjectID;
-    }
-
-    public void setCommentID(int commentID) {
-        this.commentID = commentID;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public void setUserCode(int userCode) {
-        this.userCode = userCode;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public void setLikePoint(int likePoint) {
-        this.likePoint = likePoint;
-    }
-
-    public void setDislikePoint(int dislikePoint) {
-        this.dislikePoint = dislikePoint;
-    }
-
-    //getters
     public int getSubjectID() {
         return subjectID;
     }
@@ -102,5 +73,9 @@ public class Entry {
 
     public int getDislikePoint() {
         return dislikePoint;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
     }
 }

@@ -94,6 +94,7 @@ public class ActivationFragment extends Fragment {
     private void goToMainActivity() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
 

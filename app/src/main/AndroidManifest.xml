@@ -13,23 +13,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Sozluk_2"
+        android:theme="@style/Theme.SozlukBeta"
         tools:targetApi="31">
+        <activity
+            android:name=".mainApplication.forum.ForumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mainApplication.profile.activity.fragments.pp.DisplayPpActivity"
+            android:exported="false"
+            android:parentActivityName=".mainApplication.profile.activity.ProfileActivity" />
         <activity
             android:name=".mainApplication.profile.activity.ProfileActivity"
             android:exported="true"
-            android:parentActivityName=".mainApplication.MainActivity"/>
+            android:parentActivityName=".mainApplication.MainActivity" />
         <activity
             android:name=".loginPage.activities.activation.ActivationActivity"
             android:exported="false"
             android:parentActivityName=".loginPage.activities.login.LoginActivity" />
         <activity
             android:name=".mainApplication.MainActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
         <activity

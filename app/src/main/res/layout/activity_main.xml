@@ -25,5 +25,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userInfo_textView"
+        app:layout_constraintVertical_bias="0.598" />
+
+    <EditText
+        android:id="@+id/userCodeEditTextMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="47"
+        app:layout_constraintBottom_toTopOf="@+id/button_toProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInfo_textView" />
+
+    <Button
+        android:id="@+id/go_to_forum_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="forum"
+        app:layout_constraintBottom_toTopOf="@+id/userInfo_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

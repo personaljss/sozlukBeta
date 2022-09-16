@@ -10,7 +10,7 @@ public class Header {
     private String nickName;
 
     @SerializedName("profilephoto")
-    private int profilePhoto;
+    private String profilePhoto;
 
     @SerializedName("totalTests")
     private int totalTests;
@@ -24,7 +24,7 @@ public class Header {
     @SerializedName("socialearned")
     private int socialEarned;
 
-    public Header(String nickName, int profilePhoto, int totalTests, int totalChallenges, int totalPoints, int socialEarned) {
+    public Header(String nickName, String profilePhoto, int totalTests, int totalChallenges, int totalPoints, int socialEarned) {
         this.nickName = nickName;
         this.profilePhoto = profilePhoto;
         this.totalTests = totalTests;
@@ -37,7 +37,7 @@ public class Header {
         return nickName;
     }
 
-    public int getProfilePhoto() {
+    public String getProfilePhoto() {
         return profilePhoto;
     }
 

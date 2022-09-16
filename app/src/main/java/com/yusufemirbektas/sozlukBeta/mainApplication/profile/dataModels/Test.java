@@ -19,6 +19,14 @@ public class Test {
     @SerializedName("wrong")
     private int wrongAnswers;
 
+    public Test() {
+        this.date = "";
+        this.testNo=-1;
+        this.correctAnswers=-1;
+        this.lessonNo=-1;
+        this.wrongAnswers=-1;
+    }
+
     public Test(String date, int lessonNo, int testNo, int correctAnswers, int wrongAnswers) {
         this.date = date;
         this.lessonNo = lessonNo;
