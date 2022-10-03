@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class ForumSubject {
     //data: sonucu json array şeklinde return ediyor. bunun içinde de şu değerler var: subjectID, totalPoint, subjectName, channel, totalComments, comment24ID.
     //{"SubjectID":179,"totalPoint":401,"subjectName":"salağın hamlesinin yok olması","channel":2,"totalComments":18,"comment24ID":1}
-    @SerializedName("SubjectID")
+    @SerializedName("subjectID")
     private int subjectID;
     @SerializedName("totalPoint")
     private int totalPoint;
@@ -15,16 +15,13 @@ public class ForumSubject {
     private int channelID;
     @SerializedName("totalComments")
     private String totalComments;
-    @SerializedName("comment24ID")
-    private int comment24ID;
 
-    public ForumSubject(int subjectID, int totalPoint, String subjectName, int channelID, String totalComments, int comment24ID) {
+    public ForumSubject(int subjectID, int totalPoint, String subjectName, int channelID, String totalComments) {
         this.subjectID = subjectID;
         this.totalPoint = totalPoint;
         this.subjectName = subjectName;
         this.channelID = channelID;
         this.totalComments = totalComments;
-        this.comment24ID = comment24ID;
     }
 
     public int getSubjectID() {
@@ -47,7 +44,4 @@ public class ForumSubject {
         return totalComments;
     }
 
-    public int getComment24ID() {
-        return comment24ID;
-    }
 }

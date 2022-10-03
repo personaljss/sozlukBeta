@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="5dp"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/moreButton"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:contentDescription="sends a share Intent"
+            app:srcCompat="@drawable/ic_baseline_more_horiz" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/commentButton"
+            android:layout_below="@id/moreButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginVertical="30dp"
+            android:contentDescription="like buttons"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/likeButton"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:background="#ffffff"
+                app:srcCompat="@drawable/ic_p11" />
+
+            <TextView
+                android:id="@+id/likeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
+
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            app:srcCompat="@drawable/ic_baseline_add_comment_24" />
+
+        <TextView
+            android:id="@+id/entryHeaderText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/moreButton"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@id/radioGroup"
+            android:background="#ffffff"
+            android:backgroundTint="#ffffff"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/entryContentText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/entryHeaderText"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/radioGroup"
+            android:background="#ffffff"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/date_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/commentButton"
+            android:layout_alignBottom="@id/entryContentText"
+            android:layout_marginStart="20dp"
+            />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

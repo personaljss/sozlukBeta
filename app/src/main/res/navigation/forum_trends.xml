@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forum_trends"
+    app:startDestination="@id/trendsFragment">
+
+    <fragment
+        android:id="@+id/trendsFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.trends.TrendsFragment"
+        android:label="TrendsFragment"
+        tools:layout="@layout/fragment_forum_trends">
+        <action
+            android:id="@+id/action_trendsFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.SubjectFragment"
+        android:label="SubjectFragment"
+        tools:layout="@layout/fragment_subject_entries">
+        <action
+            android:id="@+id/action_subjectFragment_self"
+            app:destination="@id/subjectFragment" />
+    </fragment>
+</navigation>

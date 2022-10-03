@@ -57,7 +57,7 @@ public class LoginTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment,container,false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login,container,false);
         setViews(root);
         setShowHidePassword(passwordET,showHidePassword);
 
@@ -201,9 +201,5 @@ public class LoginTabFragment extends Fragment {
         //passwordET.setText(sharedPreferences.getString(PASSWORD,""));
     }
 
-    private void openActivationDialog(){
-        ActivationDialog activationDialog=new ActivationDialog();
-        activationDialog.show(getParentFragmentManager(),"aktivationDialog");
-    }
 
 }

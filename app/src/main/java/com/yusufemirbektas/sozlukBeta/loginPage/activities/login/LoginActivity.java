@@ -3,9 +3,11 @@ package com.yusufemirbektas.sozlukBeta.loginPage.activities.login;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.yusufemirbektas.sozlukBeta.R;
@@ -17,14 +19,11 @@ public class LoginActivity extends AppCompatActivity {
 
     TabLayout loginTab;
     ViewPager viewPager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setLoginTab();
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
         FragmentManager fragmentManager=getSupportFragmentManager();
 

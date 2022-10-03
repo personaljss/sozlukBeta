@@ -1,38 +1,47 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-
-import com.google.android.material.navigation.NavigationBarView;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.ActivityForumBinding;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.trends.TrendsFragment;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.ProfileFragment;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.SubjectFragment;
+
+import java.util.HashSet;
+
 
 public class ForumActivity extends AppCompatActivity {
-    ActivityForumBinding binding;
+    private ActivityForumBinding binding;
+    private FragmentManager fragmentManager;
+    NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityForumBinding.inflate(getLayoutInflater());
+        binding = ActivityForumBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportFragmentManager().beginTransaction().replace(R.id.forum_fragment_container,new TrendsFragment()).commit();
-        binding.forumBottomNav.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-                Fragment fragment=null;
-                switch (item.getItemId()){
-                    case R.id.trends_bottom_nav:
-                        fragment=new TrendsFragment();
-                        break;
-                    default:
-                        fragment=new Fragment();
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.forum_fragment_container,fragment).commit();
-            }
-        });
+        fragmentManager=getSupportFragmentManager();
+        NavHostFragment navHostFragment=(NavHostFragment) fragmentManager.findFragmentById(R.id.forum_fragment_container);
+        navController=navHostFragment.getNavController();
+
+        NavigationUI.setupWithNavController(binding.forumBottomNav,navController);
+
     }
+
+
+    public static class BundleKeys {
+        public static final String SUBJECT_NAME = "com.yusufemirbektas.sozlukBeta.mainApplication.forum.subjectNameKey";
+        public static final String SUBJECT_ID = "com.yusufemirbektas.sozlukBeta.mainApplication.forum.subjectId";
+        public static final String COMMENT_ID = "com.yusufemirbektas.sozlukBeta.mainApplication.forum.commentId";
+        public static final String USERCODE = "com.yusufemirbektas.sozlukBeta.mainApplication.forum.userCode";
+    }
+
+
+
 }

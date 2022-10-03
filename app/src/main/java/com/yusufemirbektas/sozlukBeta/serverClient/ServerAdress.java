@@ -1,10 +1,14 @@
 package com.yusufemirbektas.sozlukBeta.serverClient;
 
 public class ServerAdress {
-    public static final String SERVER_URL = "https://1485-212-12-142-150.eu.ngrok.io/sinavSozlukDeneme/";
-    public static final String PROFILE_PHP = "%5bF%5dshowProfile.php";
-    public static final String UPLOAD_PP_PHP = "%5bIM%5ddownloadImages.php";
-    public static final String DISPLAY_PP_PHP = "%5bIM%5duploadImages.php";
-    public static final String SHOW_CHANNEL_SUBJECTS_PHP="%5bF%5dshowChannelSubjects.php";
-    public static final String SHOW_SUBJECT_ENTRIES_PHP="%5bF%5dSubjectEntries.php";
+    public static final String SERVER_URL = "https://hostingdenemesi.online/";
+    public static final String PROFILE_PHP = "forumfiles/showprofile/";
+    public static final String UPLOAD_PP_PHP = "generalfiles/uploadimages/";
+    public static final String DISPLAY_PP_PHP = "generalfiles/downloadimages/";
+    public static final String SHOW_CHANNEL_SUBJECTS_PHP="forumfiles/showchannelsubjects/";
+    public static final String SHOW_SUBJECT_ENTRIES_PHP="forumfiles/showsubjectentries/";
+    public static final String CREATE_SUBJECT="forumfiles/createsubject";
+    public static final String NEW_COMMENT="forumfiles/newcomment";
+    public static final String LIKE_COMMENT="forumfiles/likecomment";
+    public static final String SHOW_LIKE_DETAILS="forumfiles/showlikedetails";
 }

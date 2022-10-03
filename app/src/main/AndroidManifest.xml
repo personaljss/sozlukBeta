@@ -16,16 +16,10 @@
         android:theme="@style/Theme.SozlukBeta"
         tools:targetApi="31">
         <activity
+
             android:name=".mainApplication.forum.ForumActivity"
             android:exported="false" />
-        <activity
-            android:name=".mainApplication.profile.activity.fragments.pp.DisplayPpActivity"
-            android:exported="false"
-            android:parentActivityName=".mainApplication.profile.activity.ProfileActivity" />
-        <activity
-            android:name=".mainApplication.profile.activity.ProfileActivity"
-            android:exported="true"
-            android:parentActivityName=".mainApplication.MainActivity" />
+
         <activity
             android:name=".loginPage.activities.activation.ActivationActivity"
             android:exported="false"
