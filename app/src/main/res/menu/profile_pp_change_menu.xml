@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pp_show"
+        android:title="fotoğrafı görüntüle">
+    </item>
+
+    <item
+        android:id="@+id/pp_change"
+        android:title="fotoğrafı değiştir"></item>
+    <item
+        android:id="@+id/pp_remove"
+        android:title="fotoğrafı kaldır">
+    </item>
+
+</menu>

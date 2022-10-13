@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mainApplication.forum.newContent.NewEntryFragment">
+
+
+    <RelativeLayout
+        android:id="@+id/new_entry_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/new_entry_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:id="@+id/new_entry_publish_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="gönder"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/teal_700" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/new_entry_subject_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_entry_options"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:hint="entry"
+        android:background="#00000000"
+        android:gravity="top|start"
+        android:id="@+id/new_entry_content_editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/new_entry_subject_textView"
+        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:imeOptions="actionNone"
+        android:padding="5dp"
+        android:maxLength="500"/>
+
+
+</RelativeLayout>

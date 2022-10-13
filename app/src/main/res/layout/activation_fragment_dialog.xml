@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/activation_code_ET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="aktivasyon kodu:"
+        ></EditText>
+
+    <TextView
+        android:id="@+id/activation_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mail adresinize gönderilen kodu girip onayla butonuna tıklayın.">
+    </TextView>
+
+    <ProgressBar
+        android:id="@+id/progressBarActivation"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:outlineSpotShadowColor="@color/white"
+        android:outlineAmbientShadowColor="@color/white"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

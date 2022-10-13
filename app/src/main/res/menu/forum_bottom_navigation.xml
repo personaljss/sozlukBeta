@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/forum_trends"
+        android:icon="@drawable/ic_baseline_trending_up_24"
+        android:title="gündem">
+    </item>
+
+    <item
+        android:id="@+id/forum_new_subject"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="post" />
+
+    <item android:id="@+id/forum_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="profil">
+    </item>
+
+
+</menu>

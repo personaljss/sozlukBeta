@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mainApplication.forum.newContent.NewEntryFragment">
+
+    <RelativeLayout
+        android:id="@+id/new_entry_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/new_entry_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:id="@+id/new_entry_publish_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="gönder"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/teal_700" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/new_comment_subject_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_less_curvy_bg"
+        android:layout_below="@id/new_entry_options"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/new_comment_subject_content_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_comment_subject_textView"
+        android:layout_margin="5dp"
+        android:background="@drawable/edittext_less_curvy_bg"
+        android:padding="5dp" />
+
+
+    <EditText
+        android:hint="entry"
+        android:background="#00000000"
+        android:gravity="top|start"
+        android:id="@+id/new_subject_content_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/new_comment_subject_content_textView"
+        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:imeOptions="actionNone"
+        android:padding="5dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forum_new_subject"
+    app:startDestination="@id/newSubjectFragment">
+
+    <fragment
+        android:id="@+id/newSubjectFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.newContent.NewSubjectFragment"
+        android:label="fragment_new_subject"
+        tools:layout="@layout/fragment_new_subject" >
+        <action
+            android:id="@+id/action_newSubjectFragment_to_forum_subject"
+            app:destination="@id/forum_subject" />
+    </fragment>
+    <include app:graph="@navigation/forum_subject" />
+</navigation>

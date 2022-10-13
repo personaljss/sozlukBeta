@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/button_bg.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/curved_white_background.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_baseline_share.xml" value="0.3355" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.3355" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_baseline_trending_up_24.xml" value="0.3355" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_home.xml" value="0.256" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/ic_settings.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_bg.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_photo_bg.xml" value="0.165" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_photo_shaping.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/profile_tabs_bg.xml" value="0.306" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/drawable/tests_cardview_bg.xml" value="0.2795" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activation_fragment_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_display_pp.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_forum.xml" value="0.33" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_login.xml" value="0.21481481481481482" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_main.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/activity_profile.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/entry_item.xml" value="0.33" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/entry_layout_relative_design_optimized.xml" value="0.1810344827586207" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/forum_trends_fragment.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/header_item.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/loading_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/login_tab_fragment.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_entries_fragment.xml" value="0.3020833333333333" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_entries_tab_fragment.xml" value="0.34430379746835443" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_pp_display_fragment.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_show_more_item.xml" value="0.1778115501519757" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_test_item.xml" value="0.33" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_tests_fragments.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/profile_tests_tab_fragment.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/recycler_view_progress_bar_item.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/signup_tab_fragment.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/subject_entry_item.xml" value="0.27943840579710144" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/subject_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/test_item_for_recycler_view.xml" value="0.30085470085470084" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/layout/trends_item.xml" value="0.33" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/menu/forum_bottom_navigation.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/menu/profile_pp_change_menu.xml" value="0.365625" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/SozlukBeta/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.294" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/button_bg.xml" value="0.3135" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/curved_white_background.xml" value="0.352" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/drawable/edittext_bg.xml" value="0.3535" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/activation_fragment.xml" value="0.29483695652173914" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/activity_activation.xml" value="0.35507246376811596" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/activity_login.xml" value="0.2789473684210526" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/denmee.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/login_tab_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/yusuf/AndroidStudioProjects/Sozluk_2/app/src/main/res/layout/signup_tab_fragment.xml" value="0.3291139240506329" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forum_subject"
+    app:startDestination="@id/subjectFragment">
+
+    <fragment
+        android:id="@+id/subjectFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.SubjectFragment"
+        android:label="fragment_subject_entries"
+        tools:layout="@layout/fragment_subject_entries" >
+        <action
+            android:id="@+id/action_subjectFragment_to_othersProfileFragment"
+            app:destination="@id/othersProfileFragment" />
+        <action
+            android:id="@+id/action_subjectFragment_self"
+            app:destination="@id/subjectFragment" />
+        <action
+            android:id="@+id/action_subjectFragment_to_newEntryFragment"
+            app:destination="@id/newEntryFragment" />
+        <action
+            android:id="@+id/action_subjectFragment_to_newCommentFragment"
+            app:destination="@id/newCommentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/othersProfileFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.othersProfile.OthersProfileFragment"
+        android:label="fragment_others_profile"
+        tools:layout="@layout/fragment_others_profile" >
+        <action
+            android:id="@+id/action_othersProfileFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+        <action
+            android:id="@+id/action_othersProfileFragment_to_showPpFragment"
+            app:destination="@id/showPpFragment" />
+        <action
+            android:id="@+id/action_othersProfileFragment_self"
+            app:destination="@id/othersProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newEntryFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.newContent.NewEntryFragment"
+        android:label="fragment_new_entry"
+        tools:layout="@layout/fragment_new_entry" >
+        <action
+            android:id="@+id/action_newEntryFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newCommentFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.newContent.NewCommentFragment"
+        android:label="NewCommentFragment" >
+        <action
+            android:id="@+id/action_newCommentFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.showPp.ShowPpFragment"
+        android:label="fragment_show_pp"
+        tools:layout="@layout/fragment_show_pp" />
+</navigation>
