@@ -77,6 +77,10 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View v) {
                     int pos = viewHolder.getAdapterPosition();
                     Entry entryModel = entries.get(pos);
+                    if (entryModel.getUserCode() == UserData.getUserCode()) {
+                        Toast.makeText(context, "kendi paylaşımızı beğenemezsiniz", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos);
                 }
             });

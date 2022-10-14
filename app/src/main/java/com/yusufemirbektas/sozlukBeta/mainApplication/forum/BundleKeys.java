@@ -1,4 +1,4 @@
-package com.yusufemirbektas.sozlukBeta;
+package com.yusufemirbektas.sozlukBeta.mainApplication.forum;
 
 public class BundleKeys {
     public static final String SUBJECT_NAME = "com.yusufemirbektas.sozlukBeta.mainApplication.forum.subjectNameKey";

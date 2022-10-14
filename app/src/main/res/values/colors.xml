@@ -10,8 +10,8 @@
     <color name="profile_background">#C8E8C9</color>
     <color name="profile_viewPager_bg">#79A67A</color>
     <color name="profile_cardView_grey_bg">#FFFFFF</color>
-    <color name="dislike_bg">#F3ABAB</color>
-    <color name="like_bg">#B4F4B7</color>
+    <color name="dislike_bg">#A13B3B</color>
+    <color name="like_bg">#FF018786</color>
     <color name="beige">#F1EFD9</color>
     <color name="dark_grey">#3A3A3A</color>
 </resources>

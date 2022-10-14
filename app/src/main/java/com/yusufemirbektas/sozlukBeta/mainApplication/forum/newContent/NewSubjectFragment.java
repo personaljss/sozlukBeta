@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewSubjectBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.entryUtils.BoostDialog;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -36,9 +37,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class NewSubjectFragment extends Fragment implements View.OnClickListener{
+public class NewSubjectFragment extends Fragment implements View.OnClickListener, BoostDialog.OnPickListener {
     private static final String TAG = "NewSubjectFragment";
     private final int CHAR_LIMIT=50;
+    private String points;
     FragmentNewSubjectBinding binding;
 
     @Override
@@ -53,6 +55,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         setOnClickListeners();
         //input field check
+        /*
         EditText pointsEt=binding.newSubjectPointsEditText;
         pointsEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,6 +82,10 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
                 }
             }
         });
+
+         */
+
+
         EditText titleEditText=binding.newSubjectTitleEditText;
         titleEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -98,6 +105,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
 
             }
         });
+
 
     }
 
@@ -166,22 +174,33 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     private void setOnClickListeners(){
         binding.newSubjectPublishTextView.setOnClickListener(this);
         binding.newSubjectBackButton.setOnClickListener(this);
+        binding.likeDialog.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v==binding.newSubjectPublishTextView){
             Log.i(TAG, "onClick: publish");
-            String points=binding.newSubjectPointsEditText.getText().toString();
+            if(points.equals(null)){
+                Toast.makeText(getContext(), "lütfen like miktarı seçiniz", Toast.LENGTH_SHORT).show();
+                return;
+            }
             String subjectName=binding.newSubjectTitleEditText.getText().toString();
             String content=binding.newSubjectContentEditText.getText().toString();
             if(validatePointsInput(points)){
                 publishSubject(subjectName,content,points,"0");
-            }else {
-                Log.i(TAG, "onClick: not valid:"+points+subjectName+content);
             }
         }else if(v==binding.newSubjectBackButton){
             getActivity().onBackPressed();
+        }else if(v==binding.likeDialog){
+            BoostDialog dialog=new BoostDialog();
+            dialog.setListener(this);
+            dialog.show(getChildFragmentManager(),null);
         }
+    }
+
+    @Override
+    public void onPick(String num) {
+        this.points=num;
     }
 }

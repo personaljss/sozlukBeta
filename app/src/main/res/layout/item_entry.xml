@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/basic_rectangle">
+        android:background="@drawable/all_items_bg">
 
         <RelativeLayout
             android:id="@+id/lower_child_layout"
@@ -63,7 +63,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp" />
+                android:textSize="12dp"
+                android:layout_marginEnd="5dp"
+                android:layout_centerVertical="true"/>
 
 
         </RelativeLayout>
@@ -79,8 +81,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:textSize="12dp"
                 android:layout_marginEnd="5dp"
-                android:textColor="@color/teal_700" />
+                android:textColor="@color/teal_700"
+                android:layout_centerVertical="true"/>
 
             <ImageButton
                 android:id="@+id/moreButton"

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.navigation.NavController;
 
-import com.yusufemirbektas.sozlukBeta.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.R;
 
 public class EntryManager {

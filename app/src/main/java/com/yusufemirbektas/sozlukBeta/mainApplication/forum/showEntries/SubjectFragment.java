@@ -93,7 +93,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         pointsViewModel.getEntryItemPosition().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=PointsViewModel.DEFAULT_POS ){
+                if(integer!=PointsViewModel.DEFAULT_POS && entryModels!=null ){
                     Entry updatedEntry=entryModels.get(integer);
                     updatedEntry.setLikeStatus(updatedEntry.getLikeStatus()+pointsViewModel.getEntryItemLikeStatus().getValue());
                     updatedEntry.setLikePoint(updatedEntry.getLikePoint()+pointsViewModel.getEntryItemLikeStatus().getValue());

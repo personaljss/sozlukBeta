@@ -3,8 +3,6 @@ package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.othersProfi
 import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.ImageUtils.stringToBitmap;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.yusufemirbektas.sozlukBeta.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentOthersProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
@@ -33,9 +31,6 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.tabs.ProfileViewPagerAdapter;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.Header;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.viewModel.ProfileDataViewModel;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
 
 public class OthersProfileFragment extends Fragment implements View.OnClickListener {
     private FragmentOthersProfileBinding binding;
@@ -124,7 +119,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
 
     private void setOnClickListeners(){
         binding.homeButtonImageView.setOnClickListener(this);
-        binding.profilePhotoImageView.setOnClickListener(this);
+        binding.profilePpImageView.setOnClickListener(this);
     }
 
     @Override
@@ -133,7 +128,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().finish();
-        }else if(v==binding.profilePhotoImageView){
+        }else if(v==binding.profilePpImageView){
             NavController navController= Navigation.findNavController(v);
             Bundle args=new Bundle();
             args.putInt(ForumActivity.BundleKeys.USERCODE,viewModel.getUserCode().getValue());
@@ -143,25 +138,25 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
 
 
     private void setProgressBarsVisible() {
-        binding.ppProgressBar.setVisibility(View.VISIBLE);
-        binding.ppProgressBar.setVisibility(View.VISIBLE);
+        binding.profileProgressBar.setVisibility(View.VISIBLE);
+        binding.profilePpProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void setUpHeaderUi(Header header) {
         //the page is loaded so progress bar is gone
         binding.profileProgressBar.setVisibility(View.GONE);
-        binding.ppProgressBar.setVisibility(View.GONE);
+        binding.profilePpProgressBar.setVisibility(View.GONE);
         //onclicks
         setOnClickListeners();
-        binding.nicknameTextView.setText(header.getNickName());
-        binding.totalTestsTextView.setText("testler: " + header.getTotalTests());
-        binding.totalChallengesTextView.setText("günlük challenge: " + header.getTotalChallenges());
-        binding.totalPointsTextView.setText("puan: " + header.getTotalPoints());
-        binding.socialEarnedTextView.setText("sosyal: " + header.getSocialEarned());
+        binding.profileNickNameTextView.setText(header.getNickName());
+        binding.profileTestsTextView.setText(String.valueOf(header.getTotalTests()));
+        binding.profileChallengesTextView.setText(String.valueOf(header.getTotalChallenges()));
+        binding.profilePointsTextView.setText(String.valueOf(header.getTotalPoints()));
+        binding.profileSocialsTextView.setText(String.valueOf(header.getSocialEarned()));
         //setting the profile photo
         if (!(header.getProfilePhoto().equals("1") || header.getProfilePhoto().equals("0"))) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.profilePhotoImageView.setImageBitmap(stringToBitmap(header.getProfilePhoto()));
+                binding.profilePpImageView.setImageBitmap(stringToBitmap(header.getProfilePhoto()));
             } else {
                 //do something
             }

@@ -29,17 +29,19 @@
     </RelativeLayout>
 
     <EditText
-        android:hint="başlık"
         android:id="@+id/new_subject_title_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
-        android:layout_margin="10dp"
         android:layout_below="@+id/new_subject_options"
-        android:background="@drawable/edittext_less_curvy_bg"
-        android:padding="5dp"
-        android:maxLength="50"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/basic_rectangle"
+        android:hint="başlık"
+        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:maxLength="50"
+        android:padding="5dp" />
 
+    <!--
     <EditText
         android:id="@+id/new_subject_points_editText"
         android:layout_width="wrap_content"
@@ -48,6 +50,15 @@
         android:layout_below="@+id/new_subject_title_editText"
         android:layout_centerHorizontal="true">
     </EditText>
+    -->
+    <ImageButton
+        android:id="@+id/likeDialog"
+        android:layout_below="@+id/new_subject_title_editText"
+        android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true">
+    </ImageButton>
 
 
     <EditText
@@ -57,7 +68,7 @@
         android:id="@+id/new_subject_content_editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/new_subject_points_editText"
+        android:layout_below="@+id/likeDialog"
         android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
         android:imeOptions="actionNone"
         android:padding="5dp"/>
