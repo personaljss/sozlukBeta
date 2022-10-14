@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.Entry;
@@ -68,8 +69,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         if (viewModel.getSubjectId()==-1) {
             binding.subjectEntriesRecyclerView.setVisibility(View.GONE);
             binding.subjectTextView.setVisibility(View.GONE);
-            viewModel.setSubjectId(bundle.getInt(ForumActivity.BundleKeys.SUBJECT_ID, -1));
-            viewModel.setCommentId(bundle.getInt(ForumActivity.BundleKeys.COMMENT_ID, -1));
+            viewModel.setSubjectId(bundle.getInt(BundleKeys.SUBJECT_ID, -1));
+            viewModel.setCommentId(bundle.getInt(BundleKeys.COMMENT_ID, -1));
             viewModel.loadSubjectEntries();
 
         } else {
@@ -151,7 +152,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     private void setUpUi() {
         setUpRecyclerView();
         binding.progressBar.setVisibility(View.GONE);
-        binding.subjectTextView.setText(bundle.getString(ForumActivity.BundleKeys.SUBJECT_NAME));
+        binding.subjectTextView.setText(bundle.getString(BundleKeys.SUBJECT_NAME));
         binding.subjectTextView.setVisibility(View.VISIBLE);
         binding.subjectFragmentNewEntry.setOnClickListener(this);
         isUiSet=true;
@@ -173,8 +174,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
             Bundle outArgs=new Bundle();
             int subjectId=viewModel.getSubjectId();
             String subjectName=binding.subjectTextView.getText().toString();
-            outArgs.putInt(ForumActivity.BundleKeys.SUBJECT_ID, subjectId);
-            outArgs.putString(ForumActivity.BundleKeys.SUBJECT_NAME,subjectName);
+            outArgs.putInt(BundleKeys.SUBJECT_ID, subjectId);
+            outArgs.putString(BundleKeys.SUBJECT_NAME,subjectName);
             navController.navigate(R.id.action_subjectFragment_to_newEntryFragment,outArgs);
         }
     }

@@ -131,7 +131,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         }else if(v==binding.profilePpImageView){
             NavController navController= Navigation.findNavController(v);
             Bundle args=new Bundle();
-            args.putInt(ForumActivity.BundleKeys.USERCODE,viewModel.getUserCode().getValue());
+            args.putInt(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
             navController.navigate(R.id.action_othersProfileFragment_to_showPpFragment,args);
         }
     }

@@ -41,7 +41,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     private static final String TAG = "NewSubjectFragment";
     private final int CHAR_LIMIT=50;
     private String points;
-    FragmentNewSubjectBinding binding;
+    private FragmentNewSubjectBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -202,5 +202,6 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     @Override
     public void onPick(String num) {
         this.points=num;
+        binding.newSubjectPointsInvested.setText("puan: "+num);
     }
 }

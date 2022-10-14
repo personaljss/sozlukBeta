@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewEntryBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
@@ -56,7 +57,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
         args = getArguments();
         setOnClickListeners();
         EditText contentEditText=binding.newEntryContentEditText;
-        String subjectName=args.getString(ForumActivity.BundleKeys.SUBJECT_NAME,"");
+        String subjectName=args.getString(BundleKeys.SUBJECT_NAME,"");
         binding.newEntrySubjectTextView.setText(subjectName);
         contentEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,7 +135,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v==binding.newEntryPublishTextView){
-            int subjectId=args.getInt(ForumActivity.BundleKeys.SUBJECT_ID,-1);
+            int subjectId=args.getInt(BundleKeys.SUBJECT_ID,-1);
             String entry=binding.newEntryContentEditText.getText().toString();
             postNewEntry(subjectId,entry);
         }else if(v==binding.newEntryBackButton){

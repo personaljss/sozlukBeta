@@ -1,4 +1,4 @@
-package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.showPp;
+package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

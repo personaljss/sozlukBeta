@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.ForumSubject;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewHolders.EntryTitleViewHolder;
@@ -41,9 +42,9 @@ public class TrendsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ForumSubject forumSubject=forumSubjects.get(holder.getAdapterPosition());
                 NavController navController=Navigation.findNavController(holder.itemView);
                 Bundle args=new Bundle();
-                args.putString(ForumActivity.BundleKeys.SUBJECT_NAME,forumSubject.getSubjectName());
-                args.putInt(ForumActivity.BundleKeys.SUBJECT_ID,forumSubject.getSubjectID());
-                args.putInt(ForumActivity.BundleKeys.COMMENT_ID,1);
+                args.putString(BundleKeys.SUBJECT_NAME,forumSubject.getSubjectName());
+                args.putInt(BundleKeys.SUBJECT_ID,forumSubject.getSubjectID());
+                args.putInt(BundleKeys.COMMENT_ID,1);
                 navController.navigate(R.id.action_trendsFragment_to_forum_subject,args);
             }
         });

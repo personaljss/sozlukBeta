@@ -27,6 +27,7 @@ import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.tabs.ProfileViewPagerAdapter;
@@ -144,7 +145,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             getActivity().finish();
         }else if(v==binding.profilePpImageView){
             Bundle args=new Bundle();
-            args.putInt(ForumActivity.BundleKeys.USERCODE,viewModel.getUserCode().getValue());
+            args.putInt(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
             navController.navigate(R.id.action_profileFragment_to_showPpFragment,args);
         }else if(v==binding.settingsImageButton){
             navController.navigate(R.id.action_profileFragment_to_settingsFragment);

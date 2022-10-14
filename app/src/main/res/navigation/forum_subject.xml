@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/showPpFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.showPp.ShowPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp.ShowPpFragment"
         android:label="fragment_show_pp"
         tools:layout="@layout/fragment_show_pp" />
 </navigation>

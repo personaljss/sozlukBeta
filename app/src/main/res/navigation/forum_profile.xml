@@ -26,12 +26,21 @@
     <include app:graph="@navigation/forum_subject" />
     <fragment
         android:id="@+id/showPpFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.showPp.ShowPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp.ShowPpFragment"
         android:label="fragment_show_pp"
         tools:layout="@layout/fragment_show_pp" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.selfProfile.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_editPpFragment"
+            app:destination="@id/editPpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.editPp.EditPpFragment"
+        android:label="fragment_edit_pp"
+        tools:layout="@layout/fragment_edit_pp" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.showPp;
+package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp;
 
 import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.ImageUtils.stringToBitmap;
 
@@ -8,8 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,9 +18,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.Header;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.viewModel.ProfileDataViewModel;
 
 public class ShowPpFragment extends Fragment {
     private ShowPpViewModel viewModel;
@@ -51,7 +48,7 @@ public class ShowPpFragment extends Fragment {
         progressBar=view.findViewById(R.id.showPpProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         Bundle args=getArguments();
-        int userCode=args.getInt(ForumActivity.BundleKeys.USERCODE);
+        int userCode=args.getInt(BundleKeys.USERCODE);
 
         viewModel.loadProfilePhoto(userCode);
         viewModel.getImageStr().observe(getViewLifecycleOwner(), new Observer<String>() {

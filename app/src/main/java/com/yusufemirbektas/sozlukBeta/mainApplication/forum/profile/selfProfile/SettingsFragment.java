@@ -1,5 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.selfProfile;
 
+import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.ImageUtils.HIGH_QUALITY_IMAGE_SIZE;
+import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.ImageUtils.bitmapToBytes;
 import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.ImageUtils.imageToString;
 
 import android.app.Activity;
@@ -17,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -25,15 +29,17 @@ import android.view.ViewGroup;
 
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSettingsBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.viewModel.ProfileDataViewModel;
 
 import java.io.IOException;
 
 
 public class SettingsFragment extends Fragment {
-    FragmentSettingsBinding binding;
-    ProfileDataViewModel profileDataViewModel;
-    ActivityResultLauncher<Intent> launcher;
+    private FragmentSettingsBinding binding;
+    private ProfileDataViewModel profileDataViewModel;
+    private ActivityResultLauncher<Intent> launcher;
+    private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,12 +58,14 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profileDataViewModel = new ViewModelProvider(getParentFragment()).get(ProfileDataViewModel.class);
+        navController= Navigation.findNavController(view);
         binding.uploadPpTexView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
             }
         });
+
 
          launcher= registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -77,8 +85,10 @@ public class SettingsFragment extends Fragment {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
                             if(selectedImageBitmap!=null){
-                                String photoString=imageToString(selectedImageBitmap,130000);
-                                profileDataViewModel.upLoadProfilePhoto(photoString);
+                                byte[] photoBytes=bitmapToBytes(selectedImageBitmap);
+                                Bundle args=new Bundle();
+                                args.putByteArray(BundleKeys.PHOTO_BYTES_KEY,photoBytes);
+                                navController.navigate(R.id.action_settingsFragment_to_editPpFragment,args);
                             }
                         }
                     }

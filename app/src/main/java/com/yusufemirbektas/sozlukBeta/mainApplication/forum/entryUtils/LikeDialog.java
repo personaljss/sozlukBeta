@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.PointsViewModel;
 
@@ -34,11 +35,11 @@ public class LikeDialog extends DialogFragment {
         viewModel = new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         int points = viewModel.getPointsAvailable().getValue();
         Bundle args = getArguments();
-        int userCode = args.getInt(ForumActivity.BundleKeys.USERCODE);
-        int subjectId = args.getInt(ForumActivity.BundleKeys.SUBJECT_ID);
-        int commentId = args.getInt(ForumActivity.BundleKeys.COMMENT_ID);
-        int likeStatus = args.getInt(ForumActivity.BundleKeys.LIKE_STATUS);
-        int adapterPos = args.getInt(ForumActivity.BundleKeys.ADAPTER_POSITION);
+        int userCode = args.getInt(BundleKeys.USERCODE);
+        int subjectId = args.getInt(BundleKeys.SUBJECT_ID);
+        int commentId = args.getInt(BundleKeys.COMMENT_ID);
+        int likeStatus = args.getInt(BundleKeys.LIKE_STATUS);
+        int adapterPos = args.getInt(BundleKeys.ADAPTER_POSITION);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
