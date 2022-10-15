@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,8 +108,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                navController.navigate(R.id.action_subjectFragment_self,bundle);
-                //isUiSet=false;
+                int actionId=navController.getCurrentDestination().getId();
+                NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
+                navController.navigate(actionId,bundle,navOptions);
             }
         });
 

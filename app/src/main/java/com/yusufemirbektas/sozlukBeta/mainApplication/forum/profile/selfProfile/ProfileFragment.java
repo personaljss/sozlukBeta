@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -120,7 +121,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                navController.navigate(R.id.action_profileFragment_self);
+                int actionId=navController.getCurrentDestination().getId();
+                NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
+                navController.navigate(R.id.action_profileFragment_self,null,navOptions);
             }
         });
 
