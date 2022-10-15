@@ -11,9 +11,6 @@ public class ActivationActivity extends AppCompatActivity {    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setTitle("Aktivasyon");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         setContentView(R.layout.activity_activation);
         ActivationFragment activationFragment=new ActivationFragment();

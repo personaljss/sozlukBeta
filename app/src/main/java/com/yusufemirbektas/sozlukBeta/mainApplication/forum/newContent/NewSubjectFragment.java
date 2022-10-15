@@ -20,8 +20,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewSubjectBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.entryUtils.BoostDialog;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
@@ -40,8 +42,10 @@ import okhttp3.Response;
 public class NewSubjectFragment extends Fragment implements View.OnClickListener, BoostDialog.OnPickListener {
     private static final String TAG = "NewSubjectFragment";
     private final int CHAR_LIMIT=50;
-    private String points;
+    private String points="0";
     private FragmentNewSubjectBinding binding;
+    private NavController navController;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -53,38 +57,8 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController=Navigation.findNavController(view);
         setOnClickListeners();
-        //input field check
-        /*
-        EditText pointsEt=binding.newSubjectPointsEditText;
-        pointsEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String points=s.toString();
-                try {
-                    int p=Integer.parseInt(points);
-                    if(p<0){
-                        pointsEt.setError("lütfen puan kısmına pozitif bir tam sayı girin");
-                        return;
-                    }
-                }catch (Exception e){
-                    pointsEt.setError("lütfen puan kısmına pozitif bir tam sayı girin");
-                    return;
-                }
-            }
-        });
-
-         */
-
 
         EditText titleEditText=binding.newSubjectTitleEditText;
         titleEditText.addTextChangedListener(new TextWatcher() {
@@ -138,7 +112,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     Log.i(TAG, "onResponse: ");
-                    handleResponse(response);
+                    handleResponse(response,subjectName);
                 }
             }
         });
@@ -158,7 +132,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
         return true;
     }
 
-    private void handleResponse(Response response) throws IOException {
+    private void handleResponse(Response response, String subjectName) throws IOException {
         Gson gson=new Gson();
         String jsonResponse=response.body().string();
         NewContentServerResponse serialisedResponse=gson.fromJson(jsonResponse,NewContentServerResponse.class);
@@ -166,7 +140,43 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getContext(), serialisedResponse.getComment(), Toast.LENGTH_SHORT).show();
+                Bundle args=new Bundle();
+                String comment=serialisedResponse.getComment();
+                int i=1;
+                StringBuilder sb=new StringBuilder();
+                while(i>=0){
+                    try {
+                        int digit=Integer.parseInt(comment.substring(i-1,i));
+                        sb.append(digit);
+                        i++;
+                    }catch (NumberFormatException e){
+                        i=-1;
+                    }
+                }
+                try {
+                    args.putInt(BundleKeys.SUBJECT_ID,Integer.parseInt(sb.toString()));
+                    args.putInt(BundleKeys.COMMENT_ID,1);
+                    args.putString(BundleKeys.SUBJECT_NAME,subjectName);
+                    navController.navigate(R.id.action_newSubjectFragment_to_forum_subject,args);
+                }catch (NumberFormatException e){
+                    //subject ccreated before
+                    Toast.makeText(getContext(), "konu daha önce oluşturulmuş.", Toast.LENGTH_LONG).show();
+                    int j=6;
+                    StringBuilder sb2=new StringBuilder();
+                    while(j>=0){
+                        try {
+                            int digit=Integer.parseInt(comment.substring(j-1,j));
+                            sb2.append(digit);
+                            j++;
+                        }catch (NumberFormatException e2){
+                            j=-1;
+                        }
+                    }
+                    args.putInt(BundleKeys.SUBJECT_ID,Integer.parseInt(sb2.toString()));
+                    args.putInt(BundleKeys.COMMENT_ID,1);
+                    args.putString(BundleKeys.SUBJECT_NAME,subjectName);
+                    navController.navigate(R.id.action_newSubjectFragment_to_forum_subject,args);
+                }
             }
         });
     }

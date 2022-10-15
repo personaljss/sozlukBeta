@@ -184,6 +184,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         if (!header.getProfilePhoto().equals("1")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if(!(header.getProfilePhoto().equals("0") || header.getProfilePhoto().equals("1")))
                 binding.profilePpImageView.setImageBitmap(stringToBitmap(header.getProfilePhoto()));
             } else {
                 //do something

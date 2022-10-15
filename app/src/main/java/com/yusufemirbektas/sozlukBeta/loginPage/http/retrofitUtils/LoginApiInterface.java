@@ -10,8 +10,8 @@ import retrofit2.http.POST;
 
 public interface LoginApiInterface {
     String LOGIN_PHP="loginfiles/loginprocess/";
-    String REGISTER_PHP="loginfiles/activationprocess/";
-    String ACTIVATE_PHP="loginfiles/registerprocess/";
+    String REGISTER_PHP="loginfiles/registerprocess/";
+    String ACTIVATE_PHP="loginfiles/activationprocess/";
     @FormUrlEncoded
     @POST(LOGIN_PHP)
     Call<LoginResult> postLogin(@FieldMap Map<String,String> loginParams);
