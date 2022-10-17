@@ -22,10 +22,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.BundleKeys;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.Entry;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.viewModel.SubjectEntriesViewModel;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.viewModel.EntriesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recycleViewAdapter;
     private List<Entry> entryModels;
-    private SubjectEntriesViewModel viewModel;
+    private EntriesViewModel viewModel;
     private Bundle bundle;
     private NavController navController;
     private PointsViewModel pointsViewModel;
@@ -59,7 +58,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SubjectEntriesViewModel.class);
+        viewModel = new ViewModelProvider(this).get(EntriesViewModel.class);
 
         binding.swipeRefreshLayout.setRefreshing(false);
 
@@ -75,11 +74,11 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
             viewModel.loadSubjectEntries();
 
         } else {
-            entryModels = viewModel.getSubjectEntries().getValue();
+            entryModels = viewModel.getEntries().getValue();
             setUpUi();
         }
 
-        viewModel.getSubjectEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
+        viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels=subjectEntryModels;

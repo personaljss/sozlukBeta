@@ -14,9 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.SubjectEntriesResponse;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.newContent.NewContentServerResponse;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.Entry;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.dataModel.SubjectEntryModel;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -33,11 +31,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SubjectEntriesViewModel extends ViewModel {
+public class EntriesViewModel extends ViewModel {
     private static final String TAG = "SubjectEntriesViewModel";
     private int subjectId=-1;
     private int commentId=-1;
-    private MutableLiveData<List<Entry>> subjectEntries = new MutableLiveData<>();
+    private MutableLiveData<List<Entry>> entries = new MutableLiveData<>();
 
     //subjectID, commentID, userCode
     public void loadSubjectEntries() {
@@ -121,11 +119,43 @@ public class SubjectEntriesViewModel extends ViewModel {
         }
     }
 
+    //postlar: $usercode = $_POST["userCode"];
+    //    $date = $_POST["date"];
+    //    $limit = $_POST["limit"];
+    public void loadMainFeed(int startDate){
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("limit", "15")
+                .add("date", String.valueOf(startDate))
+                .add("userCode", String.valueOf(UserData.getUserCode()))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.SHOW_SUBJECT_ENTRIES_PHP)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonResponse = response.body().string();
+                    addEntriesBg(jsonResponse);
+                }
+            }
+        });
+    }
+
     //for epoch time
     private void addEntriesBg(String jsonResponse) {
         Gson gson = new Gson();
         SubjectEntriesResponse entriesResponse = gson.fromJson(jsonResponse, SubjectEntriesResponse.class);
-        List<Entry> entryList = this.subjectEntries.getValue();
+        List<Entry> entryList = this.entries.getValue();
         if (entryList == null) {
             entryList = new ArrayList<>();
         } else if (entryList.size() > 0 && entryList.get(entryList.size() - 1) == null) {
@@ -139,7 +169,7 @@ public class SubjectEntriesViewModel extends ViewModel {
                 entryList.add(entry);
             }
         }
-        this.subjectEntries.postValue(entryList);
+        this.entries.postValue(entryList);
     }
 
     public void setSubjectId(int subjectId) {
@@ -150,12 +180,12 @@ public class SubjectEntriesViewModel extends ViewModel {
         this.commentId = commentId;
     }
 
-    private void setSubjectEntries(List<Entry> subjectEntries) {
-        this.subjectEntries.setValue(subjectEntries);
+    private void setEntries(List<Entry> entries) {
+        this.entries.setValue(entries);
     }
 
-    private void postSubjectEntries(List<Entry> subjectEntries) {
-        this.subjectEntries.postValue(subjectEntries);
+    private void postSubjectEntries(List<Entry> entries) {
+        this.entries.postValue(entries);
     }
 /*
     public LiveData<Integer> getPointsSpent() {
@@ -180,7 +210,7 @@ public class SubjectEntriesViewModel extends ViewModel {
         return commentId;
     }
 
-    public LiveData<List<Entry>> getSubjectEntries() {
-        return subjectEntries;
+    public LiveData<List<Entry>> getEntries() {
+        return entries;
     }
 }

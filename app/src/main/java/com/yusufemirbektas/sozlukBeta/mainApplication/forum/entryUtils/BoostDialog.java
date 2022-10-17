@@ -4,14 +4,12 @@ package com.yusufemirbektas.sozlukBeta.mainApplication.forum.entryUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.PointsViewModel;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.viewModel.SubjectEntriesViewModel;
 
 public class BoostDialog extends DialogFragment {
     private static final int FULL_COLOR = 255;

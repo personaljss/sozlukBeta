@@ -6,6 +6,7 @@
 
     <include app:graph="@navigation/forum_trends" />
     <include app:graph="@navigation/forum_profile" />
+    <include app:graph="@navigation/forum_feed" />
     <include app:graph="@navigation/forum_new_subject" />
 
 </navigation>

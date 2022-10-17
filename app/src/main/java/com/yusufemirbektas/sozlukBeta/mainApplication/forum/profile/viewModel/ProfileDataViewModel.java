@@ -43,7 +43,7 @@ import okhttp3.Response;
 public class ProfileDataViewModel extends ViewModel {
     private static final String TAG = "ProfileDataViewModel";
 
-    private MutableLiveData<Boolean> reload=new MutableLiveData<Boolean>(false);
+    //private MutableLiveData<Boolean> reload=new MutableLiveData<Boolean>(false);
     private MutableLiveData<Integer> userCode=new MutableLiveData<>();
     private MutableLiveData<Header> header=new MutableLiveData<>();
     private MutableLiveData<List<Entry>> entries=new MutableLiveData<>();
@@ -429,6 +429,7 @@ public class ProfileDataViewModel extends ViewModel {
         return tests;
     }
 
+    /*
     public LiveData<Boolean> getReload() {
         return reload;
     }
@@ -436,5 +437,7 @@ public class ProfileDataViewModel extends ViewModel {
     public void setReload(boolean reload) {
         this.reload.setValue(reload);
     }
+
+     */
 
 }

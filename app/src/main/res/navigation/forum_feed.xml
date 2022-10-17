@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forum_feed"
+    app:startDestination="@id/mainFeedFragment">
+
+    <fragment
+        android:id="@+id/mainFeedFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.feed.MainFeedFragment"
+        android:label="fragment_main_feed"
+        tools:layout="@layout/fragment_main_feed" >
+        <action
+            android:id="@+id/action_mainFeedFragment_to_othersProfileFragment"
+            app:destination="@id/othersProfileFragment" />
+        <action
+            android:id="@+id/action_mainFeedFragment_to_forum_subject"
+            app:destination="@id/forum_subject" />
+    </fragment>
+    <fragment
+        android:id="@+id/othersProfileFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.othersProfile.OthersProfileFragment"
+        android:label="fragment_others_profile"
+        tools:layout="@layout/fragment_others_profile" >
+        <action
+            android:id="@+id/action_othersProfileFragment_to_forum_subject"
+            app:destination="@id/forum_subject" />
+        <action
+            android:id="@+id/action_othersProfileFragment_self2"
+            app:destination="@id/othersProfileFragment" />
+        <action
+            android:id="@+id/action_othersProfileFragment_to_showPpFragment2"
+            app:destination="@id/showPpFragment" />
+    </fragment>
+    <include app:graph="@navigation/forum_subject" />
+    <fragment
+        android:id="@+id/showPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp.ShowPpFragment"
+        android:label="fragment_show_pp"
+        tools:layout="@layout/fragment_show_pp" />
+</navigation>

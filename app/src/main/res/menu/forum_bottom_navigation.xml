@@ -3,19 +3,20 @@
     <item
         android:id="@+id/forum_trends"
         android:icon="@drawable/ic_baseline_trending_up_24"
-        android:title="gündem"
-        >
-    </item>
-
+        android:title="gündem" />
+    <item
+        android:id="@+id/forum_feed"
+        android:icon="@drawable/ic_baseline_dynamic_feed_24"
+        android:title="takip" />
     <item
         android:id="@+id/forum_new_subject"
         android:icon="@drawable/ic_baseline_post_add_24"
         android:title="post" />
 
-    <item android:id="@+id/forum_profile"
+    <item
+        android:id="@+id/forum_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="profil">
-    </item>
+        android:title="profil" />
 
 
 </menu>
