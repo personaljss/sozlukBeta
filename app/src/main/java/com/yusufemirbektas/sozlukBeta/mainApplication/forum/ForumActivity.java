@@ -6,10 +6,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
@@ -28,7 +31,7 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
     public static final String targetDatePattern = "dd/MM/yyyy HH:mm";
     private NavController navController;
     private PointsViewModel pointsViewModel;
-    EntryManager entryManager;
+    private EntryManager entryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,29 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
         entryManager=new EntryManager(navController);
 
+
         binding.forumBottomNav.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 int targetDestinationId = item.getItemId();
-                navController.popBackStack(targetDestinationId, false);
+                navController.popBackStack(targetDestinationId, true);
                 navController.navigate(targetDestinationId);
             }
         });
         NavigationUI.setupWithNavController(binding.forumBottomNav, navController);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
+        if(navController.getCurrentBackStackEntry()!=null){
+            int destId=navController.getCurrentBackStackEntry().getDestination().getId();
+            if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment){
+                navController.popBackStack();
+            }else{
+                finish();
+            }
+        }
     }
 
     @Override
