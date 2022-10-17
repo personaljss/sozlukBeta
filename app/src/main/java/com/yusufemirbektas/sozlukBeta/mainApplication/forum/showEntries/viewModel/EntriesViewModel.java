@@ -132,7 +132,7 @@ public class EntriesViewModel extends ViewModel {
                 .build();
 
         Request request = new Request.Builder()
-                .url(ServerAdress.SERVER_URL + ServerAdress.SHOW_SUBJECT_ENTRIES_PHP)
+                .url(ServerAdress.SERVER_URL + ServerAdress.MAIN_FEED)
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {

@@ -26,6 +26,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.E
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.EntriesRvAdapter;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.showEntries.viewModel.EntriesViewModel;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -56,7 +57,6 @@ public class MainFeedFragment extends Fragment {
         if(viewModel.getCommentId()==-1){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 viewModel.loadMainFeed((int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-                //viewModel.loadMainFeed(0);
             }else{
                 //do something
             }

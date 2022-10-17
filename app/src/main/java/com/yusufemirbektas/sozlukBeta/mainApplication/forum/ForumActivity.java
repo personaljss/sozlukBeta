@@ -114,4 +114,9 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
         entryManager.goToProfile(userCode);
     }
 
+    @Override
+    public void onLikeDetails(int subjectId, int commentId) {
+        entryManager.goToLikeDetails(subjectId,commentId);
+    }
+
 }

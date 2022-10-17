@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFeedFragment_to_forum_subject"
             app:destination="@id/forum_subject" />
+        <action
+            android:id="@+id/action_mainFeedFragment_to_profileListFragment"
+            app:destination="@id/profileListFragment" />
     </fragment>
     <fragment
         android:id="@+id/othersProfileFragment"
@@ -26,10 +29,10 @@
             android:id="@+id/action_othersProfileFragment_to_forum_subject"
             app:destination="@id/forum_subject" />
         <action
-            android:id="@+id/action_othersProfileFragment_self2"
+            android:id="@+id/action_othersProfileFragment_self"
             app:destination="@id/othersProfileFragment" />
         <action
-            android:id="@+id/action_othersProfileFragment_to_showPpFragment2"
+            android:id="@+id/action_othersProfileFragment_to_showPpFragment"
             app:destination="@id/showPpFragment" />
     </fragment>
     <include app:graph="@navigation/forum_subject" />
@@ -38,4 +41,9 @@
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp.ShowPpFragment"
         android:label="fragment_show_pp"
         tools:layout="@layout/fragment_show_pp" />
+    <fragment
+        android:id="@+id/profileListFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.likedPeople.ProfileListFragment"
+        android:label="fragment_profile_list"
+        tools:layout="@layout/fragment_profile_list" />
 </navigation>

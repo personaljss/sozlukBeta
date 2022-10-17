@@ -58,4 +58,27 @@ public class EntryManager {
                 break;
         }
     }
+
+    public void goToLikeDetails(int subjectId, int commentId){
+        Bundle args=new Bundle();
+        args.putInt(BundleKeys.SUBJECT_ID,subjectId);
+        args.putInt(BundleKeys.COMMENT_ID,commentId);
+        final int locId = navController.getCurrentDestination().getId();
+        switch (locId) {
+            case R.id.profileFragment:
+                navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
+                break;
+            case R.id.subjectFragment:
+                navController.navigate(R.id.action_subjectFragment_to_profileListFragment, args);
+                //
+                break;
+            case R.id.othersProfileFragment:
+                navController.navigate(R.id.action_othersProfileFragment_to_profileListFragment, args);
+                break;
+            case R.id.mainFeedFragment:
+                navController.navigate(R.id.action_mainFeedFragment_to_profileListFragment, args);
+            default:
+                break;
+        }
+    }
 }

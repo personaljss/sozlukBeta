@@ -62,6 +62,7 @@ public class LikeDialog extends DialogFragment {
         int min = Math.max(-127,likeStatus-points);
         int max = Math.min(127,likeStatus+points);
         String[] nums = new String[max - min+1];
+
         for (int i = max-min; i >=0  ; i--) {
             nums[i] = String.valueOf(min+i);
         }
@@ -69,8 +70,8 @@ public class LikeDialog extends DialogFragment {
         NumberPicker numberPicker = view.findViewById(R.id.likeNumberPicker);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setDisplayedValues(nums);
-        numberPicker.setMinValue(0);
         numberPicker.setMaxValue(max-min);
+        numberPicker.setMinValue(0);
         int color;
         likesSelected=Integer.parseInt(nums[Math.abs(min-likeStatus)]);
         pointsSpent=Math.abs(likesSelected-likeStatus);
