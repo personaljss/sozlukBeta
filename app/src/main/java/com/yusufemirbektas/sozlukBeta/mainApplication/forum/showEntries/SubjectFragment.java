@@ -83,6 +83,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels=subjectEntryModels;
                 if(isUiSet){
+                    ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
                 }else {
                     setUpUi();
@@ -94,7 +95,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         pointsViewModel.getEntryItemPosition().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=PointsViewModel.DEFAULT_POS && entryModels!=null ){
+                if(integer!=PointsViewModel.DEFAULT_POS && entryModels!=null && entryModels.size()>integer){
                     Entry updatedEntry=entryModels.get(integer);
                     updatedEntry.setLikeStatus(updatedEntry.getLikeStatus()+pointsViewModel.getEntryItemLikeStatus().getValue());
                     updatedEntry.setLikePoint(updatedEntry.getLikePoint()+pointsViewModel.getEntryItemLikeStatus().getValue());
@@ -138,6 +139,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isUiSet=false;
         pointsViewModel.refresh();
         binding = null;
         recycleViewAdapter = null;
@@ -156,6 +158,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         binding.subjectTextView.setText(bundle.getString(BundleKeys.SUBJECT_NAME));
         binding.subjectTextView.setVisibility(View.VISIBLE);
         binding.subjectFragmentNewEntry.setOnClickListener(this);
+        binding.progressBar.setVisibility(View.GONE);
         isUiSet=true;
     }
 

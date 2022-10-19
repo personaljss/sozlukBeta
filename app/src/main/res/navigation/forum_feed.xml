@@ -45,5 +45,9 @@
         android:id="@+id/profileListFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.likedPeople.ProfileListFragment"
         android:label="fragment_profile_list"
-        tools:layout="@layout/fragment_profile_list" />
+        tools:layout="@layout/fragment_profile_list" >
+        <action
+            android:id="@+id/action_profileListFragment_to_othersProfileFragment"
+            app:destination="@id/othersProfileFragment" />
+    </fragment>
 </navigation>

@@ -61,19 +61,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         viewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
         navController= Navigation.findNavController(view);
 
-        /*
-        viewModel.getReload().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if(aBoolean){
-                    setProgressBarsVisible();
-                    viewModel.loadProfileData();
-                    viewModel.setReload(false);
-                }
-            }
-        });
-
-         */
         pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getPointsAvailable().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -100,6 +87,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(Header header) {
                 setUpHeaderUi(header);
+                binding.swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -111,19 +99,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         binding.viewPagerProfile.setAdapter(adapter);
 
-        new TabLayoutMediator(binding.tabLayout, binding.viewPagerProfile, new TabLayoutMediator.TabConfigurationStrategy() {
+        new TabLayoutMediator(binding.tabLayout, binding.viewPagerProfile,true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText(TAB_TITLES[position]);
             }
         }).attach();
 
+
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                viewModel.loadProfileData();
+                /*
                 int actionId=navController.getCurrentDestination().getId();
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
                 navController.navigate(R.id.action_profileFragment_self,null,navOptions);
+
+                 */
             }
         });
 

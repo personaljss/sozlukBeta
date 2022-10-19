@@ -5,6 +5,7 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.imageUtils.Im
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.dataModels.H
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.viewModel.ProfileDataViewModel;
 
 public class OthersProfileFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "OthersProfileFragment";
     private FragmentOthersProfileBinding binding;
     //tab titles
     private final String[] TAB_TITLES = {"TESTLER", "ENTRILER"};
@@ -68,26 +70,26 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             //userCode = args.getInt(ForumActivity.BundleKeys.USERCODE, -1);
         }
         viewModel.setUserCode(userCode);
-        headerUi=viewModel.getHeader().getValue();
+        headerUi = viewModel.getHeader().getValue();
         viewModel.getHeader().observe(getViewLifecycleOwner(), new Observer<Header>() {
             @Override
             public void onChanged(Header header) {
-                headerUi=header;
+                headerUi = header;
                 setUpHeaderUi(header);
             }
         });
 
         //if it is the first time that this page is opened, load the contents
-        if (headerUi==null) {
+        if (headerUi == null) {
             setProgressBarsVisible();
             viewModel.loadProfileData();
         } else {
             setUpHeaderUi(headerUi);
         }
 
-        FragmentManager fm=getChildFragmentManager();
-        Lifecycle lifecycle=getViewLifecycleOwner().getLifecycle();
-        binding.viewPagerProfile.setAdapter(new ProfileViewPagerAdapter(fm,lifecycle));
+        FragmentManager fm = getChildFragmentManager();
+        Lifecycle lifecycle = getViewLifecycleOwner().getLifecycle();
+        binding.viewPagerProfile.setAdapter(new ProfileViewPagerAdapter(fm, lifecycle));
 
         new TabLayoutMediator(binding.tabLayout, binding.viewPagerProfile, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -96,15 +98,21 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             }
         }).attach();
 
+
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                viewModel.loadProfileData();
+                /*
                 NavController navController=Navigation.findNavController(view);
                 navController.navigate(R.id.action_othersProfileFragment_self,args);
+
+                 */
             }
         });
 
     }
+
 
     @Override
     public void onDestroyView() {
@@ -117,7 +125,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         super.onDestroy();
     }
 
-    private void setOnClickListeners(){
+    private void setOnClickListeners() {
         binding.homeButtonImageView.setOnClickListener(this);
         binding.profilePpImageView.setOnClickListener(this);
     }
@@ -128,11 +136,11 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().finish();
-        }else if(v==binding.profilePpImageView){
-            NavController navController= Navigation.findNavController(v);
-            Bundle args=new Bundle();
-            args.putInt(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
-            navController.navigate(R.id.action_othersProfileFragment_to_showPpFragment,args);
+        } else if (v == binding.profilePpImageView) {
+            NavController navController = Navigation.findNavController(v);
+            Bundle args = new Bundle();
+            args.putInt(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
+            navController.navigate(R.id.action_othersProfileFragment_to_showPpFragment, args);
         }
     }
 
@@ -142,12 +150,18 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         binding.profilePpProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void setUpHeaderUi(Header header) {
-        //the page is loaded so progress bar is gone
+    private void setProgressBarsGone() {
         binding.profileProgressBar.setVisibility(View.GONE);
         binding.profilePpProgressBar.setVisibility(View.GONE);
+    }
+
+    private void setUpHeaderUi(Header header) {
+        //the page is loaded so progress bar is gone
+        setProgressBarsGone();
         //onclicks
         setOnClickListeners();
+        //swipe-refresh
+        binding.swipeRefreshLayout.setRefreshing(false);
         binding.profileNickNameTextView.setText(header.getNickName());
         binding.profileTestsTextView.setText(String.valueOf(header.getTotalTests()));
         binding.profileChallengesTextView.setText(String.valueOf(header.getTotalChallenges()));

@@ -30,6 +30,8 @@ public class EntryManager {
                 break;
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_othersProfileFragment,args);
+            case R.id.profileListFragment:
+                navController.navigate(R.id.action_profileListFragment_to_othersProfileFragment,args);
             default:
                 break;
         }
@@ -50,7 +52,7 @@ public class EntryManager {
                 //
                 break;
             case R.id.othersProfileFragment:
-                navController.navigate(R.id.action_othersProfileFragment_to_subjectFragment,args);
+                navController.navigate(R.id.action_othersProfileFragment_to_forum_subject,args);
                 break;
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_forum_subject,args);

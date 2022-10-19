@@ -134,5 +134,6 @@ public class MainFeedFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         pointsViewModel.refresh();
+        isUiSet=false;
     }
 }

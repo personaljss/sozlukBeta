@@ -27,6 +27,9 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int LOADING = 0;
     private static final int DONE = 1;
 
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
+    }
 
     public EntriesRvAdapter(List<Entry> entries, Context context) {
         this.entries = entries;
@@ -36,11 +39,12 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
+        final View view;
         final RecyclerView.ViewHolder viewHolder;
         if (viewType == DONE) {
             view = LayoutInflater.from(context).inflate(R.layout.item_entry, parent, false);
             viewHolder = new EntryViewHolder(view);
+            //nick
             ((EntryViewHolder) viewHolder).nickNameTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,6 +52,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     ((EntryEventListener) context).onProfileClicked(entryModel.getUserCode());
                 }
             });
+            //subject name
             ((EntryViewHolder) viewHolder).subjectTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -58,8 +63,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     ((EntryEventListener) context).onSubjectClicked(entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getSubjectName());
                 }
             });
-
-
+            //like button
             ((EntryViewHolder) viewHolder).likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,6 +76,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos);
                 }
             });
+            //dislike button
             ((EntryViewHolder) viewHolder).dislikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,6 +87,16 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         return;
                     }
                     ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos);
+                }
+            });
+
+            //likes TextView
+            ((EntryViewHolder) viewHolder).likesTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = viewHolder.getAdapterPosition();
+                    Entry entryModel = entries.get(pos);
+                    ((EntryEventListener) context).onLikeDetails(entryModel.getSubjectID(), entryModel.getCommentID());
                 }
             });
 

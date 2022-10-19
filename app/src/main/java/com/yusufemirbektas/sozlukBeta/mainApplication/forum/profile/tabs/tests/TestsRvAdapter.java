@@ -22,6 +22,10 @@ public class TestsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Test> tests;
     private Context context;
 
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
+    }
+
     private static final int LOADING=0;
     private static final int DONE=1;
 

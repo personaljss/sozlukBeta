@@ -51,6 +51,8 @@ public class ProfileDataViewModel extends ViewModel {
 
     //method to get the profile data
     public void loadProfileData() {
+        entries.setValue(null);
+        tests.setValue(null);
         int entryStartDate= 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             entryStartDate = (int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);

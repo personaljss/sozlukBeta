@@ -31,6 +31,7 @@ public class TestsTabFragment extends Fragment {
     private FragmentProfileTestsBinding binding;
     private ProfileDataViewModel viewModel;
     private List<Test> testList;
+    private boolean isUiSet=false;
 
     @Nullable
     @Override
@@ -58,8 +59,15 @@ public class TestsTabFragment extends Fragment {
         viewModel.getTests().observe(getViewLifecycleOwner(), new Observer<List<Test>>() {
             @Override
             public void onChanged(List<Test> tests) {
-                testList=tests;
-                setUpUi();
+                if(tests!=null){
+                    testList=tests;
+                    if(isUiSet){
+                        ((TestsRvAdapter)adapter).setTests(tests);
+                        adapter.notifyDataSetChanged();
+                    }else {
+                        setUpUi();
+                    }
+                }
             }
         });
 
@@ -84,11 +92,13 @@ public class TestsTabFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setHasFixedSize(true);
+        isUiSet=true;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isUiSet=false;
         binding=null;
         adapter=null;
         manager=null;

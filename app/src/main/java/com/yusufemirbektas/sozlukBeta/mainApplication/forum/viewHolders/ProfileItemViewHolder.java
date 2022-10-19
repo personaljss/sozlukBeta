@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yusufemirbektas.sozlukBeta.R;
 
-public class LikedOneViewHolder extends RecyclerView.ViewHolder {
+public class ProfileItemViewHolder extends RecyclerView.ViewHolder {
     public ImageView ppImageView;
     public TextView nickNameTextView;
     public TextView pointsTextView;
-    public LikedOneViewHolder(@NonNull View itemView) {
+    public ProfileItemViewHolder(@NonNull View itemView) {
         super(itemView);
         ppImageView=itemView.findViewById(R.id.ppImageView);
         nickNameTextView=itemView.findViewById(R.id.nickNameTextView);

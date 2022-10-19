@@ -57,14 +57,19 @@ public class EntriesTabFragment extends Fragment  {
         viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
             public void onChanged(List<Entry> entries) {
-                entryList=entries;
-                if(isUiSet){
-                    adapter.notifyDataSetChanged();
-                }else{
-                    setUpUi();
+                if(entries!=null){
+                    entryList=entries;
+                    if(isUiSet){
+                        ((EntriesRvAdapter) adapter).setEntries(entries);
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        setUpUi();
+                    }
                 }
             }
         });
+        //limit=15&date=1666181490&userCode=100
+        //limit=15&date=1666181514&userCode=100
 
         pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getEntryItemPosition().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -118,6 +123,7 @@ public class EntriesTabFragment extends Fragment  {
     public void onDestroyView() {
         super.onDestroyView();
         pointsViewModel.refresh();
+        isUiSet=false;
         manager=null;
         adapter=null;
         binding=null;
