@@ -18,14 +18,17 @@ import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileListBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.ProfileItem;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters.ProfilesRvAdapter;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.LikeDetailsViewModel;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileListViewModel;
 
 import java.util.List;
 
 
 public class ProfileListFragment extends Fragment {
+    public static final int FOLLOWERS_CODE=0;
+    public static final int FOLLOWED_BYs_CODE=1;
+    public static final int LIKED_ONEs_CODE=2;
     private FragmentProfileListBinding binding;
-    private LikeDetailsViewModel viewModel;
+    private ProfileListViewModel viewModel;
     private List<ProfileItem> profileItemList;
     private boolean isUiSet=false;
     private RecyclerView.Adapter recyclerViewAdapter;
@@ -45,12 +48,13 @@ public class ProfileListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel=new ViewModelProvider(this).get(LikeDetailsViewModel.class);
+        viewModel=new ViewModelProvider(this).get(ProfileListViewModel.class);
         profileItemList=viewModel.getUsers().getValue();
         Bundle args=getArguments();
+        final int aim=args.getInt(BundleKeys.PROFILE_LIST_KEY);
 
         if(profileItemList==null){
-            viewModel.loadLikeDetatails(args.getInt(BundleKeys.SUBJECT_ID), args.getInt(BundleKeys.COMMENT_ID));
+            loadUsers(aim,args);
         }else {
             setUpUi();
         }
@@ -71,7 +75,7 @@ public class ProfileListFragment extends Fragment {
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                viewModel.loadLikeDetatails(args.getInt(BundleKeys.SUBJECT_ID), args.getInt(BundleKeys.COMMENT_ID));
+                loadUsers(aim,args);
             }
         });
     }
@@ -83,6 +87,22 @@ public class ProfileListFragment extends Fragment {
         binding.recyclerView.setHasFixedSize(true);
         binding.progressBar.setVisibility(View.GONE);
         isUiSet=true;
+    }
+
+    private void loadUsers(int aim, Bundle args){
+        switch (aim){
+            case FOLLOWERS_CODE:
+                viewModel.loadFollowers(args.getInt(BundleKeys.USERCODE));
+                break;
+            case FOLLOWED_BYs_CODE:
+                viewModel.loadFollowedBys(args.getInt(BundleKeys.USERCODE));
+                break;
+            case LIKED_ONEs_CODE:
+                viewModel.loadLikeDetails(args.getInt(BundleKeys.SUBJECT_ID), args.getInt(BundleKeys.COMMENT_ID));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

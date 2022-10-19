@@ -5,9 +5,13 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.I
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +27,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentOthersProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.tabs.ProfileViewPagerAdapter;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
@@ -47,6 +53,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     //ViewModel
     private ProfileDataViewModel viewModel;
     private Header headerUi;
+    private NavController navController;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -60,6 +67,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
+        navController=Navigation.findNavController(view);
 
         Bundle args = getArguments();
         int userCode = -1;
@@ -74,6 +82,20 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             public void onChanged(Header header) {
                 headerUi = header;
                 setUpHeaderUi(header);
+            }
+        });
+
+        viewModel.getFollowResult().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer!=-1){
+                    Toast.makeText(getContext(), viewModel.getFollowComment(), Toast.LENGTH_SHORT).show();
+                    viewModel.setFollowResult(-1);
+                    if(integer==0){
+                        binding.followButton.setEnabled(false);
+                        binding.followButton.setText("takip ediyorsun");
+                    }
+                }
             }
         });
 
@@ -101,11 +123,6 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             @Override
             public void onRefresh() {
                 viewModel.loadProfileData();
-                /*
-                NavController navController=Navigation.findNavController(view);
-                navController.navigate(R.id.action_othersProfileFragment_self,args);
-
-                 */
             }
         });
 
@@ -126,6 +143,8 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     private void setOnClickListeners() {
         binding.homeButtonImageView.setOnClickListener(this);
         binding.profilePpImageView.setOnClickListener(this);
+        binding.profileSocialsLayout.setOnClickListener(this);
+        binding.followButton.setOnClickListener(this);
     }
 
     @Override
@@ -139,6 +158,31 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             Bundle args = new Bundle();
             args.putInt(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
             navController.navigate(R.id.action_othersProfileFragment_to_showPpFragment, args);
+        }else if(v==binding.profileSocialsLayout){
+            PopupMenu menu=new PopupMenu(getContext(),v);
+            menu.getMenuInflater().inflate(R.menu.forum_socials_menu,menu.getMenu());
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Bundle args=new Bundle();
+                    args.putInt(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
+                    switch (item.getItemId()){
+                        case R.id.followers:
+                            args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
+                            break;
+                        case R.id.followedBys:
+                            args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWED_BYs_CODE);
+                            break;
+                        default:
+                            break;
+                    }
+                    navController.navigate(R.id.action_othersProfileFragment_to_profileListFragment,args);
+                    return true;
+                }
+            });
+            menu.show();
+        }else if(v==binding.followButton){
+            viewModel.followUser(viewModel.getUserCode().getValue());
         }
     }
 
@@ -160,6 +204,11 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         setOnClickListeners();
         //swipe-refresh
         binding.swipeRefreshLayout.setRefreshing(false);
+        //follow button check
+        if(header.getFollowing()!=0){
+            binding.followButton.setEnabled(false);
+            binding.followButton.setText("takip ediyorsun");
+        }
         binding.profileNickNameTextView.setText(header.getNickName());
         binding.profileTestsTextView.setText(String.valueOf(header.getTotalTests()));
         binding.profileChallengesTextView.setText(String.valueOf(header.getTotalChallenges()));

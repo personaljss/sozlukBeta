@@ -12,4 +12,6 @@ public class ServerAdress {
     public static final String LIKE_COMMENT = "forumfiles/likecomment/";
     public static final String SHOW_LIKE_DETAILS = "forumfiles/showlikedetails/";
     public static final String MAIN_FEED="forumfiles/showfeed/";
+    public static final String FOLLOW_USER="forumfiles/followuser/";
+    public static final String FOLLOWERS="forumfiles/showfollowdetails/";
 }

@@ -68,6 +68,7 @@ public class MainFeedFragment extends Fragment {
             public void onChanged(List<Entry> entries) {
                 entryList=entries;
                 if(isUiSet){
+                    ((EntriesRvAdapter) recyclerViewAdapter).setEntries(entryList);
                     recyclerViewAdapter.notifyDataSetChanged();
                 }else{
                     setUpUi();
@@ -92,6 +93,7 @@ public class MainFeedFragment extends Fragment {
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                pointsViewModel.refresh();
                 navController= Navigation.findNavController(view);
                 int actionId=navController.getCurrentDestination().getId();
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
@@ -126,6 +128,7 @@ public class MainFeedFragment extends Fragment {
         binding.entriesRecyclerView.setAdapter(recyclerViewAdapter);
         binding.entriesRecyclerView.setHasFixedSize(true);
         binding.entriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.progressBar.setVisibility(View.GONE);
         isUiSet=true;
     }
 
@@ -133,6 +136,11 @@ public class MainFeedFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         pointsViewModel.refresh();
+        pointsViewModel=null;
+        viewModel=null;
+        recyclerViewAdapter=null;
+        entryList=null;
+        navController=null;
         isUiSet=false;
     }
 }

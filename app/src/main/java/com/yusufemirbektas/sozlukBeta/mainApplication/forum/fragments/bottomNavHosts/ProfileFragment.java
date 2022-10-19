@@ -5,9 +5,13 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.I
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +30,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileBinding;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.tabs.ProfileViewPagerAdapter;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
@@ -160,6 +165,36 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         binding.profilePpImageView.setOnClickListener(this);
         binding.homeButtonImageView.setOnClickListener(this);
         binding.settingsImageButton.setOnClickListener(this);
+        binding.profileSocialsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "dokundun", Toast.LENGTH_SHORT).show();
+                PopupMenu menu=new PopupMenu(getContext(),v);
+                menu.getMenuInflater().inflate(R.menu.forum_socials_menu,menu.getMenu());
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Bundle args=new Bundle();
+                        args.putInt(BundleKeys.USERCODE,UserData.getUserCode());
+                        switch (item.getItemId()){
+                            case R.id.followers:
+                                Log.i(TAG, "onMenuItemClick: followers");
+                                args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
+                                break;
+                            case R.id.followedBys:
+                                Log.i(TAG, "onMenuItemClick: followedbys");
+                                args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWED_BYs_CODE);
+                                break;
+                            default:
+                                break;
+                        }
+                        navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
+                        return true;
+                    }
+                });
+                menu.show();
+            }
+        });
     }
 
     private void setUpHeaderUi(Header header) {

@@ -14,11 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ShowPpViewModel;
 
 public class ShowPpFragment extends Fragment {
     private ShowPpViewModel viewModel;
@@ -42,29 +44,41 @@ public class ShowPpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel=new ViewModelProvider(this).get(ShowPpViewModel.class);
-        imageView=view.findViewById(R.id.showPpImageView);
-        progressBar=view.findViewById(R.id.showPpProgressBar);
+        viewModel = new ViewModelProvider(this).get(ShowPpViewModel.class);
+        imageView = view.findViewById(R.id.ppImageView);
+        progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-        Bundle args=getArguments();
-        int userCode=args.getInt(BundleKeys.USERCODE);
+        Bundle args = getArguments();
+        int userCode = args.getInt(BundleKeys.USERCODE);
+
+        ImageButton backButton=view.findViewById(R.id.backIcon);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
         viewModel.loadProfilePhoto(userCode);
         viewModel.getImageStr().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                imageStr=s;
-                setProfilePhoto();
+                try {
+                    imageStr = s;
+                    setProfilePhoto();
+                }catch (IllegalArgumentException e){
+                    e.fillInStackTrace();
+                }
                 progressBar.setVisibility(View.GONE);
             }
         });
     }
 
-    private void setProfilePhoto(){
+    private void setProfilePhoto() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            Bitmap image=stringToBitmap(imageStr);
+            Bitmap image = stringToBitmap(imageStr);
             imageView.setImageBitmap(image);
-        }else{
+        } else {
             //do something
         }
     }

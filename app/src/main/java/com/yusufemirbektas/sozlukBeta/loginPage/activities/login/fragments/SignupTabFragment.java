@@ -65,7 +65,7 @@ public class SignupTabFragment extends Fragment {
                 //posting the signup info
                 Retrofit retrofit= ApiClientRetrofit.getInstance();
                 Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
-                        .postSignup(emailET.getText().toString(),userNameET.getText().toString()
+                        .postSignup(emailET.getText().toString()
                                 ,passwordET.getText().toString(), passwordCheckET.getText().toString());
 
                 call.enqueue(new Callback<LoginResult>() {

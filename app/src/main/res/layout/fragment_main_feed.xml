@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".mainApplication.forum.fragments.bottomNavHosts.MainFeedFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="wrap_content"

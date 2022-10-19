@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/forum_profile"
     app:startDestination="@id/profileFragment">
-
+    <include app:graph="@navigation/forum_subject" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts.ProfileFragment"
@@ -26,7 +26,6 @@
             android:id="@+id/action_profileFragment_to_profileListFragment"
             app:destination="@id/profileListFragment" />
     </fragment>
-    <include app:graph="@navigation/forum_subject" />
     <fragment
         android:id="@+id/showPpFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.profilePhoto.showPp.ShowPpFragment"
@@ -69,5 +68,8 @@
         <action
             android:id="@+id/action_othersProfileFragment_to_showPpFragment"
             app:destination="@id/showPpFragment" />
+        <action
+            android:id="@+id/action_othersProfileFragment_to_profileListFragment"
+            app:destination="@id/profileListFragment" />
     </fragment>
 </navigation>

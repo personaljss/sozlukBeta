@@ -6,15 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.ProfileItem;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.DisplayPpResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,19 +20,18 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LikeDetailsViewModel extends ViewModel {
-    MutableLiveData<List<ProfileItem>> users=new MutableLiveData<>();
+public class ShowPpViewModel extends ViewModel {
+    private MutableLiveData<String> imageStr=new MutableLiveData<>();
 
-    public void loadLikeDetatails(int subjectId, int commentId){
+    public void loadProfilePhoto(int userCode){
         OkHttpClient client = ApiClientOkhttp.getInstance();
-
         RequestBody requestBody = new FormBody.Builder()
-                .add("subjectID", String.valueOf(subjectId))
-                .add("commentID", String.valueOf(commentId))
+                .add("images", String.valueOf(userCode))
+                .add("folder", "profilePhotosFullRes")
                 .build();
 
         Request request = new Request.Builder()
-                .url(ServerAdress.SERVER_URL + ServerAdress.SHOW_LIKE_DETAILS)
+                .url(ServerAdress.SERVER_URL + ServerAdress.DISPLAY_PP)
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -48,20 +43,19 @@ public class LikeDetailsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
-                    Gson gson=new Gson();
-                    ServerResponse sr=gson.fromJson(response.body().string(),ServerResponse.class);
-                    Type ListOfUsers= TypeToken.getParameterized(List.class, ProfileItem.class).getType();
-                    List<ProfileItem> likedUserData=gson.fromJson(sr.data,ListOfUsers);
-                    users.postValue(likedUserData);
+                    String jsonResponse=response.body().string();
+                    DisplayPpResponse displayPpResponse=new Gson().fromJson(jsonResponse,DisplayPpResponse.class);
+                    imageStr.postValue(displayPpResponse.getImagesEncoded());
                 }
             }
         });
     }
-    public LiveData<List<ProfileItem>> getUsers(){
-        return users;
+
+    public LiveData<String> getImageStr() {
+        return imageStr;
     }
-    private static class ServerResponse{
-        @SerializedName("data")
-        String data;
+
+    public void setImageStr(String imageStr) {
+        this.imageStr.setValue(imageStr);
     }
 }

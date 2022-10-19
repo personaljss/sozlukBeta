@@ -33,13 +33,14 @@ import okhttp3.Response;
 
 public class EntriesViewModel extends ViewModel {
     private static final String TAG = "SubjectEntriesViewModel";
-    private int subjectId=-1;
-    private int commentId=-1;
+    private int subjectId = -1;
+    private int commentId = -1;
     private MutableLiveData<List<Entry>> entries = new MutableLiveData<>();
+    private MutableLiveData<Boolean> fail = new MutableLiveData<>(false);
 
     //subjectID, commentID, userCode
     public void loadSubjectEntries() {
-        try{
+        try {
             OkHttpClient client = ApiClientOkhttp.getInstance();
 
             RequestBody requestBody = new FormBody.Builder()
@@ -55,23 +56,27 @@ public class EntriesViewModel extends ViewModel {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                    fail.postValue(true);
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        String jsonResponse = response.body().string();
-                        addEntriesBg(jsonResponse);
+                        try{
+                            String jsonResponse = response.body().string();
+                            addEntriesBg(jsonResponse);
+                        }catch (Exception e){
+                            fail.postValue(true);
+                        }
                     }
                 }
             });
-        }catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             exception.fillInStackTrace();
             Log.d(TAG, "!!!!!!!!!!!!!!!!" +
                     "loadSubjectEntries: muhtemelen usercode ve subject id bu" +
-                    "metod çağrılmadan önce initialise edilmedi."+"\n"
-                    +"metot çağrılmadan bunları fragmanın getArguments() ile " +
+                    "metod çağrılmadan önce initialise edilmedi." + "\n"
+                    + "metot çağrılmadan bunları fragmanın getArguments() ile " +
                     "aldığı args(bundle) objesindeki değerlerden" +
                     "başlat eğer sorun bu değilse doktoru ara da o uğraşsın" +
                     "!!!!!!!!!!!!!!!!");
@@ -80,7 +85,7 @@ public class EntriesViewModel extends ViewModel {
 
     //subjectID, commentID, userCode
     public void loadSubjectEntries(int start) {
-        try{
+        try {
             OkHttpClient client = ApiClientOkhttp.getInstance();
 
             RequestBody requestBody = new FormBody.Builder()
@@ -107,12 +112,12 @@ public class EntriesViewModel extends ViewModel {
                     }
                 }
             });
-        }catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             exception.fillInStackTrace();
             Log.d(TAG, "!!!!!!!!!!!!!!!!" +
                     "loadSubjectEntries: muhtemelen usercode ve subject id bu" +
-                    "metod çağrılmadan önce initialise edilmedi."+"\n"
-                    +"metot çağrılmadan bunları fragmanın getArguments() ile " +
+                    "metod çağrılmadan önce initialise edilmedi." + "\n"
+                    + "metot çağrılmadan bunları fragmanın getArguments() ile " +
                     "aldığı args(bundle) objesindeki değerlerden" +
                     "başlat eğer sorun bu değilse doktoru ara da o uğraşsın" +
                     "!!!!!!!!!!!!!!!!");
@@ -122,11 +127,11 @@ public class EntriesViewModel extends ViewModel {
     //postlar: $usercode = $_POST["userCode"];
     //    $date = $_POST["date"];
     //    $limit = $_POST["limit"];
-    public void loadMainFeed(int startDate){
+    public void loadMainFeed(int startDate) {
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("limit", "15")
+                .add("limit", "10")
                 .add("date", String.valueOf(startDate))
                 .add("userCode", String.valueOf(UserData.getUserCode()))
                 .build();
@@ -164,7 +169,7 @@ public class EntriesViewModel extends ViewModel {
         Type ListOfSubjectEntries = TypeToken.getParameterized(List.class, Entry.class).getType();
         List<Entry> entriesFromJson = gson.fromJson(entriesResponse.getData(), ListOfSubjectEntries);
         if (entriesFromJson.size() > 0) {
-            for (Entry entry : entriesFromJson){
+            for (Entry entry : entriesFromJson) {
                 entry.formatDate(targetDatePattern);
                 entryList.add(entry);
             }

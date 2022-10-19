@@ -14,6 +14,8 @@ import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Header;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Test;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.FollowResponse;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.ProfileDataResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -35,11 +37,12 @@ import okhttp3.Response;
 public class ProfileDataViewModel extends ViewModel {
     private static final String TAG = "ProfileDataViewModel";
 
-    //private MutableLiveData<Boolean> reload=new MutableLiveData<Boolean>(false);
     private MutableLiveData<Integer> userCode=new MutableLiveData<>();
     private MutableLiveData<Header> header=new MutableLiveData<>();
     private MutableLiveData<List<Entry>> entries=new MutableLiveData<>();
     private MutableLiveData<List<Test>> tests=new MutableLiveData<>();
+    private MutableLiveData<Integer> followResult=new MutableLiveData<>(-1);
+    private String followComment;
 
     //method to get the profile data
     public void loadProfileData() {
@@ -178,6 +181,36 @@ public class ProfileDataViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
+            }
+        });
+    }
+
+    public void followUser(int userCode){
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("userCode", String.valueOf(UserData.getUserCode()))
+                .add("followed", String.valueOf(userCode))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.FOLLOW_USER)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                followResult.postValue(404);
+                followComment="lütfen internet bağnatınızı kontrol edin";
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    FollowResponse srlsdResponse=new Gson().fromJson(response.body().string(),FollowResponse.class);
+                    followResult.postValue(srlsdResponse.result);
+                    followComment= srlsdResponse.comment;
+                }
             }
         });
     }
@@ -360,28 +393,6 @@ public class ProfileDataViewModel extends ViewModel {
         this.entries.postValue(entryList);
     }
 
-
-    //data class to parse json response
-    private static class ProfileDataResponse {
-        @SerializedName("result")
-        private int result;
-
-        @SerializedName("comment")
-        private String comment;
-
-        @SerializedName("time")
-        private String time;
-
-        @SerializedName("header")
-        private String header;
-
-        @SerializedName("tests")
-        private String tests;
-
-        @SerializedName("entries")
-        private String entries;
-    }
-
     public void setUserCode(int userCode) {
         this.userCode.setValue(userCode);
     }
@@ -423,15 +434,15 @@ public class ProfileDataViewModel extends ViewModel {
         return tests;
     }
 
-    /*
-    public LiveData<Boolean> getReload() {
-        return reload;
+    public LiveData<Integer> getFollowResult() {
+        return followResult;
     }
 
-    public void setReload(boolean reload) {
-        this.reload.setValue(reload);
+    public void setFollowResult(int followResult) {
+        this.followResult.setValue(followResult);
     }
 
-     */
-
+    public String getFollowComment() {
+        return followComment;
+    }
 }

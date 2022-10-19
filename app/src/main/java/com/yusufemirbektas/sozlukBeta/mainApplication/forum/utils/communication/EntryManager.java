@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.navigation.NavController;
 
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.R;
 
@@ -30,8 +31,10 @@ public class EntryManager {
                 break;
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_othersProfileFragment,args);
+                break;
             case R.id.profileListFragment:
                 navController.navigate(R.id.action_profileListFragment_to_othersProfileFragment,args);
+                break;
             default:
                 break;
         }
@@ -49,13 +52,18 @@ public class EntryManager {
                 break;
             case R.id.subjectFragment:
                 navController.navigate(R.id.action_subjectFragment_self,args);
-                //
                 break;
             case R.id.othersProfileFragment:
-                navController.navigate(R.id.action_othersProfileFragment_to_forum_subject,args);
+                //!!!!!!!!dönücem!!!!!!!!
+                try{
+                    navController.navigate(R.id.action_othersProfileFragment_to_forum_subject,args);
+                }catch (IllegalArgumentException e){
+                    navController.navigate(R.id.action_othersProfileFragment_to_subjectFragment,args);
+                }
                 break;
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_forum_subject,args);
+                break;
             default:
                 break;
         }
@@ -65,6 +73,7 @@ public class EntryManager {
         Bundle args=new Bundle();
         args.putInt(BundleKeys.SUBJECT_ID,subjectId);
         args.putInt(BundleKeys.COMMENT_ID,commentId);
+        args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.LIKED_ONEs_CODE);
         final int locId = navController.getCurrentDestination().getId();
         switch (locId) {
             case R.id.profileFragment:
@@ -72,13 +81,13 @@ public class EntryManager {
                 break;
             case R.id.subjectFragment:
                 navController.navigate(R.id.action_subjectFragment_to_profileListFragment, args);
-                //
                 break;
             case R.id.othersProfileFragment:
                 navController.navigate(R.id.action_othersProfileFragment_to_profileListFragment, args);
                 break;
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_profileListFragment, args);
+                break;
             default:
                 break;
         }

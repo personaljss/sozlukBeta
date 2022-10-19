@@ -18,7 +18,7 @@ public interface LoginApiInterface {
 
     @FormUrlEncoded
     @POST(LOGIN_PHP)
-    Call<LoginResult> postLogin(@Field("us_login")String userName, @Field("ps_login")String password);
+    Call<LoginResult> postLogin(@Field("email_login")String userName, @Field("ps_login")String password);
 
     @FormUrlEncoded
     @POST(REGISTER_PHP)
@@ -26,8 +26,8 @@ public interface LoginApiInterface {
 
     @FormUrlEncoded
     @POST(REGISTER_PHP)
-    Call<LoginResult> postSignup(@Field("email_reg")String email, @Field("us_reg")String userName,
-                                 @Field("ps_reg1")String password, @Field("ps_reg2") String passwordCheck);
+    Call<LoginResult> postSignup(@Field("email_reg")String email, @Field("ps_reg1")String password,
+                                 @Field("ps_reg2") String passwordCheck);
 
     @FormUrlEncoded
     @POST(ACTIVATE_PHP)

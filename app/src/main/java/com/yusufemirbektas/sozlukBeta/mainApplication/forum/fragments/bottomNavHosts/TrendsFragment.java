@@ -55,6 +55,7 @@ public class TrendsFragment extends Fragment{
             public void onChanged(List<ForumSubject> forumSubjects) {
                 TrendsFragment.this.forumSubjects=forumSubjects;
                 if(isUiSet){
+                    ((TrendsRvAdapter) adapter).setForumSubjects(forumSubjects);
                     adapter.notifyDataSetChanged();
                 }else{
                     setUpUi();
@@ -93,6 +94,7 @@ public class TrendsFragment extends Fragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isUiSet=false;
         adapter=null;
         manager=null;
         binding=null;

@@ -15,6 +15,7 @@
             android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <RelativeLayout
@@ -87,13 +88,15 @@
         android:id="@+id/profileNickNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
+        android:padding="10dp"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/profileScoresLayout"
+        app:layout_constraintBottom_toTopOf="@+id/profilePointsTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/profilePpCardView"
         app:layout_constraintTop_toTopOf="@+id/profilePpCardView"
         app:layout_constraintVertical_bias="0.1" />
 
@@ -106,6 +109,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="15dp"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@id/profileScoresLayout"
         app:layout_constraintEnd_toEndOf="@id/profileNickNameTextView"
         app:layout_constraintHorizontal_bias="0"
@@ -230,8 +234,8 @@
 
     <ImageButton
         android:id="@+id/settingsImageButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="19dp"
+        android:layout_height="21dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/ic_settings"
         app:layout_constraintBottom_toTopOf="@+id/profilePpCardView"
@@ -239,7 +243,8 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/home_button_imageView"
@@ -253,5 +258,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@drawable/ic_baseline_home_24" />
+
+    <TextView
+        android:id="@+id/followButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="takip et"
+        android:textColor="@color/black"
+        android:padding="5dp"
+        android:background="@drawable/button_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePointsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePointsTextView"
+        app:layout_constraintTop_toTopOf="@id/profilePointsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
