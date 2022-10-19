@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.selfProfile.ProfileFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
@@ -29,12 +29,12 @@
     <include app:graph="@navigation/forum_subject" />
     <fragment
         android:id="@+id/showPpFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.showPp.ShowPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.profilePhoto.showPp.ShowPpFragment"
         android:label="fragment_show_pp"
         tools:layout="@layout/fragment_show_pp" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.selfProfile.SettingsFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.selfProfile.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -43,12 +43,12 @@
     </fragment>
     <fragment
         android:id="@+id/editPpFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.profilePhoto.editPp.EditPpFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.profilePhoto.editPp.EditPpFragment"
         android:label="fragment_edit_pp"
         tools:layout="@layout/fragment_edit_pp" />
     <fragment
         android:id="@+id/profileListFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.likedPeople.ProfileListFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment"
         android:label="fragment_profile_list"
         tools:layout="@layout/fragment_profile_list" >
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/othersProfileFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profile.othersProfile.OthersProfileFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.othersProfile.OthersProfileFragment"
         android:label="fragment_others_profile"
         tools:layout="@layout/fragment_others_profile" >
         <action

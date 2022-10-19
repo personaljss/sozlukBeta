@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newSubjectFragment"
-        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.newContent.NewSubjectFragment"
+        android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts.NewSubjectFragment"
         android:label="fragment_new_subject"
         tools:layout="@layout/fragment_new_subject" >
         <action

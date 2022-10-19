@@ -22,7 +22,7 @@ import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
-import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

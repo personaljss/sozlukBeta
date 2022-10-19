@@ -31,7 +31,7 @@ import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewM
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
-import com.yusufemirbektas.sozlukBeta.mainApplication.MainActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 
 import retrofit2.Call;

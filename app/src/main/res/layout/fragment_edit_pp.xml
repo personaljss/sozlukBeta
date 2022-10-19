@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainApplication.forum.profile.profilePhoto.editPp.EditPpFragment">
+    tools:context=".mainApplication.forum.fragments.secondaries.profile.profilePhoto.editPp.EditPpFragment">
 
     <Button
         android:id="@+id/editPpAproveBtn"
