@@ -85,16 +85,38 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             }
         });
 
+        viewModel.following.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==1){
+                    binding.followButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewModel.unFollowUser(viewModel.getUserCode().getValue());
+                        }
+                    });
+                }else if(integer==0){
+                    binding.followButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewModel.followUser(viewModel.getUserCode().getValue());
+                        }
+                    });
+                }
+            }
+        });
+
         viewModel.getFollowResult().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(integer!=-1){
                     Toast.makeText(getContext(), viewModel.getFollowComment(), Toast.LENGTH_SHORT).show();
-                    viewModel.setFollowResult(-1);
                     if(integer==0){
-                        binding.followButton.setEnabled(false);
                         binding.followButton.setText("takip ediyorsun");
+                    }else{
+                        binding.followButton.setText("takip et");
                     }
+                    viewModel.setFollowResult(-1);
                 }
             }
         });
@@ -144,7 +166,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         binding.homeButtonImageView.setOnClickListener(this);
         binding.profilePpImageView.setOnClickListener(this);
         binding.profileSocialsLayout.setOnClickListener(this);
-        binding.followButton.setOnClickListener(this);
+        //binding.followButton.setOnClickListener(this);
     }
 
     @Override
@@ -182,7 +204,13 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
             });
             menu.show();
         }else if(v==binding.followButton){
-            viewModel.followUser(viewModel.getUserCode().getValue());
+            /*
+            if(viewModel.getHeader().getValue().getFollowing()==1){
+                viewModel.unFollowUser(viewModel.getUserCode().getValue());
+            }else {
+                viewModel.followUser(viewModel.getUserCode().getValue());
+            }
+             */
         }
     }
 
@@ -205,9 +233,10 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         //swipe-refresh
         binding.swipeRefreshLayout.setRefreshing(false);
         //follow button check
-        if(header.getFollowing()!=0){
-            binding.followButton.setEnabled(false);
+        if(header.getFollowing()==1){
             binding.followButton.setText("takip ediyorsun");
+        }else if(header.getFollower()==1){
+            binding.followButton.setText("sen de takip et");
         }
         binding.profileNickNameTextView.setText(header.getNickName());
         binding.profileTestsTextView.setText(String.valueOf(header.getTotalTests()));

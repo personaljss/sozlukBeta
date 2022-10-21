@@ -42,6 +42,7 @@ public class ProfileDataViewModel extends ViewModel {
     private MutableLiveData<List<Entry>> entries=new MutableLiveData<>();
     private MutableLiveData<List<Test>> tests=new MutableLiveData<>();
     private MutableLiveData<Integer> followResult=new MutableLiveData<>(-1);
+    public final MutableLiveData<Integer> following=new MutableLiveData<>(0);
     private String followComment;
 
     //method to get the profile data
@@ -186,11 +187,20 @@ public class ProfileDataViewModel extends ViewModel {
     }
 
     public void followUser(int userCode){
+        followHelper(userCode,"1");
+    }
+
+    public void unFollowUser(int userCode){
+        followHelper(userCode,"0");
+    }
+
+    public void followHelper(int userCode, String operation){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("userCode", String.valueOf(UserData.getUserCode()))
                 .add("followed", String.valueOf(userCode))
+                .add("operation",operation)
                 .build();
 
         Request request = new Request.Builder()
@@ -210,6 +220,11 @@ public class ProfileDataViewModel extends ViewModel {
                     FollowResponse srlsdResponse=new Gson().fromJson(response.body().string(),FollowResponse.class);
                     followResult.postValue(srlsdResponse.result);
                     followComment= srlsdResponse.comment;
+                    if(operation.equals("1")){
+                        following.postValue(1);
+                    }else if(operation.equals("0")){
+                        following.postValue(0);
+                    }
                 }
             }
         });
@@ -222,6 +237,7 @@ public class ProfileDataViewModel extends ViewModel {
         addEntriesBg(profileDataResponse.entries, targetPattern);
         Header header=gson.fromJson(profileDataResponse.header,Header.class);
         postHeader(header);
+        following.postValue(header.getFollowing());
     }
 
     public void setUpProfileData(String jsonResponse, String targetPattern){
