@@ -1,5 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts;
 
+import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.activity.ForumActivity.targetDatePattern;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -28,6 +30,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.EntriesVi
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class MainFeedFragment extends Fragment {
@@ -37,12 +40,12 @@ public class MainFeedFragment extends Fragment {
     private List<Entry> entryList;
     private PointsViewModel pointsViewModel;
     private NavController navController;
-    private boolean isUiSet=false;
+    private boolean isUiSet = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentMainFeedBinding.inflate(inflater,container,false);
+        binding = FragmentMainFeedBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
@@ -50,41 +53,41 @@ public class MainFeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel=new ViewModelProvider(this).get(EntriesViewModel.class);
-        entryList=viewModel.getEntries().getValue();
+        viewModel = new ViewModelProvider(this).get(EntriesViewModel.class);
+        entryList = viewModel.getEntries().getValue();
         //first time check
-        if(viewModel.getCommentId()==-1){
+        if (viewModel.getCommentId() == -1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 viewModel.loadMainFeed((int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-            }else{
+            } else {
                 //do something
             }
-        }else {
+        } else {
             setUpUi();
         }
 
         viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
             public void onChanged(List<Entry> entries) {
-                entryList=entries;
-                if(isUiSet){
+                entryList = entries;
+                if (isUiSet) {
                     ((EntriesRvAdapter) recyclerViewAdapter).setEntries(entryList);
                     recyclerViewAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     setUpUi();
                 }
             }
         });
 
-        pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
+        pointsViewModel = new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getEntryItemPosition().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=PointsViewModel.DEFAULT_POS && entryList!=null ){
-                    Entry updatedEntry=entryList.get(integer);
-                    updatedEntry.setLikeStatus(updatedEntry.getLikeStatus()+pointsViewModel.getEntryItemLikeStatus().getValue());
-                    updatedEntry.setLikePoint(updatedEntry.getLikePoint()+pointsViewModel.getEntryItemLikeStatus().getValue());
-                    entryList.set(integer,updatedEntry);
+                if (integer != PointsViewModel.DEFAULT_POS && entryList != null) {
+                    Entry updatedEntry = entryList.get(integer);
+                    updatedEntry.setLikeStatus(updatedEntry.getLikeStatus() + pointsViewModel.getEntryItemLikeStatus().getValue());
+                    updatedEntry.setLikePoint(updatedEntry.getLikePoint() + pointsViewModel.getEntryItemLikeStatus().getValue());
+                    entryList.set(integer, updatedEntry);
                     recyclerViewAdapter.notifyItemChanged(integer);
                 }
             }
@@ -94,10 +97,10 @@ public class MainFeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 pointsViewModel.refresh();
-                navController= Navigation.findNavController(view);
-                int actionId=navController.getCurrentDestination().getId();
-                NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
-                navController.navigate(actionId,null,navOptions);
+                navController = Navigation.findNavController(view);
+                int actionId = navController.getCurrentDestination().getId();
+                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(actionId, true).build();
+                navController.navigate(actionId, null, navOptions);
             }
         });
 
@@ -114,9 +117,12 @@ public class MainFeedFragment extends Fragment {
                     entryList.add(null);
                     int testsSize = entryList.size();
                     recyclerViewAdapter.notifyItemInserted(testsSize - 1);
+                    String dateStr=entryList.get(testsSize-2).getDate();
+                    DateTimeFormatter formatter=DateTimeFormatter.ofPattern(targetDatePattern);
+                    LocalDateTime dateTime= LocalDateTime.parse(dateStr,formatter);
+                    int epochTime= (int) dateTime.toEpochSecond(ZoneOffset.UTC);
                     //load the entry items
-                    viewModel.setCommentId(entryList.size()-1);
-                    viewModel.loadSubjectEntries(entryList.size()-1);
+                    viewModel.loadMainFeed(epochTime);
                 }
             }
         });
@@ -124,23 +130,23 @@ public class MainFeedFragment extends Fragment {
     }
 
     private void setUpUi() {
-        recyclerViewAdapter=new EntriesRvAdapter(entryList,getContext());
+        recyclerViewAdapter = new EntriesRvAdapter(entryList, getContext());
         binding.entriesRecyclerView.setAdapter(recyclerViewAdapter);
         binding.entriesRecyclerView.setHasFixedSize(true);
         binding.entriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.progressBar.setVisibility(View.GONE);
-        isUiSet=true;
+        isUiSet = true;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         pointsViewModel.refresh();
-        pointsViewModel=null;
-        viewModel=null;
-        recyclerViewAdapter=null;
-        entryList=null;
-        navController=null;
-        isUiSet=false;
+        pointsViewModel = null;
+        viewModel = null;
+        recyclerViewAdapter = null;
+        entryList = null;
+        navController = null;
+        isUiSet = false;
     }
 }
