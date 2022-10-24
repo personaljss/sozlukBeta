@@ -33,6 +33,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondarie
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Header;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
@@ -54,6 +55,7 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     private ProfileDataViewModel viewModel;
     private Header headerUi;
     private NavController navController;
+    private PointsViewModel pointsViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -67,13 +69,13 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
+        pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         navController=Navigation.findNavController(view);
 
         Bundle args = getArguments();
         int userCode = -1;
         if (args != null) {
             userCode = args.getInt(BundleKeys.USERCODE, -1);
-            //userCode = args.getInt(ForumActivity.BundleKeys.USERCODE, -1);
         }
         viewModel.setUserCode(userCode);
         headerUi = viewModel.getHeader().getValue();
@@ -128,6 +130,20 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         } else {
             setUpHeaderUi(headerUi);
         }
+
+        pointsViewModel.getEntryItemLikeStatus().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer!=PointsViewModel.DEFAULT_STATUS){
+                    if(viewModel.getHeader().getValue()!=null){
+                        //!!!!!!!!!!!!!!DEBUG HERE !!!!!!!!!!!!!!!!
+                        int points=viewModel.getHeader().getValue().getTotalPoints();
+                        viewModel.getHeader().getValue().setTotalPoints(points+integer);
+                        binding.profilePointsTextView.setText(String.valueOf(points+integer));
+                    }
+                }
+            }
+        });
 
         FragmentManager fm = getChildFragmentManager();
         Lifecycle lifecycle = getViewLifecycleOwner().getLifecycle();
