@@ -55,6 +55,7 @@ public class TrendsFragment extends Fragment{
             public void onChanged(List<ForumSubject> forumSubjects) {
                 TrendsFragment.this.forumSubjects=forumSubjects;
                 if(isUiSet){
+                    binding.swipeRefreshLayout.setRefreshing(false);
                     ((TrendsRvAdapter) adapter).setForumSubjects(forumSubjects);
                     adapter.notifyDataSetChanged();
                 }else{
@@ -72,8 +73,11 @@ public class TrendsFragment extends Fragment{
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                viewModel.loadTrends("0");
+                /*
                 NavController navController= Navigation.findNavController(view);
                 navController.navigate(R.id.action_trendsFragment_self);
+                 */
             }
         });
 
@@ -82,6 +86,7 @@ public class TrendsFragment extends Fragment{
     private void setUpUi() {
         //making the progress bar gone
         binding.trendsProgressBar.setVisibility(View.INVISIBLE);
+        binding.swipeRefreshLayout.setRefreshing(false);
         //setting the recycler view
         adapter=new TrendsRvAdapter(getContext(),forumSubjects);
         manager=new LinearLayoutManager(getContext());

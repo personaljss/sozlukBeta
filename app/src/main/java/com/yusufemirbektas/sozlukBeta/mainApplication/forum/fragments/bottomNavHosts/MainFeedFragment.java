@@ -1,5 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts;
 
+import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.activity.ForumActivity.targetDatePattern;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -28,6 +30,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.EntriesVi
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class MainFeedFragment extends Fragment {
@@ -115,8 +118,16 @@ public class MainFeedFragment extends Fragment {
                     int testsSize = entryList.size();
                     recyclerViewAdapter.notifyItemInserted(testsSize - 1);
                     //load the entry items
-                    viewModel.setCommentId(entryList.size()-1);
-                    viewModel.loadSubjectEntries(entryList.size()-1);
+                    String startDateStr=entryList.get(testsSize-2).getDate();
+                    int startDateEpoch=0;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        DateTimeFormatter formatter=DateTimeFormatter.ofPattern(targetDatePattern);
+                        LocalDateTime localDateTime=LocalDateTime.parse(startDateStr,formatter);
+                        startDateEpoch=(int)localDateTime.toEpochSecond(ZoneOffset.UTC);
+                    }else{
+                        //do something else
+                    }
+                    viewModel.loadMainFeed(startDateEpoch);
                 }
             }
         });
