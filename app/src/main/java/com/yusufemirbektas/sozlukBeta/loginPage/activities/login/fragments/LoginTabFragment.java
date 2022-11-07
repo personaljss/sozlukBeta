@@ -21,19 +21,33 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
+import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
+import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +64,7 @@ public class LoginTabFragment extends Fragment {
 
     UserNameViewModel userNameViewModel;
 
+    String deviceToken;
 
     public static final String SHARED_PREFS="sharedPrefs";
     public static final String USER_NAME="userName";
@@ -61,11 +76,23 @@ public class LoginTabFragment extends Fragment {
         setViews(root);
         setShowHidePassword(passwordET,showHidePassword);
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            // Get new FCM registration token
+                            deviceToken= task.getResult();
+                            Toast.makeText(getContext(), deviceToken, Toast.LENGTH_SHORT).show();
+                            return;
+                        }else if(task.getException()!=null){
+                            Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
         upDateEditTexts();
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //goToMainActivity();
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
         userNameViewModel=new ViewModelProvider(getActivity()).get(UserNameViewModel.class);
         userNameViewModel.getUserName().observe(getActivity(), new Observer<String>() {
             @Override
@@ -93,7 +120,7 @@ public class LoginTabFragment extends Fragment {
         //posting login info to the server
         Retrofit retrofit= ApiClientRetrofit.getInstance();
         Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
-                .postLogin(usernameET.getText().toString(),passwordET.getText().toString());
+                .postLogin(deviceToken ,usernameET.getText().toString(),passwordET.getText().toString());
 
         call.enqueue(new Callback<LoginResult>() {
             @Override
@@ -138,8 +165,9 @@ public class LoginTabFragment extends Fragment {
         getActivity().finish();
     }
 
-    private void goToActivationActivity(){
+    private void goToActivationActivity(int userCode){
         Intent intent = new Intent(getActivity(), ActivationActivity.class);
+        intent.putExtra(BundleKeys.USERCODE,userCode);
         startActivity(intent);
     }
 
@@ -170,13 +198,14 @@ public class LoginTabFragment extends Fragment {
                 //save the user code
                 UserData.setUserCode(loginResult.getUserCode());
                 //save the data
-                saveLoginData(usernameET.getText().toString(),passwordET.getText().toString());
+                //saveLoginData(usernameET.getText().toString(),passwordET.getText().toString());
+                saveToSharedPrefs(loginResult.getUserCode());
                 //if login is successful go to main activity;
                 goToMainActivity();
             }else if(loginResult.getResult()==1){
                 //if activation is required go to activation activity
-                UserData.setUserCode(loginResult.getUserCode());
-                goToActivationActivity();
+                //UserData.setUserCode(loginResult.getUserCode());
+                goToActivationActivity(loginResult.getUserCode());
                 //when I solve the bugs, I will use it
                 //openActivationDialog();
             }
@@ -187,6 +216,7 @@ public class LoginTabFragment extends Fragment {
 
     }
 
+    /*
     private void saveLoginData(String userName, String password){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -195,11 +225,19 @@ public class LoginTabFragment extends Fragment {
         editor.apply();
     }
 
+     */
+
+    private void saveToSharedPrefs(int userCode){
+        SharedPreferences sharedPrefs= getContext().getSharedPreferences(LoginActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPrefs.edit();
+        editor.putInt(LoginActivity.SP_USERCODE, userCode);
+        editor.apply();
+    }
+
     private void upDateEditTexts(){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
         usernameET.setText(sharedPreferences.getString(USER_NAME,""));
         //passwordET.setText(sharedPreferences.getString(PASSWORD,""));
     }
-
 
 }

@@ -18,6 +18,10 @@ public interface LoginApiInterface {
 
     @FormUrlEncoded
     @POST(LOGIN_PHP)
+    Call<LoginResult> postLogin( @Field("deviceToken")String deviceToken ,@Field("email_login")String userName, @Field("ps_login")String password);
+
+    @FormUrlEncoded
+    @POST(LOGIN_PHP)
     Call<LoginResult> postLogin(@Field("email_login")String userName, @Field("ps_login")String password);
 
     @FormUrlEncoded

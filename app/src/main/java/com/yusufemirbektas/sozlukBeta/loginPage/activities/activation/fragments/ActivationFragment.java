@@ -1,6 +1,8 @@
 package com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +20,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
@@ -34,6 +38,7 @@ public class ActivationFragment extends Fragment {
     EditText activationCodeEt;
     UserNameViewModel userNameViewModel;
     ProgressBar progressBar;
+    private int userCode;
 
     @Nullable
     @Override
@@ -43,7 +48,8 @@ public class ActivationFragment extends Fragment {
         activationCodeEt = root.findViewById(R.id.activation_ET);
         progressBar = root.findViewById(R.id.progress_bar);
 
-        userNameViewModel = new ViewModelProvider(getActivity()).get(UserNameViewModel.class);
+        Bundle args=getArguments();
+        userCode=args.getInt(BundleKeys.USERCODE);
 
         activateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +62,7 @@ public class ActivationFragment extends Fragment {
                 //posting login info to the server
                 Retrofit retrofit = ApiClientRetrofit.getInstance();
                 Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
-                        .postActivation(UserData.getUserCode()
+                        .postActivation(userCode
                                 , activationCodeEt.getText().toString());
 
                 call.enqueue(new Callback<LoginResult>() {
@@ -102,6 +108,9 @@ public class ActivationFragment extends Fragment {
         //404: sistem hatası, 0: aktivasyon başarılı, 1: kod eşleşmiyor
         Toast.makeText(getContext(), loginResult.getComment(), Toast.LENGTH_LONG).show();
         if (loginResult.getResult() == 0) {
+            SharedPreferences sharedPrefs= getContext().getSharedPreferences(LoginActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPrefs.edit();
+            editor.putInt(LoginActivity.SP_USERCODE, userCode);
             goToMainActivity();
         }
     }

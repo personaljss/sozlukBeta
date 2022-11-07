@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -75,6 +77,13 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
     public void onBackPressed() {
         Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
         if(navController.getCurrentBackStackEntry()!=null){
+            //fragments to be popped
+            NavDestination destination=navController.getPreviousBackStackEntry().getDestination();
+            int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
+            if(prevDestId==R.id.newEntryFragment){
+                navController.popBackStack(prevDestId,true);
+            }
+            //bottom navs
             int destId=navController.getCurrentBackStackEntry().getDestination().getId();
             if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment){
                 navController.popBackStack();
