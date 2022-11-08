@@ -64,6 +64,9 @@ public class EntryManager {
             case R.id.mainFeedFragment:
                 navController.navigate(R.id.action_mainFeedFragment_to_forum_subject,args);
                 break;
+            case R.id.newEntryFragment:
+                navController.navigate(R.id.action_newEntryFragment_to_subjectFragment,args);
+                break;
             default:
                 break;
         }

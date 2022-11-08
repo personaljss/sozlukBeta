@@ -43,6 +43,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (viewType == DONE) {
             view = LayoutInflater.from(context).inflate(R.layout.item_entry, parent, false);
             viewHolder = new EntryViewHolder(view);
+            //holder
             //nick
             ((EntryViewHolder) viewHolder).nickNameTextView.setOnClickListener(new View.OnClickListener() {
                 @Override

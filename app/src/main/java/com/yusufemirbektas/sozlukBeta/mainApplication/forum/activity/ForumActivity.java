@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -25,8 +26,6 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModel
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
-
-import kotlin.collections.ArrayDeque;
 
 
 public class ForumActivity extends AppCompatActivity implements EntryEventListener {
@@ -76,17 +75,20 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
     @Override
     public void onBackPressed() {
+        Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
         if(navController.getCurrentBackStackEntry()!=null){
-
+            //fragments to be popped
+            NavDestination destination=navController.getPreviousBackStackEntry().getDestination();
+            int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
+            if(prevDestId==R.id.newEntryFragment){
+                navController.popBackStack(prevDestId,true);
+            }
+            //bottom navs
             int destId=navController.getCurrentBackStackEntry().getDestination().getId();
-            if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment && destId!=R.id.mainFeedFragment){
+            if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment){
                 navController.popBackStack();
             }else{
-                if(destId==R.id.trendsFragment){
-                    finish();
-                }else{
-                    navController.navigate(R.id.forum_trends);
-                }
+                finish();
             }
         }
     }

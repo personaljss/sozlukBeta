@@ -16,6 +16,8 @@ import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.adapter.Section
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String SHARED_PREFS="SHARED_PREFS";
+    public static final String SP_USERCODE="SP_USERCODE";
 
     TabLayout loginTab;
     ViewPager viewPager;
