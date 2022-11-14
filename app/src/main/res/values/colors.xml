@@ -14,4 +14,8 @@
     <color name="like_bg">#FF018786</color>
     <color name="beige">#F1EFD9</color>
     <color name="dark_grey">#3A3A3A</color>
+    <color name="text_color">#0C1752</color>
+    <color name="background_light_1">#FFFFFF</color>
+    <color name="background_light_2">#F6FDF0</color>
+    <color name="backgroung_gray_1">#A4A4A4</color>
 </resources>
