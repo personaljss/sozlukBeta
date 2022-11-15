@@ -29,6 +29,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfile10Binding;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
@@ -40,7 +41,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDa
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "ProfileFragment";
-    private FragmentProfileBinding binding;
+    private FragmentProfile10Binding binding;
     private ProfileDataViewModel viewModel;
     private PointsViewModel pointsViewModel;
     //tab titles
@@ -54,7 +55,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentProfile10Binding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

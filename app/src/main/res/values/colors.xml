@@ -14,4 +14,10 @@
     <color name="like_bg">#FF018786</color>
     <color name="beige">#F1EFD9</color>
     <color name="dark_grey">#3A3A3A</color>
+    <color name="button_color_1">#0E495B</color>
+    <color name="text_color">#0E495B</color>
+    <color name="tag_color">#F56E43</color>
+    <color name="background_light_1">#FFFFFF</color>
+    <color name="background_light_2">#F6FDF0</color>
+
 </resources>

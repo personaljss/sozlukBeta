@@ -2,14 +2,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/white"/>
+            <solid android:color="@color/background_light_2"/>
             <stroke
                 android:width="0dp"
                 android:color="#959595" />
             <gradient
                 android:angle="90"
                 android:endColor="@color/teal_700"
-                android:startColor="@color/white" />
+                android:startColor="@color/background_light_2" />
             <corners android:radius="2dp" />
             <padding
                 android:bottom="2dp"
@@ -20,7 +20,7 @@
     </item>
     <item >
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" />
+            <solid android:color="@color/background_light_2" />
             <corners android:radius="2dp" />
         </shape>
     </item>

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.activity.ForumActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.EntriesItemDecoration;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
@@ -35,11 +36,19 @@ public class EntriesTabFragment extends Fragment  {
     private EntriesRvAdapter adapter;
     private RecyclerView.LayoutManager manager;
     private ProfileDataViewModel viewModel;
+    private static final int VERTICAL_ITEM_SPACE = 30;
     private List<Entry> entryList;
     private boolean isUiSet=false;
     private boolean isSelf=false;
     private NavController navController;
     PointsViewModel pointsViewModel;
+
+
+
+    //item_entry is set on fragment_profile_entries Xml file in profileEntries
+    // but set in SubjectFragment.class in Forum entries
+    // -onerayhan
+
 
     @Nullable
     @Override
@@ -53,6 +62,7 @@ public class EntriesTabFragment extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
         viewModel=new ViewModelProvider(getParentFragment()).get(ProfileDataViewModel.class);
         entryList=viewModel.getEntries().getValue();
+
 
         viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
@@ -116,7 +126,9 @@ public class EntriesTabFragment extends Fragment  {
         manager=new LinearLayoutManager(getContext());
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(manager);
+        binding.recyclerView.addItemDecoration(new EntriesItemDecoration(VERTICAL_ITEM_SPACE));
         binding.recyclerView.setHasFixedSize(true);
+        isUiSet = true;
     }
 
     @Override

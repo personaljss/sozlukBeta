@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.EntriesItemDecoration;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters.EntriesRvAdapter;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class SubjectFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "SubjectFragment";
+    private static final int VERTICAL_ITEM_SPACE = 30;
     private FragmentSubjectEntriesBinding binding;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recycleViewAdapter;
@@ -40,6 +42,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     private Bundle bundle;
     private NavController navController;
     private PointsViewModel pointsViewModel;
+    private boolean isDecorated = false;
+
     private boolean isUiSet=false;
 
     @Override
@@ -65,6 +69,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
 
         bundle = getArguments();
         navController= Navigation.findNavController(view);
+
 
         //checking if this page has been loaded previously
         if (viewModel.getSubjectId()==-1) {
@@ -167,11 +172,15 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         isUiSet=true;
     }
 
+    //spacing between elements in addItemDecoration.
+    // See recyclerView/EntriesItemDecoration.class for implementation. -onerayhan
+    // bool is for to not add any item decoration more than one
     private void setUpRecyclerView(){
         layoutManager = new LinearLayoutManager(getContext());
         recycleViewAdapter = new EntriesRvAdapter(entryModels, getContext());
         binding.subjectEntriesRecyclerView.setLayoutManager(layoutManager);
         binding.subjectEntriesRecyclerView.setAdapter(recycleViewAdapter);
+        binding.subjectEntriesRecyclerView.addItemDecoration(new EntriesItemDecoration(VERTICAL_ITEM_SPACE));
         binding.subjectEntriesRecyclerView.setHasFixedSize(true);
         binding.subjectEntriesRecyclerView.setVisibility(View.VISIBLE);
     }
