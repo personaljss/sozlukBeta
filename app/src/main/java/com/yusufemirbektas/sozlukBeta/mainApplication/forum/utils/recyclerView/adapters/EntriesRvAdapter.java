@@ -41,7 +41,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final View view;
         final RecyclerView.ViewHolder viewHolder;
         if (viewType == DONE) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_entry, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.item_entry1_0, parent, false);
             viewHolder = new EntryViewHolder(view);
             //holder
             //nick

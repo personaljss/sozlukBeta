@@ -5,6 +5,9 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.I
 import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.ImageUtils.imageToString;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,12 +23,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.databinding.FragmentEditPpBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
 
 public class EditPpFragment extends Fragment {
     private ProfileDataViewModel viewModel;
     private Bitmap imageBitmap;
+    private EditPPView editPPView;
+    private FragmentEditPpBinding binding;
+    private Drawable image;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +49,15 @@ public class EditPpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel=new ViewModelProvider(getParentFragment()).get(ProfileDataViewModel.class);
-        Button approveBtn = view.findViewById(R.id.editPpAproveBtn);
-        ImageView photoImageView=view.findViewById(R.id.editPhotoImageView);
+        //Button approveBtn = view.findViewById(R.id.editPpAproveBtn);
+        //ImageView photoImageView=view.findViewById(R.id.editPhotoImageView);
         //settings fragment sends a byte array when a photo is selected from the storage
         Bundle args=getArguments();
         byte[] bytes=args.getByteArray(BundleKeys.PHOTO_BYTES_KEY);
         //converting the bytearray to bitmap for ease of use
         imageBitmap=bytesToBitmap(bytes);
-        photoImageView.setImageBitmap(imageBitmap);
+        //photoImageView.setImageBitmap(imageBitmap);
+        image = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(bytes, 0,bytes.length));
         //---
         /**
         you should create a ui that permits the user to
@@ -62,7 +70,7 @@ public class EditPpFragment extends Fragment {
         **/
         //---
         //selected image is going to server after clicking this button
-        approveBtn.setOnClickListener(new View.OnClickListener() {
+        /*approveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //network operation
@@ -74,7 +82,7 @@ public class EditPpFragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
     }
 
 }
