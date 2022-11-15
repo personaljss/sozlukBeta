@@ -71,7 +71,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
             binding.subjectEntriesRecyclerView.setVisibility(View.GONE);
             binding.subjectTextView.setVisibility(View.GONE);
             viewModel.setSubjectId(bundle.getInt(BundleKeys.SUBJECT_ID, -1));
-            viewModel.setCommentId(bundle.getInt(BundleKeys.COMMENT_ID, -1));
+            viewModel.setCommentId(bundle.getInt(BundleKeys.USERCODE,-1));
             viewModel.loadSubjectEntries();
 
         } else {
@@ -83,6 +83,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels=subjectEntryModels;
+                binding.swipeRefreshLayout.setRefreshing(false);
                 if(isUiSet){
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
@@ -109,9 +110,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                viewModel.loadSubjectEntries();
+                /*
                 int actionId=navController.getCurrentDestination().getId();
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
                 navController.navigate(actionId,bundle,navOptions);
+                 */
             }
         });
 

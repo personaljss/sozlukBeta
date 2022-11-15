@@ -195,10 +195,10 @@ public class LoginTabFragment extends Fragment {
         try {
             Toast.makeText(getContext(),loginResult.getComment(),Toast.LENGTH_LONG).show();
             if(loginResult.getResult()==0){
+
                 //save the user code
                 UserData.setUserCode(loginResult.getUserCode());
                 //save the data
-                //saveLoginData(usernameET.getText().toString(),passwordET.getText().toString());
                 saveToSharedPrefs(loginResult.getUserCode());
                 //if login is successful go to main activity;
                 goToMainActivity();

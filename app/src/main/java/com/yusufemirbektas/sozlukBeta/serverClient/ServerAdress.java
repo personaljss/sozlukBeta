@@ -1,6 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.serverClient;
 
 public class ServerAdress {
+    public static final String REGISTER="loginfiles/registerprocess/";
     public static final String LOGIN="loginfiles/loginprocess/";
     public static final String AUTO_LOGIN="loginfiles/autologin/";
     public static final String SERVER_URL = "https://hostingdenemesi.online/";

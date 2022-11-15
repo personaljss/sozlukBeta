@@ -118,7 +118,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 int actionId=navController.getCurrentDestination().getId();
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
                 navController.navigate(R.id.action_profileFragment_self,null,navOptions);
-
                  */
             }
         });
