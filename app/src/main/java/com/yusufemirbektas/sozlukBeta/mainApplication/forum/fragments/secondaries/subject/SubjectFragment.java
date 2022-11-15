@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.EntriesItemDecoration;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters.EntriesRvAdapter;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class SubjectFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "SubjectFragment";
+    private static final int VERTICAL_ITEM_SPACE = 30;
     private FragmentSubjectEntriesBinding binding;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recycleViewAdapter;
@@ -40,6 +42,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
     private Bundle bundle;
     private NavController navController;
     private PointsViewModel pointsViewModel;
+
     private boolean isUiSet=false;
 
     @Override
@@ -172,6 +175,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener{
         recycleViewAdapter = new EntriesRvAdapter(entryModels, getContext());
         binding.subjectEntriesRecyclerView.setLayoutManager(layoutManager);
         binding.subjectEntriesRecyclerView.setAdapter(recycleViewAdapter);
+        binding.subjectEntriesRecyclerView.addItemDecoration(new EntriesItemDecoration(VERTICAL_ITEM_SPACE));
         binding.subjectEntriesRecyclerView.setHasFixedSize(true);
         binding.subjectEntriesRecyclerView.setVisibility(View.VISIBLE);
     }
