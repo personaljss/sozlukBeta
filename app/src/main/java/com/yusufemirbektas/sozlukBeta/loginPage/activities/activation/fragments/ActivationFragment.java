@@ -108,9 +108,12 @@ public class ActivationFragment extends Fragment {
         //404: sistem hatası, 0: aktivasyon başarılı, 1: kod eşleşmiyor
         Toast.makeText(getContext(), loginResult.getComment(), Toast.LENGTH_LONG).show();
         if (loginResult.getResult() == 0) {
+            /*
             SharedPreferences sharedPrefs= getContext().getSharedPreferences(LoginActivity.SHARED_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=sharedPrefs.edit();
             editor.putInt(LoginActivity.SP_USERCODE, userCode);
+
+             */
             goToMainActivity();
         }
     }

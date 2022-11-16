@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/settingsPpCircleImageView"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:src="@drawable/profile_photo"></de.hdodenhof.circleimageview.CircleImageView>
+
+
+    <EditText
+        android:id="@+id/nickNameEditTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsPpCircleImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:ems="10"
+        android:hint="kullanıcı adı"
+        android:inputType="textPersonName" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/settingsTextInputLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nickNameEditTextText"
+        android:layout_centerHorizontal="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/degreesAutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="eğitim"
+            android:inputType="none">
+
+        </AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="kaydet"
+        android:layout_below="@+id/settingsTextInputLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="60dp"/>
+
+</RelativeLayout>

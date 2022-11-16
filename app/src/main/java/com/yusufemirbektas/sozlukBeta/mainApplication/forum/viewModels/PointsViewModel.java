@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -96,7 +96,7 @@ public class PointsViewModel extends ViewModel {
                     if (response.isSuccessful()) {
                         String jsonResponse = response.body().string();
                         Gson gson=new Gson();
-                        NewContentServerResponse serialisedResponse=gson.fromJson(jsonResponse,NewContentServerResponse.class);
+                        NewContentResponse serialisedResponse=gson.fromJson(jsonResponse, NewContentResponse.class);
                         if(serialisedResponse.getResult()!=0){
                             pointsAvailable.postValue(pointsAvailable.getValue()+Math.abs(likes));
                             entryItemLikeStatus.postValue(entryItemLikeStatus.getValue()-likes);

@@ -1,6 +1,5 @@
 package com.yusufemirbektas.sozlukBeta.data;
 
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -25,7 +24,7 @@ public class User {
     //fields
     private int socialPoints = DNE;
     private int eduPoints = DNE;
-    private int degree = DNE;
+    private String degree;
     private String deviceToken;
     private String nickname;
     private String userCode;
@@ -35,31 +34,38 @@ public class User {
     }
 
     //static method to get User instance
-    public static User getInstance() {
+    public static synchronized User getInstance() {
         if (instance == null) {
             instance = new User();
         }
         return instance;
     }
 
-    //methods
+    /**
+     * These methods are created for checking the user's current status in the app
+     * */
+
+    //checks whether a user signed in or not
     public boolean isSignedIn() {
-        boolean res = true;
-        if(userCode==null || deviceToken==null){
-            res=false;
-        }
+        boolean res = userCode != null && deviceToken != null;
         return res;
     }
-
+    //checks whether required fields for a profile exits or not
     public boolean doesProfileExist(){
-        boolean res=true;
-        if(degree==DNE || nickname==null){
-            res=false;
-        }
-        return res;
+        //boolean res= degree != null && nickname != null;
+
+        return (nickname!=null);
     }
 
-    //login related methods
+
+    /**
+     * These methods prepare a http request which are meant to be made in relevant ViewModels.
+     * Returned call objects will be enqueued and their callbacks will be implemented.
+     * **/
+
+    //login related methods:
+
+    //regular login
     public Call logIn(String email, String password,String deviceToken){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
@@ -76,7 +82,7 @@ public class User {
 
         return client.newCall(request);
     }
-
+    //automatic login
     public Call autoLogin(){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
@@ -93,6 +99,7 @@ public class User {
         return client.newCall(request);
     }
 
+    //sign-up
     public Call signUp(String email, String password1, String password2){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
@@ -109,6 +116,40 @@ public class User {
 
         return client.newCall(request);
     }
+    //activating the account
+    public Call activate(String activationCode){
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("userCode", userCode)
+                .add("activationCode",activationCode)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.ACTIVATION)
+                .post(requestBody)
+                .build();
+
+        return client.newCall(request);
+    }
+
+    public Call createProfile(String nickName, String degree, String ppImage){
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("usercode", userCode)
+                .add("nickname",nickName)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.NEW_NICKNAME)
+                .post(requestBody)
+                .build();
+
+        return client.newCall(request);
+    }
+
+
 
     //getter and setters
     public String getUserCode() {
@@ -151,11 +192,11 @@ public class User {
         this.nickname = nickname;
     }
 
-    public int getDegree() {
+    public String getDegree() {
         return degree;
     }
 
-    public void setDegree(int degree) {
+    public void setDegree(String degree) {
         this.degree = degree;
     }
 }
