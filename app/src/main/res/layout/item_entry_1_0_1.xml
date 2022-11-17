@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    app:cardCornerRadius="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/entry_item_bg">
+
+        <RelativeLayout
+            android:id="@+id/lower_child_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/likeButtonsGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentStart="true"
+                android:background="@color/background_light_1">
+                <ImageButton
+                    android:id="@+id/likeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                    android:background="@color/background_light_1">
+                </ImageButton>
+
+                <TextView
+                    android:id="@+id/subjectEntryLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color"
+                    android:background="@color/background_light_1"
+                    android:layout_toEndOf="@id/likeButton"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <ImageButton
+                    android:id="@+id/dislikeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_toEndOf="@+id/subjectEntryLikeCount"
+                    android:background="@color/background_light_1">
+                </ImageButton>
+
+
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/commentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_alignTop="@id/likeButtonsGroup"
+                android:layout_toEndOf="@id/likeButtonsGroup"
+                android:background="@color/background_light_1"
+                app:srcCompat="@drawable/ic_baseline_add_comment_24" />
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/moreButton"
+                android:textColor="@color/text_color"
+                android:background="@color/background_light_1"
+                android:textSize="16sp"
+                android:layout_marginEnd="5dp"
+                android:layout_centerVertical="true"/>
+            <ImageButton
+                android:id="@+id/moreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@color/background_light_1"
+                app:srcCompat="@drawable/ic_baseline_more_horiz" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/upper_child_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/nickNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textSize="14sp"
+                android:background="@color/background_light_1"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/text_color"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/entryHeaderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_light_1"
+            android:textSize="22sp"
+            android:layout_below="@+id/upper_child_layout"
+            android:padding="3dp"
+            android:textColor="@color/text_color" />
+
+        <TextView
+            android:padding="3dp"
+            android:id="@+id/entryContentText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/entryHeaderText"
+            android:layout_above="@+id/lower_child_layout"
+            android:background="@color/background_light_1" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

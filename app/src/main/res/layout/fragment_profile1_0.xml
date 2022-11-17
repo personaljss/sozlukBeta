@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_light_2"
     tools:context=".mainApplication.forum.fragments.bottomNavHosts.ProfileFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -17,6 +24,7 @@
             android:layout_height="match_parent">
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <RelativeLayout
         android:id="@+id/inner_constraint_relativeLayout_profile"
         android:layout_width="match_parent"
@@ -31,27 +39,18 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
+            app:tabTextColor="@color/text_color"
+            app:tabIndicatorColor="@color/text_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:background="@drawable/tabs_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0." />
-
+            app:layout_constraintVertical_bias="0" />
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tab_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </androidx.viewpager2.widget.ViewPager2>
-
+            android:layout_below="@id/tab_layout"/>
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
@@ -59,22 +58,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/profile_badges_bg"
-        app:layout_constraintBottom_toTopOf="@+id/profileScoresLayout"
+        app:layout_constraintBottom_toTopOf="@id/profileScoresLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settingsImageButton"
-        app:layout_constraintVertical_bias="0.45">
+        app:layout_constraintTop_toTopOf="@id/swipe_refresh_layout"
+        app:layout_constraintVertical_bias="0.35">
 
         <ImageView
             android:id="@+id/profilePpImageView"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:layout_constraintBottom_toTopOf="parent"
+            android:src="@drawable/profile_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/profile_photo"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/profilePpProgressBar"
@@ -88,16 +85,15 @@
         android:id="@+id/profileNickNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:padding="10dp"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/profilePointsTextView"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/profilePointsTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toEndOf="@+id/profilePpCardView"
-        app:layout_constraintTop_toTopOf="@+id/profilePpCardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profilePpCardView"
         app:layout_constraintVertical_bias="0.1" />
 
     <TextView
@@ -105,28 +101,62 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="puan:0"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textSize="15dp"
+        android:text="Puan:0"
         android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileFollowingTextView"
+        app:layout_constraintTop_toBottomOf="@id/profileNickNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
+
+    <TextView
+        android:id="@+id/profileFollowingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Takip:0"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@id/profileScoresLayout"
-        app:layout_constraintEnd_toEndOf="@id/profileNickNameTextView"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@id/profileNickNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/profileNickNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileNickNameTextView"
         app:layout_constraintVertical_bias="0.2" />
+    <TextView
+        android:id="@+id/profileFollowersTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Takipçi:0"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileFollowingTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintTop_toBottomOf="@id/profileNickNameTextView" />
+
+
 
     <RelativeLayout
         android:id="@+id/profileScoresLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/inner_constraint_relativeLayout_profile"
+        app:layout_constraintBottom_toTopOf="@id/inner_constraint_relativeLayout_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePpCardView"
+        app:layout_constraintTop_toBottomOf="@id/profilePpCardView"
         app:layout_constraintVertical_bias="0.5">
 
 
@@ -144,18 +174,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="testler"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/profileTestsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profileTestsBadge"
+                android:layout_below="@id/profileTestsBadge"
                 android:layout_centerHorizontal="true"
                 android:text="0"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
 
         </RelativeLayout>
@@ -174,18 +204,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="sosyal"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/profileSocialsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profileSocialsBadge"
+                android:layout_below="@id/profileSocialsBadge"
                 android:layout_centerHorizontal="true"
                 android:text="0"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
 
         </RelativeLayout>
@@ -205,18 +235,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="düellolar"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/profileChallengesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profileChallengesBadge"
+                android:layout_below="@id/profileChallengesBadge"
                 android:layout_centerHorizontal="true"
                 android:text="0"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -230,7 +260,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/settingsImageButton"
@@ -238,7 +268,6 @@
         android:layout_height="30dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/ic_settings"
-        app:layout_constraintBottom_toTopOf="@+id/profilePpCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
@@ -249,7 +278,6 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/profilePpCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
