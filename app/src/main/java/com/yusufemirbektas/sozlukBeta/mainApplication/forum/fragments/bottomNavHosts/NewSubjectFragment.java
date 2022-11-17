@@ -24,7 +24,7 @@ import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewSubjectBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentResponse;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.pointsRelated.BoostDialog;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
@@ -136,7 +136,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     private void handleResponse(Response response, String subjectName) throws IOException {
         Gson gson=new Gson();
         String jsonResponse=response.body().string();
-        NewContentServerResponse serialisedResponse=gson.fromJson(jsonResponse,NewContentServerResponse.class);
+        NewContentResponse serialisedResponse=gson.fromJson(jsonResponse, NewContentResponse.class);
         Handler handler=new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

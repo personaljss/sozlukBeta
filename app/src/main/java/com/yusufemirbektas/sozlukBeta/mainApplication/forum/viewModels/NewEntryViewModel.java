@@ -1,8 +1,5 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -68,7 +65,7 @@ public class NewEntryViewModel extends ViewModel {
 
     private void handleResponse(String resp) {
         Gson gson=new Gson();
-        NewContentServerResponse serialisedResponse=gson.fromJson(resp,NewContentServerResponse.class);
+        NewContentResponse serialisedResponse=gson.fromJson(resp, NewContentResponse.class);
         String comment=serialisedResponse.getComment();
 
         String[] arrOfStr = comment.split(",", 2);

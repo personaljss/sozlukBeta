@@ -31,133 +31,120 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.databinding.FragmentLoginBinding;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
+import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.fragments.ActivationFragment;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
+import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
-import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
-import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
-import java.io.IOException;
-
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-public class LoginTabFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
-    private EditText usernameET;
-    private EditText passwordET;
-    private Button loginButton;
-    ImageView showHidePassword;
-    ProgressBar progressBar;
-
-    UserNameViewModel userNameViewModel;
-
-    String deviceToken;
-
-    public static final String SHARED_PREFS="sharedPrefs";
-    public static final String USER_NAME="userName";
+    private FragmentLoginBinding binding;
+    private LoginViewModel viewModel;
+    private FragmentManager fm;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login,container,false);
-        setViews(root);
-        setShowHidePassword(passwordET,showHidePassword);
+        binding=FragmentLoginBinding.inflate(inflater,container,false);
+        return binding.getRoot();
+    }
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (task.isSuccessful()) {
-                            // Get new FCM registration token
-                            deviceToken= task.getResult();
-                            Toast.makeText(getContext(), deviceToken, Toast.LENGTH_SHORT).show();
-                            return;
-                        }else if(task.getException()!=null){
-                            Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //initialising the viewModel object
+        viewModel=new ViewModelProvider(this).get(LoginViewModel.class);
+        //initialising the fragment manager
+        fm=getActivity().getSupportFragmentManager();
+        //setting the eye icon behaviour
+        setShowHidePassword(binding.passwordEditText,binding.showHidePassword);
+
+        //when user clicks login
+        binding.loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                String email=binding.emailEditText.getText().toString();
+                String password=binding.passwordEditText.getText().toString();
+                viewModel.logIn(email,password);
+            }
+        });
+
+        binding.toSignupTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction().replace(R.id.login_fragment_container,new SignupFragment()).commit();
+            }
+        });
+
+        //observing the login result
+        viewModel.httpSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean!=null){
+                    binding.progressBar.setVisibility(View.INVISIBLE);
+                    if(!aBoolean) {
+                        Toast.makeText(getContext(), "lütfen internet bağlantınızı kontrol edin", Toast.LENGTH_SHORT).show();
                     }
-                });
-
-        upDateEditTexts();
-
-        userNameViewModel=new ViewModelProvider(getActivity()).get(UserNameViewModel.class);
-        userNameViewModel.getUserName().observe(getActivity(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                usernameET.setText(s);
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postLogin();
-            }
-        });
-        return root;
-    }
-
-    private void postLogin(){
-        //disabling button
-        loginButton.setEnabled(false);
-        //making progress bar visible on the button
-        progressBar.setVisibility(View.VISIBLE);
-        loginButton.setText("");
-
-        //posting login info to the server
-        Retrofit retrofit= ApiClientRetrofit.getInstance();
-        Call<LoginResult> call = retrofit.create(LoginApiInterface.class)
-                .postLogin(deviceToken ,usernameET.getText().toString(),passwordET.getText().toString());
-
-        call.enqueue(new Callback<LoginResult>() {
-            @Override
-            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                if(response.isSuccessful()){
-                    validateLogin(response.body());
-                }else {
-                    Toast.makeText(getActivity(), "serverla ilgili bir sorun yaşandı...", Toast.LENGTH_SHORT).show();
-                    Log.d("Login post","response is not succesful!");
                 }
-                //enabling the button when the response comes
-                loginButton.setEnabled(true);
-                //making progress bar visible on the button
-                progressBar.setVisibility(View.GONE);
-                loginButton.setText("GİRİŞ YAP");
-            }
-
-            @Override
-            public void onFailure(Call<LoginResult> call, Throwable t) {
-                Log.d("Login post","onFailure called");
-                Toast.makeText(getContext(),"bir sorun yaşandı...",Toast.LENGTH_LONG).show();
-                //enabling the button again if there is a problem
-                loginButton.setEnabled(true);
-                //making progress bar visible on the button
-                progressBar.setVisibility(View.GONE);
-                loginButton.setText("GİRİŞ YAP");
             }
         });
+
+        //observing the login result
+        viewModel.loginResult.observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
+            @Override
+            public void onChanged(LoginResult loginResult) {
+                if(loginResult!=null){
+                    handleResult(loginResult);
+                }
+            }
+        });
+
     }
 
-    private void setViews(ViewGroup root){
-        usernameET=root.findViewById(R.id.username_ET);
-        passwordET=root.findViewById(R.id.password_ET);
-        showHidePassword=root.findViewById(R.id.show_hide_password);
-        loginButton=root.findViewById(R.id.login_btn);
-        progressBar=root.findViewById(R.id.progress_bar);
+    private void handleResult(LoginResult loginResult) {
+        final int result=loginResult.getResult();
+        String comment= loginResult.getComment();
+        Toast message=Toast.makeText(getContext(), comment, Toast.LENGTH_SHORT);
+        switch (result){
+            case 0:
+                //login is succesful
+                goToMainActivity();
+                break;
+            case 1:
+                //activation required, open activation fragment
+                String userCode= loginResult.getUserCode();
+                openActivationFragment(userCode);
+                break;
+            default:
+                //there is a problem, show it to the user
+                message.show();
+                break;
+        }
     }
+
+    private void openActivationFragment(String userCode) {
+        Bundle args=new Bundle();
+        args.putString(BundleKeys.USERCODE, userCode);
+        ActivationFragment activationFragment=new ActivationFragment();
+        activationFragment.setArguments(args);
+        fm=getChildFragmentManager();
+        fm.beginTransaction().replace(R.id.login_fragment_container,activationFragment).commit();
+    }
+
 
     private void goToMainActivity(){
         Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -190,6 +177,7 @@ public class LoginTabFragment extends Fragment {
         });
     }
 
+    /*
     private void validateLogin(LoginResult loginResult){
         //0: hatasız login, 1: aktiveli login, 2: geçersiz girdi, 3: yanlış girdi, 404: sistemsel hata
         try {
@@ -216,6 +204,8 @@ public class LoginTabFragment extends Fragment {
 
     }
 
+     */
+
     /*
     private void saveLoginData(String userName, String password){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -226,7 +216,7 @@ public class LoginTabFragment extends Fragment {
     }
 
      */
-
+/*
     private void saveToSharedPrefs(int userCode){
         SharedPreferences sharedPrefs= getContext().getSharedPreferences(LoginActivity.SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPrefs.edit();
@@ -234,10 +224,6 @@ public class LoginTabFragment extends Fragment {
         editor.apply();
     }
 
-    private void upDateEditTexts(){
-        SharedPreferences sharedPreferences= getActivity().getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
-        usernameET.setText(sharedPreferences.getString(USER_NAME,""));
-        //passwordET.setText(sharedPreferences.getString(PASSWORD,""));
-    }
+ */
 
 }

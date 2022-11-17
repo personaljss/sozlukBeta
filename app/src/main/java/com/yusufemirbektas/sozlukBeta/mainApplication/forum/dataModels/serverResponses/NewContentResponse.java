@@ -2,7 +2,7 @@ package com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverRe
 
 import com.google.gson.annotations.SerializedName;
 
-public class NewContentServerResponse {
+public class NewContentResponse {
     @SerializedName("result")
     private int result;
     @SerializedName("comment")

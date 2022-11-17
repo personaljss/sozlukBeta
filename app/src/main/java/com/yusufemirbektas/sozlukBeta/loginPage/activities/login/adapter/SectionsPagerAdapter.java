@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments.LoginTabFragment;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments.SignupTabFragment;
+import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments.LoginFragment;
+import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments.SignupFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
@@ -29,9 +29,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
 
         if (position == 0) {
-            return new LoginTabFragment();
+            return new LoginFragment();
         } else {
-            return new SignupTabFragment();
+            return new SignupFragment();
         }
 
     }

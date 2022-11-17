@@ -12,7 +12,9 @@ public class LoginResult {
     @SerializedName("time")
     private String time;
     @SerializedName("usercode")
-    private Integer userCode;
+    private String userCode;
+    @SerializedName("nickname")
+    private String nickName;
 
 
     public Integer getResult() {
@@ -27,9 +29,11 @@ public class LoginResult {
         return time;
     }
 
-    public Integer getUserCode(){
+    public String getUserCode(){
         return userCode;
     }
 
-
+    public String getNickName() {
+        return nickName;
+    }
 }
