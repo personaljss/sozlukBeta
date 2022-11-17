@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,7 +16,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.databinding.ActivityForumBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.EntryEventListener;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.EntryManager;
@@ -42,7 +41,7 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
         setContentView(binding.getRoot());
 
         ProfileDataViewModel profileDataViewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
-        profileDataViewModel.setUserCode(UserData.getUserCode());
+        profileDataViewModel.setUserCode(User.getInstance().getUserCode());
         profileDataViewModel.loadProfileData();
 
         pointsViewModel=new ViewModelProvider(this).get(PointsViewModel.class);
@@ -75,23 +74,23 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
     @Override
     public void onBackPressed() {
-        Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
         if(navController.getCurrentBackStackEntry()!=null){
+            //fragments to be popped
+            //Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
+
+            NavDestination destination=navController.getPreviousBackStackEntry().getDestination();
+            int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
+            if(prevDestId==R.id.newEntryFragment){
+                navController.popBackStack(prevDestId,true);
+            }
+
             //bottom navs
             int destId=navController.getCurrentBackStackEntry().getDestination().getId();
             if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment){
                 navController.popBackStack();
             }else{
-                super.onBackPressed();
+                finish();
             }
-            if(navController.getPreviousBackStackEntry()!=null){
-                int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
-                if(prevDestId==R.id.newEntryFragment){
-                    navController.popBackStack(prevDestId,true);
-                }
-            }
-        }else {
-            super.onBackPressed();
         }
     }
 
@@ -103,9 +102,9 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
     //Entry events
     @Override
-    public void onLiked(int userCode, int subjectId,int commentId, int likeStatus, int adapterPosition) {
+    public void onLiked(String userCode, int subjectId,int commentId, int likeStatus, int adapterPosition) {
         Bundle args=new Bundle();
-        args.putInt(BundleKeys.USERCODE,userCode);
+        args.putString(BundleKeys.USERCODE,userCode);
         args.putInt(BundleKeys.SUBJECT_ID,subjectId);
         args.putInt(BundleKeys.COMMENT_ID,commentId);
         args.putInt(BundleKeys.LIKE_STATUS,likeStatus);
@@ -121,7 +120,7 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
     }
 
     @Override
-    public void onProfileClicked(int userCode) {
+    public void onProfileClicked(String userCode) {
         entryManager.goToProfile(userCode);
     }
 

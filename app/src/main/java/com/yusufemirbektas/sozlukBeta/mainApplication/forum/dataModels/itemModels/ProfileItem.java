@@ -10,7 +10,7 @@ public class ProfileItem {
     private int likeStatus;
 
     @SerializedName("usercode")
-    private int userCode;
+    private String userCode;
 
     public String getNickName() {
         return nickName;
@@ -24,7 +24,7 @@ public class ProfileItem {
         this.likeStatus = likeStatus;
     }
 
-    public int getUserCode() {
+    public String getUserCode() {
         return userCode;
     }
 }

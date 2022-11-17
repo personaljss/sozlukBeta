@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentResponse;
+import com.yusufemirbektas.sozlukBeta.data.User;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -26,17 +26,20 @@ import okhttp3.Response;
 public class NewEntryViewModel extends ViewModel {
     public static final String SUBJECT_ID_KEY="SUBJECT_ID_KEY";
     public static final String COMMENT_ID_KEY="COMMENT_ID_KEY";
-    MutableLiveData<HashMap<String,String>> newEntryLoc=new MutableLiveData<>(new HashMap<>(Map.ofEntries(
-            Map.entry(SUBJECT_ID_KEY,""),
-            Map.entry(COMMENT_ID_KEY,"")
-    )));
+
+    MutableLiveData<HashMap<String,String>> newEntryLoc=new MutableLiveData<>();
+
+    //new HashMap<>(Map.ofEntries(
+    //            Map.entry(SUBJECT_ID_KEY,""),
+    //            Map.entry(COMMENT_ID_KEY,"")
+    //    ))
 
     public void postNewEntry(int subjectId, String entry) {
         //{"result":0,"comment":"Yorum yapıldı.","time":"97.834825515747 ms"}
         OkHttpClient client = ApiClientOkhttp.getInstance();
         RequestBody requestBody = new FormBody.Builder()
                 .add("subjectID", String.valueOf(subjectId))
-                .add("userCode", String.valueOf(UserData.getUserCode()))
+                .add("userCode", User.getInstance().getUserCode())
                 .add("comment", entry)
                 .build();
 
@@ -65,13 +68,16 @@ public class NewEntryViewModel extends ViewModel {
 
     private void handleResponse(String resp) {
         Gson gson=new Gson();
-        NewContentResponse serialisedResponse=gson.fromJson(resp, NewContentResponse.class);
-        String comment=serialisedResponse.getComment();
-
-        String[] arrOfStr = comment.split(",", 2);
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(SUBJECT_ID_KEY,arrOfStr[0]);
-        hashMap.put(COMMENT_ID_KEY,arrOfStr[1]);
-        newEntryLoc.postValue(hashMap);
+        NewContentServerResponse serialisedResponse=gson.fromJson(resp,NewContentServerResponse.class);
+        if(serialisedResponse.getResult()!=1){
+            String comment=serialisedResponse.getComment();
+            String[] arrOfStr = comment.split(",", 2);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put(SUBJECT_ID_KEY,arrOfStr[0]);
+            hashMap.put(COMMENT_ID_KEY,arrOfStr[1]);
+            newEntryLoc.postValue(hashMap);
+        }else {
+            newEntryLoc.postValue(null);
+        }
     }
 }

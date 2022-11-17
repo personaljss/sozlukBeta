@@ -34,7 +34,7 @@ public class LikeDialog extends DialogFragment {
         viewModel = new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         int points = viewModel.getPointsAvailable().getValue();
         Bundle args = getArguments();
-        int userCode = args.getInt(BundleKeys.USERCODE);
+        String userCode = args.getString(BundleKeys.USERCODE);
         int subjectId = args.getInt(BundleKeys.SUBJECT_ID);
         int commentId = args.getInt(BundleKeys.COMMENT_ID);
         int likeStatus = args.getInt(BundleKeys.LIKE_STATUS);

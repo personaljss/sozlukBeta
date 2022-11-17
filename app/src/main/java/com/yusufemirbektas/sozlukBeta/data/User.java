@@ -1,4 +1,11 @@
+
+
 package com.yusufemirbektas.sozlukBeta.data;
+
+import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
@@ -22,6 +29,8 @@ public class User {
     private static User instance;
 
     //fields
+    private MutableLiveData<Boolean> isLoggedIn=new MutableLiveData<>();
+    private boolean isSignedIn;
     private int socialPoints = DNE;
     private int eduPoints = DNE;
     private String degree;
@@ -41,20 +50,34 @@ public class User {
         return instance;
     }
 
+    public static void init(Context context){
+        instance=getInstance();
+        SharedPrefs.init(context);
+        instance.deviceToken=SharedPrefs.read(SharedPrefs.DEVICE_TOKEN,"");
+        instance.userCode=SharedPrefs.read(SharedPrefs.USER_CODE,"");
+    }
+
     /**
      * These methods are created for checking the user's current status in the app
      * */
 
     //checks whether a user signed in or not
     public boolean isSignedIn() {
-        boolean res = userCode != null && deviceToken != null;
-        return res;
+        return isSignedIn;
     }
     //checks whether required fields for a profile exits or not
     public boolean doesProfileExist(){
         //boolean res= degree != null && nickname != null;
-
         return (nickname!=null);
+    }
+
+    //Live data of issign in
+    public LiveData<Boolean> loginStatus(){
+        return isLoggedIn;
+    }
+
+    public void setLoginStatus(boolean p){
+        isLoggedIn.postValue(p);
     }
 
 
@@ -198,5 +221,9 @@ public class User {
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public void setSignedIn(boolean signedIn) {
+        isSignedIn = signedIn;
     }
 }

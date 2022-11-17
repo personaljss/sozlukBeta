@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
-import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentResponse;
+import com.yusufemirbektas.sozlukBeta.data.User;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
 import com.yusufemirbektas.sozlukBeta.serverClient.ServerAdress;
 
@@ -59,7 +59,7 @@ public class PointsViewModel extends ViewModel {
         entryItemPosition.setValue(DEFAULT_POS);
     }
 
-    public void likeEntry(int userCode, int likes, int subjectId, int commentId, int adapterPos){
+    public void likeEntry(String userCode, int likes, int subjectId, int commentId, int adapterPos){
         pointsAvailable.setValue(pointsAvailable.getValue()-Math.abs(likes));
         entryItemLikeStatus.setValue(likes);
         entryItemPosition.setValue(adapterPos);
@@ -74,8 +74,8 @@ public class PointsViewModel extends ViewModel {
             RequestBody requestBody = new FormBody.Builder()
                     .add("subjectID", String.valueOf(subjectId))
                     .add("commentID", String.valueOf(commentId))
-                    .add("userCode",String.valueOf(UserData.getUserCode()))
-                    .add("likedOne",String.valueOf(userCode))
+                    .add("userCode", User.getInstance().getUserCode())
+                    .add("likedOne",userCode)
                     .add("like",String.valueOf(likes))
                     .build();
 
@@ -96,7 +96,7 @@ public class PointsViewModel extends ViewModel {
                     if (response.isSuccessful()) {
                         String jsonResponse = response.body().string();
                         Gson gson=new Gson();
-                        NewContentResponse serialisedResponse=gson.fromJson(jsonResponse, NewContentResponse.class);
+                        NewContentServerResponse serialisedResponse=gson.fromJson(jsonResponse,NewContentServerResponse.class);
                         if(serialisedResponse.getResult()!=0){
                             pointsAvailable.postValue(pointsAvailable.getValue()+Math.abs(likes));
                             entryItemLikeStatus.postValue(entryItemLikeStatus.getValue()-likes);

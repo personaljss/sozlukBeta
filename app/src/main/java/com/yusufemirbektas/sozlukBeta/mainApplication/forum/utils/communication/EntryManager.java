@@ -15,9 +15,9 @@ public class EntryManager {
         this.navController = navController;
     }
 
-    public void goToProfile(int userCode) {
+    public void goToProfile(String userCode) {
         Bundle args=new Bundle();
-        args.putInt(BundleKeys.USERCODE,userCode);
+        args.putString(BundleKeys.USERCODE,userCode);
         final int locId = navController.getCurrentDestination().getId();
         switch (locId) {
             case R.id.profileFragment:

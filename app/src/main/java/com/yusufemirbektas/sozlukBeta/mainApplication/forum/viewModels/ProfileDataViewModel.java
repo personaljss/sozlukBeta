@@ -8,9 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Header;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Test;
@@ -36,8 +35,9 @@ import okhttp3.Response;
 
 public class ProfileDataViewModel extends ViewModel {
     private static final String TAG = "ProfileDataViewModel";
+    private User user=User.getInstance();
 
-    private MutableLiveData<Integer> userCode=new MutableLiveData<>();
+    private MutableLiveData<String> userCode=new MutableLiveData<>();
     private MutableLiveData<Header> header=new MutableLiveData<>();
     private MutableLiveData<List<Entry>> entries=new MutableLiveData<>();
     private MutableLiveData<List<Test>> tests=new MutableLiveData<>();
@@ -57,7 +57,7 @@ public class ProfileDataViewModel extends ViewModel {
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("usercode", String.valueOf(userCode.getValue()))
-                .add("viewer",String.valueOf(UserData.getUserCode()))
+                .add("viewer", user.getUserCode())
                 .add("testStart", "0")
                 .add("entryStartDate", String.valueOf(entryStartDate))
                 .add("testCount", "10")
@@ -92,7 +92,7 @@ public class ProfileDataViewModel extends ViewModel {
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("usercode", String.valueOf(userCode.getValue()))
-                .add("viewer",String.valueOf(UserData.getUserCode()))
+                .add("viewer", user.getUserCode())
                 .add("testStart", String.valueOf(testStart))
                 .add("entryStartDate", "0")
                 .add("testCount", String.valueOf(testsCount))
@@ -128,7 +128,7 @@ public class ProfileDataViewModel extends ViewModel {
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("usercode", String.valueOf(userCode.getValue()))
-                .add("viewer",String.valueOf(UserData.getUserCode()))
+                .add("viewer",user.getUserCode())
                 .add("testStart", "0")
                 .add("entryStartDate", String.valueOf(entryStartDate))
                 .add("testCount", "0")
@@ -164,7 +164,7 @@ public class ProfileDataViewModel extends ViewModel {
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("userCode", String.valueOf(UserData.getUserCode()))
+                .add("userCode", User.getInstance().getUserCode())
                 .add("image", imageStr)
                 .add("imageType","0")
                 .build();
@@ -186,20 +186,20 @@ public class ProfileDataViewModel extends ViewModel {
         });
     }
 
-    public void followUser(int userCode){
+    public void followUser(String userCode){
         followHelper(userCode,"1");
     }
 
-    public void unFollowUser(int userCode){
+    public void unFollowUser(String userCode){
         followHelper(userCode,"0");
     }
 
-    public void followHelper(int userCode, String operation){
+    public void followHelper(String userCode, String operation){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("userCode", String.valueOf(UserData.getUserCode()))
-                .add("followed", String.valueOf(userCode))
+                .add("userCode", user.getUserCode())
+                .add("followed", userCode)
                 .add("operation",operation)
                 .build();
 
@@ -233,11 +233,15 @@ public class ProfileDataViewModel extends ViewModel {
     public void setUpProfileDataBg(String jsonResponse, String targetPattern){
         Gson gson=new Gson();
         ProfileDataResponse profileDataResponse=gson.fromJson(jsonResponse,ProfileDataResponse.class);
-        addTestsBg(profileDataResponse.tests, targetPattern);
-        addEntriesBg(profileDataResponse.entries, targetPattern);
-        Header header=gson.fromJson(profileDataResponse.header,Header.class);
-        postHeader(header);
-        following.postValue(header.getFollowing());
+        if(profileDataResponse.result!=404){
+            addTestsBg(profileDataResponse.tests, targetPattern);
+            addEntriesBg(profileDataResponse.entries, targetPattern);
+            Header header=gson.fromJson(profileDataResponse.header,Header.class);
+            postHeader(header);
+            following.postValue(header.getFollowing());
+        }else {
+            following.postValue(null);
+        }
     }
 
     public void setUpProfileData(String jsonResponse, String targetPattern){
@@ -409,7 +413,7 @@ public class ProfileDataViewModel extends ViewModel {
         this.entries.postValue(entryList);
     }
 
-    public void setUserCode(int userCode) {
+    public void setUserCode(String userCode) {
         this.userCode.setValue(userCode);
     }
 
@@ -438,7 +442,7 @@ public class ProfileDataViewModel extends ViewModel {
         return header;
     }
 
-    public LiveData<Integer> getUserCode() {
+    public LiveData<String> getUserCode() {
         return userCode;
     }
 

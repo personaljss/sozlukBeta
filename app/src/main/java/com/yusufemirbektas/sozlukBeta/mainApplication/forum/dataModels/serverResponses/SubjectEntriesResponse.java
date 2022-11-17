@@ -9,6 +9,8 @@ public class SubjectEntriesResponse {
     String data;
     @SerializedName("time")
     String time;
+    @SerializedName("comments")
+    int totalEntries;
 
     public int getResult() {
         return result;
@@ -20,5 +22,9 @@ public class SubjectEntriesResponse {
 
     public String getTime() {
         return time;
+    }
+
+    public int getTotalEntries() {
+        return totalEntries;
     }
 }

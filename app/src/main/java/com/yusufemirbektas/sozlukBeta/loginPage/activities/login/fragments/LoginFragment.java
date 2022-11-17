@@ -1,21 +1,16 @@
 package com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,27 +21,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentLoginBinding;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.fragments.ActivationFragment;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
-import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class LoginFragment extends Fragment {
@@ -183,7 +165,6 @@ public class LoginFragment extends Fragment {
         try {
             Toast.makeText(getContext(),loginResult.getComment(),Toast.LENGTH_LONG).show();
             if(loginResult.getResult()==0){
-
                 //save the user code
                 UserData.setUserCode(loginResult.getUserCode());
                 //save the data
@@ -201,9 +182,7 @@ public class LoginFragment extends Fragment {
             e.printStackTrace();
             Toast.makeText(getContext(),"bir şeyler ters gitti, lütfen internet bağlantınızı kontrol edin",Toast.LENGTH_LONG).show();
         }
-
     }
-
      */
 
     /*
@@ -214,7 +193,6 @@ public class LoginFragment extends Fragment {
         //editor.putString(PASSWORD,password);
         editor.apply();
     }
-
      */
 /*
     private void saveToSharedPrefs(int userCode){
@@ -223,7 +201,6 @@ public class LoginFragment extends Fragment {
         editor.putInt(LoginActivity.SP_USERCODE, userCode);
         editor.apply();
     }
-
  */
 
 }

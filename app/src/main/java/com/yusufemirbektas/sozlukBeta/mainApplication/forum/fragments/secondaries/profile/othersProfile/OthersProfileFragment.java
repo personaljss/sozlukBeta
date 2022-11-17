@@ -5,7 +5,6 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.I
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentOthersProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.tabs.ProfileViewPagerAdapter;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
@@ -69,13 +67,13 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
-        pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
-        navController=Navigation.findNavController(view);
+        pointsViewModel = new ViewModelProvider(getActivity()).get(PointsViewModel.class);
+        navController = Navigation.findNavController(view);
 
         Bundle args = getArguments();
-        int userCode = -1;
+        String userCode=null;
         if (args != null) {
-            userCode = args.getInt(BundleKeys.USERCODE, -1);
+            userCode = args.getString(BundleKeys.USERCODE, "");
         }
         viewModel.setUserCode(userCode);
         headerUi = viewModel.getHeader().getValue();
@@ -90,14 +88,19 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         viewModel.following.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer==1){
+                if(integer==null){
+                    Toast.makeText(getContext(), "kullanıcı mevcut değil", Toast.LENGTH_SHORT).show();
+                    getActivity().onBackPressed();
+                    return;
+                }
+                if (integer == 1) {
                     binding.followButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             viewModel.unFollowUser(viewModel.getUserCode().getValue());
                         }
                     });
-                }else if(integer==0){
+                } else if (integer == 0) {
                     binding.followButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -111,11 +114,11 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         viewModel.getFollowResult().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=-1){
+                if (integer != -1) {
                     Toast.makeText(getContext(), viewModel.getFollowComment(), Toast.LENGTH_SHORT).show();
-                    if(integer==0){
+                    if (integer == 0) {
                         binding.followButton.setText("takip ediyorsun");
-                    }else{
+                    } else {
                         binding.followButton.setText("takip et");
                     }
                     viewModel.setFollowResult(-1);
@@ -134,12 +137,12 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         pointsViewModel.getEntryItemLikeStatus().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=PointsViewModel.DEFAULT_STATUS){
-                    if(viewModel.getHeader().getValue()!=null){
+                if (integer != PointsViewModel.DEFAULT_STATUS) {
+                    if (viewModel.getHeader().getValue() != null) {
                         //!!!!!!!!!!!!!!DEBUG HERE !!!!!!!!!!!!!!!!
-                        int points=viewModel.getHeader().getValue().getTotalPoints();
-                        viewModel.getHeader().getValue().setTotalPoints(points+integer);
-                        binding.profilePointsTextView.setText(String.valueOf(points+integer));
+                        int points = viewModel.getHeader().getValue().getTotalPoints();
+                        viewModel.getHeader().getValue().setTotalPoints(points + integer);
+                        binding.profilePointsTextView.setText(String.valueOf(points + integer));
                     }
                 }
             }
@@ -194,17 +197,17 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         } else if (v == binding.profilePpImageView) {
             NavController navController = Navigation.findNavController(v);
             Bundle args = new Bundle();
-            args.putInt(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
+            args.putString(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
             navController.navigate(R.id.action_othersProfileFragment_to_showPpFragment, args);
-        }else if(v==binding.profileSocialsLayout){
-            PopupMenu menu=new PopupMenu(getContext(),v);
-            menu.getMenuInflater().inflate(R.menu.forum_socials_menu,menu.getMenu());
+        } else if (v == binding.profileSocialsLayout) {
+            PopupMenu menu = new PopupMenu(getContext(), v);
+            menu.getMenuInflater().inflate(R.menu.forum_socials_menu, menu.getMenu());
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    Bundle args=new Bundle();
-                    args.putInt(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
-                    switch (item.getItemId()){
+                    Bundle args = new Bundle();
+                    args.putString(BundleKeys.USERCODE, viewModel.getUserCode().getValue());
+                    switch (item.getItemId()) {
                         case R.id.followers:
                             args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
                             break;
@@ -214,12 +217,12 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
                         default:
                             break;
                     }
-                    navController.navigate(R.id.action_othersProfileFragment_to_profileListFragment,args);
+                    navController.navigate(R.id.action_othersProfileFragment_to_profileListFragment, args);
                     return true;
                 }
             });
             menu.show();
-        }else if(v==binding.followButton){
+        } else if (v == binding.followButton) {
             /*
             if(viewModel.getHeader().getValue().getFollowing()==1){
                 viewModel.unFollowUser(viewModel.getUserCode().getValue());
@@ -249,9 +252,9 @@ public class OthersProfileFragment extends Fragment implements View.OnClickListe
         //swipe-refresh
         binding.swipeRefreshLayout.setRefreshing(false);
         //follow button check
-        if(header.getFollowing()==1){
+        if (header.getFollowing() == 1) {
             binding.followButton.setText("takip ediyorsun");
-        }else if(header.getFollower()==1){
+        } else if (header.getFollower() == 1) {
             binding.followButton.setText("sen de takip et");
         }
         binding.profileNickNameTextView.setText(header.getNickName());

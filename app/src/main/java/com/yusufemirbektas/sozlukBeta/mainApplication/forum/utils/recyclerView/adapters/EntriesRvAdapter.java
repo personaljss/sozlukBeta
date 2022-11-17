@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.EntryEventListener;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.viewHolders.EntryViewHolder;
@@ -70,7 +70,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View v) {
                     int pos = viewHolder.getAdapterPosition();
                     Entry entryModel = entries.get(pos);
-                    if (entryModel.getUserCode() == UserData.getUserCode()) {
+                    if (entryModel.getUserCode() == User.getInstance().getUserCode()) {
                         Toast.makeText(context, "kendi paylaşımızı beğenemezsiniz", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -83,7 +83,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View v) {
                     int pos = viewHolder.getAdapterPosition();
                     Entry entryModel = entries.get(pos);
-                    if (entryModel.getUserCode() == UserData.getUserCode()) {
+                    if (entryModel.getUserCode() == User.getInstance().getUserCode()) {
                         Toast.makeText(context, "kendi paylaşımızı beğenemezsiniz", Toast.LENGTH_SHORT).show();
                         return;
                     }

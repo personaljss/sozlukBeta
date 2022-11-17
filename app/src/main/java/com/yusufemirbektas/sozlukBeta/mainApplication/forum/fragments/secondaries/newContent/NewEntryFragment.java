@@ -54,10 +54,15 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
         viewModel.getNewEntryLoc().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
             @Override
             public void onChanged(HashMap<String, String> stringStringHashMap) {
-                if(!stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY).equals("")){
-                    int subjectId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY));
-                    int commentId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.COMMENT_ID_KEY));
-                    entryEventListener.onSubjectClicked(subjectId,commentId,subjectName);
+                if(stringStringHashMap!=null){
+                    if(!stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY).equals("")){
+                        int subjectId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY));
+                        int commentId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.COMMENT_ID_KEY));
+                        int newLoc=(commentId-9<1)?1:commentId-9;
+                        entryEventListener.onSubjectClicked(subjectId,newLoc,subjectName);
+                    }
+                }else {
+                    Toast.makeText(getContext(), "yeterli puanınız yok", Toast.LENGTH_SHORT).show();
                 }
             }
         });

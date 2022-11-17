@@ -28,9 +28,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfile10Binding;
-import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profile.tabs.ProfileViewPagerAdapter;
@@ -49,6 +48,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     //Image type constant to get profile picture from server
     public static final int IMAGE_TYPE_PROFILE = 0;
     private NavController navController;
+    private User user;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -64,6 +64,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
         navController= Navigation.findNavController(view);
+        user=User.getInstance();
 
         pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getPointsAvailable().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -77,7 +78,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        int userCode = UserData.getUserCode();
+        String userCode = user.getUserCode();
         viewModel.setUserCode(userCode);
         //if it is the first time that this page is opened, load the contents
         if (viewModel.getHeader().getValue() == null ) {
@@ -144,7 +145,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             getActivity().finish();
         }else if(v==binding.profilePpImageView){
             Bundle args=new Bundle();
-            args.putInt(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
+            args.putString(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
             navController.navigate(R.id.action_profileFragment_to_showPpFragment,args);
         }else if(v==binding.settingsImageButton){
             navController.navigate(R.id.action_profileFragment_to_settingsFragment);
@@ -175,7 +176,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Bundle args=new Bundle();
-                        args.putInt(BundleKeys.USERCODE,UserData.getUserCode());
+                        args.putString(BundleKeys.USERCODE,user.getUserCode());
                         switch (item.getItemId()){
                             case R.id.followers:
                                 Log.i(TAG, "onMenuItemClick: followers");

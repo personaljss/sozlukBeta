@@ -68,9 +68,13 @@ public class LoginViewModel extends AndroidViewModel {
         @Override
         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
             if (response.isSuccessful()) {
-                httpSuccess.postValue(true);
-                //parsing the response
-                loginResult.postValue(gson.fromJson(response.body().string(), LoginResult.class));
+                try{
+                    //parsing the response
+                    loginResult.postValue(gson.fromJson(response.body().string(), LoginResult.class));
+                    httpSuccess.postValue(true);
+                }catch (Exception e){
+                    httpSuccess.postValue(false);
+                }
             } else {
                 httpSuccess.postValue(false);
             }
@@ -100,6 +104,8 @@ public class LoginViewModel extends AndroidViewModel {
                         user.setDeviceToken(deviceToken);
                         SharedPrefs.write(SharedPrefs.DEVICE_TOKEN,deviceToken);
                         user.setNickname(result.getNickName());
+                        user.setSignedIn(true);
+                        user.setLoginStatus(true);
                     }
 
 

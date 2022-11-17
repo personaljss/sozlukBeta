@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.SubjectEntriesResponse;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Entry;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientOkhttp;
@@ -33,20 +33,20 @@ import okhttp3.Response;
 
 public class EntriesViewModel extends ViewModel {
     private static final String TAG = "SubjectEntriesViewModel";
-    private int subjectId = -1;
-    private int commentId = -1;
     private MutableLiveData<List<Entry>> entries = new MutableLiveData<>();
     private MutableLiveData<Boolean> fail = new MutableLiveData<>(false);
+    private int totalEntries = 0;
+    private final User user = User.getInstance();
 
     //subjectID, commentID, userCode
-    public void loadSubjectEntries() {
+    public void loadSubjectEntries(int subjectId, int commentId,boolean add) {
         try {
             OkHttpClient client = ApiClientOkhttp.getInstance();
 
             RequestBody requestBody = new FormBody.Builder()
                     .add("subjectID", String.valueOf(subjectId))
                     .add("commentID", String.valueOf(commentId))
-                    .add("userCode", String.valueOf(UserData.getUserCode()))
+                    .add("userCode", user.getUserCode())
                     .build();
 
             Request request = new Request.Builder()
@@ -62,10 +62,14 @@ public class EntriesViewModel extends ViewModel {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        try{
+                        try {
                             String jsonResponse = response.body().string();
-                            addEntriesBg(jsonResponse);
-                        }catch (Exception e){
+                            if(add){
+                                addEntriesBg(jsonResponse);
+                            }else {
+                                putEntriesBg(jsonResponse);
+                            }
+                        } catch (Exception e) {
                             fail.postValue(true);
                         }
                     }
@@ -83,46 +87,6 @@ public class EntriesViewModel extends ViewModel {
         }
     }
 
-    //subjectID, commentID, userCode
-    public void loadSubjectEntries(int start) {
-        try {
-            OkHttpClient client = ApiClientOkhttp.getInstance();
-
-            RequestBody requestBody = new FormBody.Builder()
-                    .add("subjectID", String.valueOf(subjectId))
-                    .add("commentID", String.valueOf(start))
-                    .add("userCode", String.valueOf(UserData.getUserCode()))
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(ServerAdress.SERVER_URL + ServerAdress.SHOW_SUBJECT_ENTRIES_PHP)
-                    .post(requestBody)
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        String jsonResponse = response.body().string();
-                        addEntriesBg(jsonResponse);
-                    }
-                }
-            });
-        } catch (IllegalArgumentException exception) {
-            exception.fillInStackTrace();
-            Log.d(TAG, "!!!!!!!!!!!!!!!!" +
-                    "loadSubjectEntries: muhtemelen usercode ve subject id bu" +
-                    "metod çağrılmadan önce initialise edilmedi." + "\n"
-                    + "metot çağrılmadan bunları fragmanın getArguments() ile " +
-                    "aldığı args(bundle) objesindeki değerlerden" +
-                    "başlat eğer sorun bu değilse doktoru ara da o uğraşsın" +
-                    "!!!!!!!!!!!!!!!!");
-        }
-    }
 
     //postlar: $usercode = $_POST["userCode"];
     //    $date = $_POST["date"];
@@ -133,7 +97,7 @@ public class EntriesViewModel extends ViewModel {
         RequestBody requestBody = new FormBody.Builder()
                 .add("limit", "10")
                 .add("date", String.valueOf(startDate))
-                .add("userCode", String.valueOf(UserData.getUserCode()))
+                .add("userCode", user.getUserCode())
                 .build();
 
         Request request = new Request.Builder()
@@ -160,6 +124,7 @@ public class EntriesViewModel extends ViewModel {
     private void addEntriesBg(String jsonResponse) {
         Gson gson = new Gson();
         SubjectEntriesResponse entriesResponse = gson.fromJson(jsonResponse, SubjectEntriesResponse.class);
+        totalEntries = entriesResponse.getTotalEntries();
         List<Entry> entryList = this.entries.getValue();
         if (entryList == null) {
             entryList = new ArrayList<>();
@@ -177,12 +142,19 @@ public class EntriesViewModel extends ViewModel {
         this.entries.postValue(entryList);
     }
 
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
+    private void putEntriesBg(String jsonResponse){
+        Gson gson = new Gson();
+        SubjectEntriesResponse entriesResponse = gson.fromJson(jsonResponse, SubjectEntriesResponse.class);
+        totalEntries = entriesResponse.getTotalEntries();
+        List<Entry> entryList = this.entries.getValue();
+        if (entryList == null) {
+            entryList = new ArrayList<>();
+        } else if (entryList.size() > 0 && entryList.get(entryList.size() - 1) == null) {
+            entryList.remove(entryList.size() - 1);
+        }
+        Type ListOfSubjectEntries = TypeToken.getParameterized(List.class, Entry.class).getType();
+        List<Entry> entriesFromJson = gson.fromJson(entriesResponse.getData(), ListOfSubjectEntries);
+        this.entries.postValue(entriesFromJson);
     }
 
     private void setEntries(List<Entry> entries) {
@@ -192,27 +164,9 @@ public class EntriesViewModel extends ViewModel {
     private void postSubjectEntries(List<Entry> entries) {
         this.entries.postValue(entries);
     }
-/*
-    public LiveData<Integer> getPointsSpent() {
-        return pointsSpent;
-    }
 
-    public void setPointsSpent(int pointsSpent) {
-        this.pointsSpent.setValue(pointsSpent);
-    }
-
-    public void postPointsSpent(int pointsSpent){
-        this.pointsSpent.postValue(pointsSpent);
-    }
-
- */
-
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public int getCommentId() {
-        return commentId;
+    public int getTotalEntries() {
+        return totalEntries;
     }
 
     public LiveData<List<Entry>> getEntries() {

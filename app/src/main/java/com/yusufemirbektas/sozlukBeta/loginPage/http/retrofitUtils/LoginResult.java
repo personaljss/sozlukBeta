@@ -29,9 +29,10 @@ public class LoginResult {
         return time;
     }
 
-    public String getUserCode(){
+    public String getUserCode() {
         return userCode;
     }
+
 
     public String getNickName() {
         return nickName;

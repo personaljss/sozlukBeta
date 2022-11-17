@@ -55,6 +55,7 @@ public class MainFeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel=new ViewModelProvider(this).get(EntriesViewModel.class);
         entryList=viewModel.getEntries().getValue();
+        /*
         //first time check
         if(viewModel.getCommentId()==-1){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -65,6 +66,14 @@ public class MainFeedFragment extends Fragment {
         }else {
             setUpUi();
         }
+         */
+        if(entryList==null){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                viewModel.loadMainFeed((int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            }else{
+                //do something
+            }
+        }
 
         viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
@@ -73,6 +82,7 @@ public class MainFeedFragment extends Fragment {
                 if(isUiSet){
                     ((EntriesRvAdapter) recyclerViewAdapter).setEntries(entryList);
                     recyclerViewAdapter.notifyDataSetChanged();
+                    binding.swipeRefreshLayout.setRefreshing(false);
                 }else{
                     setUpUi();
                 }
@@ -97,10 +107,17 @@ public class MainFeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 pointsViewModel.refresh();
+                /*
                 navController= Navigation.findNavController(view);
                 int actionId=navController.getCurrentDestination().getId();
                 NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
                 navController.navigate(actionId,null,navOptions);
+                 */
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    viewModel.loadMainFeed((int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+                }else {
+                    //!!!!!!!!!!!!
+                }
             }
         });
 
@@ -146,12 +163,18 @@ public class MainFeedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding=null;
         pointsViewModel.refresh();
+        isUiSet=false;
+        /*
         pointsViewModel=null;
         viewModel=null;
         recyclerViewAdapter=null;
         entryList=null;
         navController=null;
         isUiSet=false;
+
+         */
+
     }
 }

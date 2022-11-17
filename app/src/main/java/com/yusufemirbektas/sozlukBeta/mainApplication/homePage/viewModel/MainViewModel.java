@@ -28,7 +28,7 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<LoginResult> loginResult=new MutableLiveData<>();
     private final Gson gson=new Gson();
 
-    //CallBack object to manage http response
+    //CallBack object to manage autologin http response
     private Callback callback=new Callback() {
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -41,8 +41,12 @@ public class MainViewModel extends ViewModel {
                 httpSuccess.postValue(true);
                 //parsing the response
                 LoginResult result=gson.fromJson(response.body().string(), LoginResult.class);
-                user.setNickname(result.getNickName());
-                loginResult.postValue(result);
+                if(result.getResult()==0){
+                    user.setNickname(result.getNickName());
+                    loginResult.postValue(result);
+                    user.setSignedIn(true);
+                    user.setLoginStatus(true);
+                }
             } else {
                 httpSuccess.postValue(false);
             }

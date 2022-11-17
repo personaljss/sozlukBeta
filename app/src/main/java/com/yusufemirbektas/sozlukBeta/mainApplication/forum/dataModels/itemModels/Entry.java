@@ -22,7 +22,7 @@ public class Entry {
     private String date;
 
     @SerializedName("usercode")
-    private int userCode;
+    private String userCode;
 
     @SerializedName("nickname")
     private String nickName;
@@ -80,7 +80,7 @@ public class Entry {
         return date;
     }
 
-    public int getUserCode() {
+    public String getUserCode() {
         return userCode;
     }
 
@@ -120,7 +120,7 @@ public class Entry {
         this.date = date;
     }
 
-    public void setUserCode(int userCode) {
+    public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
 

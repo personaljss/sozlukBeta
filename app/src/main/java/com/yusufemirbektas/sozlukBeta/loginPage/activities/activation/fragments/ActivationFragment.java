@@ -1,8 +1,5 @@
 package com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,22 +8,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
-import com.yusufemirbektas.sozlukBeta.data.UserData;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.login.LoginActivity;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
 import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
 import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
-import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +61,7 @@ public class ActivationFragment extends Fragment {
                     @Override
                     public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                         if (response.isSuccessful()) {
-                            validateActivation(response.body());
+
                         } else {
                             Log.e("activationFragment", "response is not successful");
                         }
@@ -97,24 +89,5 @@ public class ActivationFragment extends Fragment {
         return root;
     }
 
-    private void goToMainActivity() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
 
-
-    private void validateActivation(LoginResult loginResult) {
-        //404: sistem hatası, 0: aktivasyon başarılı, 1: kod eşleşmiyor
-        Toast.makeText(getContext(), loginResult.getComment(), Toast.LENGTH_LONG).show();
-        if (loginResult.getResult() == 0) {
-            /*
-            SharedPreferences sharedPrefs= getContext().getSharedPreferences(LoginActivity.SHARED_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPrefs.edit();
-            editor.putInt(LoginActivity.SP_USERCODE, userCode);
-
-             */
-            goToMainActivity();
-        }
-    }
 }
