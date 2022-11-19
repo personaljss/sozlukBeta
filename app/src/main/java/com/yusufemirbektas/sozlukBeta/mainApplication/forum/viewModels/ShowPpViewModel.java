@@ -23,10 +23,10 @@ import okhttp3.Response;
 public class ShowPpViewModel extends ViewModel {
     private MutableLiveData<String> imageStr=new MutableLiveData<>();
 
-    public void loadProfilePhoto(int userCode){
+    public void loadProfilePhoto(String userCode){
         OkHttpClient client = ApiClientOkhttp.getInstance();
         RequestBody requestBody = new FormBody.Builder()
-                .add("images", String.valueOf(userCode))
+                .add("image", String.valueOf(userCode))
                 .add("folder", "profilePhotosFullRes")
                 .build();
 

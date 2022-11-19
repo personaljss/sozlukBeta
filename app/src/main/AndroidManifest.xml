@@ -29,10 +29,6 @@
             android:name=".mainApplication.forum.activity.ForumActivity"
             android:exported="false" />
         <activity
-            android:name=".loginPage.activities.activation.ActivationActivity"
-            android:exported="false"
-            android:parentActivityName=".loginPage.activities.login.LoginActivity" />
-        <activity
             android:name=".mainApplication.homePage.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -42,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".loginPage.activities.login.LoginActivity"
+            android:name=".loginPage.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"></activity>
 

@@ -18,15 +18,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ShowPpViewModel;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShowPpFragment extends Fragment {
     private ShowPpViewModel viewModel;
     private String imageStr;
     private ImageView imageView;
     private ProgressBar progressBar;
+    private String userCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,8 @@ public class ShowPpFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         Bundle args = getArguments();
-        int userCode = args.getInt(BundleKeys.USERCODE);
+        userCode = args.getString(BundleKeys.USERCODE);
+
 
         ImageButton backButton=view.findViewById(R.id.backIcon);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +73,19 @@ public class ShowPpFragment extends Fragment {
         viewModel.getImageStr().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                try {
-                    imageStr = s;
-                    setProfilePhoto();
-                }catch (IllegalArgumentException e){
-                    e.fillInStackTrace();
-                }
+                imageStr=parseResponse(s);
+                setProfilePhoto();
                 progressBar.setVisibility(View.GONE);
             }
         });
     }
+
+    private String parseResponse(String str){
+        Type mapType=new TypeToken<Map<String,String>>(){}.getType();
+        LinkedTreeMap<String,String> map=new Gson().fromJson(str,mapType);
+        return map.get(userCode);
+    }
+
 
     private void setProfilePhoto() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

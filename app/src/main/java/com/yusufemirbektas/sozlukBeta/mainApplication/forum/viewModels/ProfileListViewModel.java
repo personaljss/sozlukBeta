@@ -57,17 +57,17 @@ public class ProfileListViewModel extends ViewModel {
             }
         });
     }
-    public void loadFollowers(int userCode){
+    public void loadFollowers(String userCode){
         followHelper(userCode,"2");
     }
-    public void loadFollowedBys(int userCode){
+    public void loadFollowedBys(String userCode){
         followHelper(userCode,"1");
     }
-    private void followHelper(int userCode, String flag){
+    private void followHelper(String userCode, String flag){
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("userCode",String.valueOf(userCode))
+                .add("userCode",userCode)
                 .add("follower",flag)
                 .build();
 

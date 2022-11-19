@@ -3,6 +3,7 @@ package com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.profileList.ProfileListFragment;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;

@@ -37,10 +37,11 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.EntriesVi
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectFragment extends Fragment implements View.OnClickListener, PagerDialog.OnPageSelectedListener{
+public class SubjectFragment extends Fragment implements View.OnClickListener, PagerDialog.OnPageSelectedListener {
     private static final String TAG = "SubjectFragment";
     private static final int VERTICAL_ITEM_SPACE = 30;
-    public static final int ENTRY_PER_PAGE=10;
+    public static final int ENTRY_PER_PAGE = 10;
+    public static final int SCROLL_LIMIT=30;
     private FragmentSubjectEntriesBinding binding;
     private LinearLayoutManager layoutManager;
     private RecyclerView.Adapter recycleViewAdapter;
@@ -51,13 +52,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     private PointsViewModel pointsViewModel;
     private boolean isDecorated = false;
     //this value keeps track of the id of the first entry in the entryModels
-    private int startCommentId=1;
+    private int startCommentId = 1;
     //current page value
-    private int currentPage=1;
+    private int currentPage = 1;
 
 
-
-    private boolean isUiSet=false;
+    private boolean isUiSet = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,16 +80,16 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         //binding.swipeRefreshLayout.setRefreshing(false);
 
         bundle = getArguments();
-        navController= Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
 
         //initialing the id of the top-most entry
-        startCommentId=bundle.getInt(BundleKeys.COMMENT_ID,1);
+        startCommentId = bundle.getInt(BundleKeys.COMMENT_ID, 1);
 
 
-        if(entryModels==null){
-            viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID, -1),startCommentId,false);
-        }else {
-            if(!isUiSet){
+        if (entryModels == null) {
+            viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID, -1), startCommentId, false);
+        } else {
+            if (!isUiSet) {
                 setUpUi();
             }
         }
@@ -97,31 +97,31 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         viewModel.getEntries().observe(getViewLifecycleOwner(), new Observer<List<Entry>>() {
             @Override
             public void onChanged(List<Entry> subjectEntryModels) {
-                entryModels=subjectEntryModels;
+                entryModels = subjectEntryModels;
 
                 binding.swipeRefreshLayout.setRefreshing(false);
-                if(isUiSet){
+                if (isUiSet) {
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
-                    if(bundle.getInt(BundleKeys.COMMENT_ID,1)>1){
-                        binding.subjectEntriesRecyclerView.scrollToPosition(recycleViewAdapter.getItemCount()-1);
-                        bundle.putInt(BundleKeys.COMMENT_ID,1);
+                    if (bundle.getInt(BundleKeys.COMMENT_ID, 1) > 1) {
+                        binding.subjectEntriesRecyclerView.scrollToPosition(recycleViewAdapter.getItemCount() - 1);
+                        bundle.putInt(BundleKeys.COMMENT_ID, 1);
                     }
-                }else {
+                } else {
                     setUpUi();
                 }
             }
         });
 
-        pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
+        pointsViewModel = new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getEntryItemPosition().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                if(integer!=PointsViewModel.DEFAULT_POS && entryModels!=null && entryModels.size()>integer){
-                    Entry updatedEntry=entryModels.get(integer);
-                    updatedEntry.setLikeStatus(updatedEntry.getLikeStatus()+pointsViewModel.getEntryItemLikeStatus().getValue());
-                    updatedEntry.setLikePoint(updatedEntry.getLikePoint()+pointsViewModel.getEntryItemLikeStatus().getValue());
-                    entryModels.set(integer,updatedEntry);
+                if (integer != PointsViewModel.DEFAULT_POS && entryModels != null && entryModels.size() > integer) {
+                    Entry updatedEntry = entryModels.get(integer);
+                    updatedEntry.setLikeStatus(updatedEntry.getLikeStatus() + pointsViewModel.getEntryItemLikeStatus().getValue());
+                    updatedEntry.setLikePoint(updatedEntry.getLikePoint() + pointsViewModel.getEntryItemLikeStatus().getValue());
+                    entryModels.set(integer, updatedEntry);
                     recycleViewAdapter.notifyItemChanged(integer);
                 }
             }
@@ -131,10 +131,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID,-1),startCommentId,false);
+                viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID, -1), startCommentId, false);
             }
         });
-
 
 
         //paging
@@ -144,27 +143,34 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             binding.subjectEntriesRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    int pos=layoutManager.findLastVisibleItemPosition();
+                    //pager visibility check
+                    int pos = layoutManager.findLastVisibleItemPosition();
                     //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
-                    currentPage=(pos+startCommentId)/ENTRY_PER_PAGE+1;
-                    binding.pageTextView.setText(String.valueOf(currentPage));
-                        if (pos == entryModels.size() - 1) {
-                            //bottom of list!
-                            if(entryModels.size()==0){
-                                return;
-                            }
-                            Log.i(TAG, "onScrollChange: total="+viewModel.getTotalEntries()+" lastIx="+pos+startCommentId);
-                            if (entryModels.get(entryModels.size() - 1) == null || viewModel.getTotalEntries()<=pos+startCommentId) {
-                                //if the user is waiting for update already or this is the end of the feed, return
-                                return;
-                            }
-                            //adding a null reference to the list to make adapter return progress bar
-                            entryModels.add(null);
-                            int testsSize = entryModels.size();
-                            recycleViewAdapter.notifyItemInserted(testsSize - 1);
-                            //load the entry items
-                            viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID),startCommentId+testsSize-1,true);
+                    currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
+                    Log.i(TAG, "onScrollChange: Y="+scrollY+" oldY="+oldScrollY+" X="+scrollX+" oldX="+oldScrollX);
+                    if(oldScrollY<-SCROLL_LIMIT){
+                        binding.pageTextView.setVisibility(View.GONE);
+                    }else if(oldScrollY>SCROLL_LIMIT){
+                        binding.pageTextView.setVisibility(View.VISIBLE);
+                        binding.pageTextView.setText(String.valueOf(currentPage));
+                    }
+
+                    if (pos == entryModels.size() - 1) {
+                        //bottom of list!
+                        if (entryModels.size() == 0) {
+                            return;
                         }
+                        if (entryModels.get(entryModels.size() - 1) == null || viewModel.getTotalEntries() <= pos + startCommentId) {
+                            //if the user is waiting for update already or this is the end of the feed, return
+                            return;
+                        }
+                        //adding a null reference to the list to make adapter return progress bar
+                        entryModels.add(null);
+                        int testsSize = entryModels.size();
+                        recycleViewAdapter.notifyItemInserted(testsSize - 1);
+                        //load the entry items
+                        viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID), startCommentId + testsSize - 1, true);
+                    }
 
                 }
 
@@ -177,7 +183,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        isUiSet=false;
+        isUiSet = false;
         pointsViewModel.refresh();
         binding = null;
 
@@ -197,17 +203,17 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         binding.subjectFragmentNewEntry.setOnClickListener(this);
         binding.pageTextView.setOnClickListener(this);
         binding.progressBar.setVisibility(View.GONE);
-        isUiSet=true;
-        if(startCommentId!=1){
-            RecyclerView rv=(RecyclerView) binding.subjectEntriesRecyclerView;
-            rv.smoothScrollToPosition(recycleViewAdapter.getItemCount()-1);
+        isUiSet = true;
+        if (startCommentId != 1) {
+            RecyclerView rv = (RecyclerView) binding.subjectEntriesRecyclerView;
+            rv.smoothScrollToPosition(recycleViewAdapter.getItemCount() - 1);
         }
     }
 
     //spacing between elements in addItemDecoration.
     // See recyclerView/EntriesItemDecoration.class for implementation. -onerayhan
     // bool is for to not add any item decoration more than one
-    private void setUpRecyclerView(){
+    private void setUpRecyclerView() {
         layoutManager = new LinearLayoutManager(getContext());
         recycleViewAdapter = new EntriesRvAdapter(entryModels, getContext());
         binding.subjectEntriesRecyclerView.setLayoutManager(layoutManager);
@@ -220,21 +226,21 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void onClick(View v) {
-        if(v==binding.subjectFragmentNewEntry){
-            Bundle outArgs=new Bundle();
-            int subjectId=bundle.getInt(BundleKeys.SUBJECT_ID);
-            String subjectName=binding.subjectTextView.getText().toString();
+        if (v == binding.subjectFragmentNewEntry) {
+            Bundle outArgs = new Bundle();
+            int subjectId = bundle.getInt(BundleKeys.SUBJECT_ID);
+            String subjectName = binding.subjectTextView.getText().toString();
             outArgs.putInt(BundleKeys.SUBJECT_ID, subjectId);
-            outArgs.putString(BundleKeys.SUBJECT_NAME,subjectName);
-            outArgs.putInt(BundleKeys.COMMENT_ID,viewModel.getTotalEntries());
-            navController.navigate(R.id.action_subjectFragment_to_newEntryFragment,outArgs);
-        }else if(v==binding.pageTextView){
+            outArgs.putString(BundleKeys.SUBJECT_NAME, subjectName);
+            outArgs.putInt(BundleKeys.COMMENT_ID, viewModel.getTotalEntries());
+            navController.navigate(R.id.action_subjectFragment_to_newEntryFragment, outArgs);
+        } else if (v == binding.pageTextView) {
             Log.i(TAG, "onClick: pagePicker");
-            Bundle pageArgs=new Bundle();
-            int maxPage= viewModel.getTotalEntries()/ENTRY_PER_PAGE+1;
-            pageArgs.putInt(BundleKeys.CURRENT_PAGE,currentPage);
-            pageArgs.putInt(BundleKeys.MAX_PAGE,maxPage);
-            PagerDialog pagerDialog=new PagerDialog();
+            Bundle pageArgs = new Bundle();
+            int maxPage = viewModel.getTotalEntries() / ENTRY_PER_PAGE + 1;
+            pageArgs.putInt(BundleKeys.CURRENT_PAGE, currentPage);
+            pageArgs.putInt(BundleKeys.MAX_PAGE, maxPage);
+            PagerDialog pagerDialog = new PagerDialog();
             pagerDialog.setArguments(pageArgs);
             pagerDialog.setOnPageSelectedListener(this);
             pagerDialog.show(getActivity().getFragmentManager(), null);
@@ -243,12 +249,17 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void onPageSelected(int page) {
-        if (page<1){
+        if (page < 1) {
             return;
         }
-        currentPage=page;
+        int initialPage = (startCommentId - 1) / ENTRY_PER_PAGE + 1;
+        if (initialPage <= page) {
+            binding.subjectEntriesRecyclerView.smoothScrollToPosition((page - 1) * ENTRY_PER_PAGE);
+            return;
+        }
+        currentPage = page;
         binding.pageTextView.setText(String.valueOf(page));
-        startCommentId=(page-1)*10+1;
-        viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID),startCommentId,false);
+        startCommentId = (page - 1) * ENTRY_PER_PAGE + 1;
+        viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID), startCommentId, false);
     }
 }

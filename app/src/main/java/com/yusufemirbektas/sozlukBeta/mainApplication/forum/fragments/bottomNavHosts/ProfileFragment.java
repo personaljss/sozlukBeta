@@ -37,6 +37,7 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.PointsViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Header;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
+import com.yusufemirbektas.sozlukBeta.mainApplication.settings.SettingsActivity;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "ProfileFragment";
@@ -145,11 +146,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             getActivity().finish();
         }else if(v==binding.profilePpImageView){
             Bundle args=new Bundle();
-            args.putString(BundleKeys.USERCODE,viewModel.getUserCode().getValue());
+            args.putString(BundleKeys.USERCODE,user.getUserCode());
             navController.navigate(R.id.action_profileFragment_to_showPpFragment,args);
         }else if(v==binding.settingsImageButton){
-            navController.navigate(R.id.action_profileFragment_to_settingsFragment);
+            goToSettings();
         }
+    }
+
+    private void goToSettings() {
+        Intent i=new Intent(getContext(), SettingsActivity.class);
+        startActivity(i);
     }
 
     private void setProgressBarsVisible() {

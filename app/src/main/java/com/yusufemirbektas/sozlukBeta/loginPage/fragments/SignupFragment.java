@@ -1,16 +1,13 @@
-package com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments;
+package com.yusufemirbektas.sozlukBeta.loginPage.fragments;
 
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,16 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSignupBinding;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
-import com.yusufemirbektas.sozlukBeta.loginPage.UserData.viewModel.UserNameViewModel;
+import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginResult;
 import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginViewModel;
-import com.yusufemirbektas.sozlukBeta.serverClient.ApiClientRetrofit;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginApiInterface;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class SignupFragment extends Fragment {

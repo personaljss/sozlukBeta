@@ -1,8 +1,5 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.homePage.viewModel;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,8 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.data.User;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
-import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
+import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginResult;
 
 import java.io.IOException;
 
@@ -44,8 +40,7 @@ public class MainViewModel extends ViewModel {
                 if(result.getResult()==0){
                     user.setNickname(result.getNickName());
                     loginResult.postValue(result);
-                    user.setSignedIn(true);
-                    user.setLoginStatus(true);
+                    //user.setSignedIn(true);
                 }
             } else {
                 httpSuccess.postValue(false);
@@ -68,7 +63,4 @@ public class MainViewModel extends ViewModel {
                 });
     }
 
-    public void autoLogIn(){
-        user.autoLogin().enqueue(callback);
-    }
 }

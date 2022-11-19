@@ -108,7 +108,7 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
 
     private void handleResponse(Response response, String subjectName) throws IOException {
         Gson gson = new Gson();
-        String jsonResponse = response.body().string();
+        String jsonResponse = response.peekBody(2048).string();
         NewContentServerResponse serialisedResponse = gson.fromJson(jsonResponse, NewContentServerResponse.class);
         String message=serialisedResponse.getComment();
         if(serialisedResponse.getResult()!=1){

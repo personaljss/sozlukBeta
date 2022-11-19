@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class ProfileDataViewModel extends ViewModel {
     private static final String TAG = "ProfileDataViewModel";
-    private User user=User.getInstance();
+    private final User user=User.getInstance();
 
     private MutableLiveData<String> userCode=new MutableLiveData<>();
     private MutableLiveData<Header> header=new MutableLiveData<>();
@@ -62,7 +62,49 @@ public class ProfileDataViewModel extends ViewModel {
                 .add("entryStartDate", String.valueOf(entryStartDate))
                 .add("testCount", "10")
                 .add("entryCount", "10")
-                .add("header", "1")
+                .add("takePP", "1")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.PROFILE_PHP)
+                .post(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonResponse = response.body().string();
+                    setUpProfileDataBg(jsonResponse,targetDatePattern);
+                }
+            }
+        });
+    }
+
+    //method to get the profile data
+    public void loadProfileDataWithoutPp() {
+        entries.setValue(null);
+        tests.setValue(null);
+        int entryStartDate= 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            entryStartDate = (int) LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        }
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("usercode", String.valueOf(userCode.getValue()))
+                .add("viewer", user.getUserCode())
+                .add("testStart", "0")
+                .add("entryStartDate", String.valueOf(entryStartDate))
+                .add("testCount", "10")
+                .add("entryCount", "10")
+                .add("takePP", "0")
                 .build();
 
         Request request = new Request.Builder()

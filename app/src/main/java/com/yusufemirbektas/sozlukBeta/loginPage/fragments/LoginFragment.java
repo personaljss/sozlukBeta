@@ -1,4 +1,4 @@
-package com.yusufemirbektas.sozlukBeta.loginPage.activities.login.fragments;
+package com.yusufemirbektas.sozlukBeta.loginPage.fragments;
 
 
 import android.content.Intent;
@@ -22,13 +22,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.data.GenericResponse;
+import com.yusufemirbektas.sozlukBeta.data.User;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentLoginBinding;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.ActivationActivity;
-import com.yusufemirbektas.sozlukBeta.loginPage.activities.activation.fragments.ActivationFragment;
 import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
-import com.yusufemirbektas.sozlukBeta.mainApplication.homePage.MainActivity;
-import com.yusufemirbektas.sozlukBeta.loginPage.http.retrofitUtils.LoginResult;
+import com.yusufemirbektas.sozlukBeta.loginPage.viewModels.LoginResult;
 
 
 public class LoginFragment extends Fragment {
@@ -36,6 +35,7 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
     private FragmentManager fm;
+    private User user;
 
     @Nullable
     @Override
@@ -48,9 +48,10 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //initialising the viewModel object
-        viewModel=new ViewModelProvider(this).get(LoginViewModel.class);
-        //initialising the fragment manager
+        viewModel=new ViewModelProvider(getActivity()).get(LoginViewModel.class);
+        user=User.getInstance();
         fm=getActivity().getSupportFragmentManager();
+
         //setting the eye icon behaviour
         setShowHidePassword(binding.passwordEditText,binding.showHidePassword);
 
@@ -61,7 +62,18 @@ public class LoginFragment extends Fragment {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 String email=binding.emailEditText.getText().toString();
                 String password=binding.passwordEditText.getText().toString();
-                viewModel.logIn(email,password);
+                //viewModel.logIn(email,password);
+                user.login(email,password).observe(getViewLifecycleOwner(), new Observer<GenericResponse<LoginResult>>() {
+                    @Override
+                    public void onChanged(GenericResponse<LoginResult> loginResultGenericResponse) {
+                        if(loginResultGenericResponse!=null){
+                            LoginResult loginResult=loginResultGenericResponse.response;
+                            if(loginResult!=null){
+                                Toast.makeText(getContext(), loginResult.getComment(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
             }
         });
 
@@ -85,60 +97,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        //observing the login result
-        viewModel.loginResult.observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
-            @Override
-            public void onChanged(LoginResult loginResult) {
-                if(loginResult!=null){
-                    handleResult(loginResult);
-                }
-            }
-        });
-
     }
 
-    private void handleResult(LoginResult loginResult) {
-        final int result=loginResult.getResult();
-        String comment= loginResult.getComment();
-        Toast message=Toast.makeText(getContext(), comment, Toast.LENGTH_SHORT);
-        switch (result){
-            case 0:
-                //login is succesful
-                goToMainActivity();
-                break;
-            case 1:
-                //activation required, open activation fragment
-                String userCode= loginResult.getUserCode();
-                openActivationFragment(userCode);
-                break;
-            default:
-                //there is a problem, show it to the user
-                message.show();
-                break;
-        }
-    }
-
-    private void openActivationFragment(String userCode) {
-        Bundle args=new Bundle();
-        args.putString(BundleKeys.USERCODE, userCode);
-        ActivationFragment activationFragment=new ActivationFragment();
-        activationFragment.setArguments(args);
-        fm=getChildFragmentManager();
-        fm.beginTransaction().replace(R.id.login_fragment_container,activationFragment).commit();
-    }
-
-
-    private void goToMainActivity(){
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
-    private void goToActivationActivity(int userCode){
-        Intent intent = new Intent(getActivity(), ActivationActivity.class);
-        intent.putExtra(BundleKeys.USERCODE,userCode);
-        startActivity(intent);
-    }
 
     private void setShowHidePassword(EditText passwordField, ImageView eyeIcon){
         //password hide-show

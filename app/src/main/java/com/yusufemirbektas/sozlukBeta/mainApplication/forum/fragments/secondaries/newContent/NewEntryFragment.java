@@ -32,6 +32,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     private Bundle args;
     private NewEntryViewModel viewModel;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,54 +94,6 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
         entryEventListener=null;
     }
 
-    /*
-    private void postNewEntry(int subjectId, String entry) {
-        //{"result":0,"comment":"Yorum yapıldı.","time":"97.834825515747 ms"}
-        OkHttpClient client = ApiClientOkhttp.getInstance();
-        RequestBody requestBody = new FormBody.Builder()
-                .add("subjectID", String.valueOf(subjectId))
-                .add("userCode", String.valueOf(UserData.getUserCode()))
-                .add("comment", entry)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(ServerAdress.SERVER_URL + ServerAdress.NEW_COMMENT)
-                .post(requestBody)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.i(TAG, "onFailure: ");
-                Toast.makeText(getContext(), "bir hata oluştu, lütfen internet bağlantınızı kontrol edin", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.i(TAG, "onResponse: ");
-                if(response.isSuccessful()){
-                    handleResponse(response);
-                }
-            }
-        });
-    }
-
-    private void handleResponse(Response response) throws IOException {
-        Gson gson=new Gson();
-        String jsonResponse=response.body().string();
-        NewContentServerResponse serialisedResponse=gson.fromJson(jsonResponse,NewContentServerResponse.class);
-        Handler handler=new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getContext(), serialisedResponse.getComment(), Toast.LENGTH_SHORT).show();
-                if(serialisedResponse.getResult()==0){
-                    //go to the subject
-                    getActivity().onBackPressed();
-                }
-            }
-        });
-    }
-     */
 
     private void setOnClickListeners(){
         binding.newEntryPublishTextView.setOnClickListener(this);
@@ -150,11 +103,6 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v==binding.newEntryPublishTextView){
-            /*
-            int subjectId=args.getInt(BundleKeys.SUBJECT_ID,-1);
-            String entry=binding.newEntryContentEditText.getText().toString();
-            postNewEntry(subjectId,entry);
-             */
             int subjectId=args.getInt(BundleKeys.SUBJECT_ID,-1);
             String entry=binding.newEntryContentEditText.getText().toString();
             viewModel.postNewEntry(subjectId,entry);

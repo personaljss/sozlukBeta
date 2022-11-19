@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -42,7 +43,7 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
         ProfileDataViewModel profileDataViewModel = new ViewModelProvider(this).get(ProfileDataViewModel.class);
         profileDataViewModel.setUserCode(User.getInstance().getUserCode());
-        profileDataViewModel.loadProfileData();
+        profileDataViewModel.loadProfileDataWithoutPp();
 
         pointsViewModel=new ViewModelProvider(this).get(PointsViewModel.class);
         profileDataViewModel.getHeader().observe(this, new Observer<Header>() {
@@ -74,30 +75,31 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
     @Override
     public void onBackPressed() {
-        if(navController.getCurrentBackStackEntry()!=null){
+        if(navController.getCurrentBackStackEntry()!=null && navController.getPreviousBackStackEntry()!=null){
             //fragments to be popped
             //Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
-
-            if(navController.getPreviousBackStackEntry()==null){
-                finish();
-                return;
+            for (NavBackStackEntry entry: navController.getBackQueue()){
+                Log.i(TAG, "destination: "+entry.getDestination().getDisplayName());
             }
-            NavDestination destination=navController.getPreviousBackStackEntry().getDestination();
 
             int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
-            if(prevDestId==R.id.newEntryFragment){
-                navController.popBackStack(prevDestId,true);
-            }
-
             //bottom navs
             int destId=navController.getCurrentBackStackEntry().getDestination().getId();
-            if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment){
-                navController.popBackStack();
+            if(prevDestId==R.id.newEntryFragment || prevDestId==R.id.newSubjectFragment){
+                int thrdDestId=navController.getBackQueue().get(2).getDestination().getId();
+                navController.popBackStack(thrdDestId,false);
+            }
+            if(destId!=R.id.trendsFragment && destId!=R.id.profileFragment && destId!=R.id.newSubjectFragment && destId!=R.id.mainFeedFragment){
+                navController.popBackStack(prevDestId,false);
             }else{
                 finish();
             }
+        }else {
+            finish();
         }
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -133,5 +135,6 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
     public void onLikeDetails(int subjectId, int commentId) {
         entryManager.goToLikeDetails(subjectId,commentId);
     }
+
 
 }

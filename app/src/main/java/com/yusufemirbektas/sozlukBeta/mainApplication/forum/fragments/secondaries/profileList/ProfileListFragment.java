@@ -92,10 +92,10 @@ public class ProfileListFragment extends Fragment {
     private void loadUsers(int aim, Bundle args){
         switch (aim){
             case FOLLOWERS_CODE:
-                viewModel.loadFollowers(args.getInt(BundleKeys.USERCODE));
+                viewModel.loadFollowers(args.getString(BundleKeys.USERCODE));
                 break;
             case FOLLOWED_BYs_CODE:
-                viewModel.loadFollowedBys(args.getInt(BundleKeys.USERCODE));
+                viewModel.loadFollowedBys(args.getString(BundleKeys.USERCODE));
                 break;
             case LIKED_ONEs_CODE:
                 viewModel.loadLikeDetails(args.getInt(BundleKeys.SUBJECT_ID), args.getInt(BundleKeys.COMMENT_ID));
