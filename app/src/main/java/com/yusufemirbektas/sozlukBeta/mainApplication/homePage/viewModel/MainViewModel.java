@@ -45,7 +45,6 @@ public class MainViewModel extends ViewModel {
                     user.setNickname(result.getNickName());
                     loginResult.postValue(result);
                     user.setSignedIn(true);
-                    user.setLoginStatus(true);
                 }
             } else {
                 httpSuccess.postValue(false);

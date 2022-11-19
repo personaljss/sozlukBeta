@@ -26,18 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private User user;
     private MainViewModel viewModel;
-    @Override
-    protected void onStart() {
-        super.onStart();
-        /*
-        if(!user.isSignedIn()){
-            //in case the system destroyed the app
-            goToLoginActivity();
-        }
-
-         */
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +35,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel=new ViewModelProvider(this).get(MainViewModel.class);
 
         user=User.getInstance();
-        /*
-        if(!user.isSignedIn()){
-            //user directly coming to main activity
-            viewModel.autoLogIn();
-        }else {
-            setUpUi();
-        }
-
-         */
         user.loginStatus().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -63,12 +42,17 @@ public class MainActivity extends AppCompatActivity {
                     if(!aBoolean){
                         goToLoginActivity();
                     }else {
-                        setUpUi();
+                        if(!user.doesProfileExist()){
+                            goToSettingsActivity(true);
+                        }else {
+                            setUpUi();
+                        }
                     }
                 }
             }
         });
 
+        /*
         viewModel.loginResult.observe(this, new Observer<LoginResult>() {
             @Override
             public void onChanged(LoginResult loginResult) {
@@ -85,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+         */
+
+        binding.mainActivitySettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSettingsActivity(false);
+            }
+        });
+
     }
 
     private void goToSettingsActivity(boolean closeThis) {

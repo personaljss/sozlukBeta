@@ -37,13 +37,12 @@ public class App extends Application{
                     LoginResult result=new Gson().fromJson(response.body().string(), LoginResult.class);
                     if(result.getResult()==0){
                         user.setNickname(result.getNickName());
-                        user.setSignedIn(true);
-                        user.setLoginStatus(true);
+                        user.setLoginStatus(0);
                     }
                 }catch (Exception e){
                     //when userCode and deviceToken in SharedPres is null, server returns http code 500
                     //which means there is something wrong with the server(probably a bug).
-                    user.setLoginStatus(false);
+                    user.setLoginStatus(404);
                 }
             }
         });

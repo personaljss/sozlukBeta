@@ -29,7 +29,7 @@ public class User {
     private static User instance;
 
     //fields
-    private MutableLiveData<Boolean> isLoggedIn=new MutableLiveData<>();
+    private MutableLiveData<Integer> loginStatus=new MutableLiveData<>();
     private boolean isSignedIn;
     private int socialPoints = DNE;
     private int eduPoints = DNE;
@@ -72,12 +72,12 @@ public class User {
     }
 
     //Live data of issign in
-    public LiveData<Boolean> loginStatus(){
-        return isLoggedIn;
+    public LiveData<Integer> loginStatus(){
+        return loginStatus;
     }
 
-    public void setLoginStatus(boolean p){
-        isLoggedIn.postValue(p);
+    public void setLoginStatus(int status){
+        loginStatus.postValue(status);
     }
 
 
@@ -172,6 +172,21 @@ public class User {
         return client.newCall(request);
     }
 
+    public Call upLoadProfilePhoto(String imageStr) {
+        OkHttpClient client = ApiClientOkhttp.getInstance();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("userCode", userCode)
+                .add("image", imageStr)
+                .add("imageType", "0")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(ServerAdress.SERVER_URL + ServerAdress.UPLOAD_PP)
+                .post(requestBody)
+                .build();
+        return client.newCall(request);
+    }
 
 
     //getter and setters

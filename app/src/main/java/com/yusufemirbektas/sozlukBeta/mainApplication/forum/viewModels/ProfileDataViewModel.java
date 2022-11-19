@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class ProfileDataViewModel extends ViewModel {
     private static final String TAG = "ProfileDataViewModel";
-    private User user=User.getInstance();
+    private final User user=User.getInstance();
 
     private MutableLiveData<String> userCode=new MutableLiveData<>();
     private MutableLiveData<Header> header=new MutableLiveData<>();
@@ -62,7 +62,7 @@ public class ProfileDataViewModel extends ViewModel {
                 .add("entryStartDate", String.valueOf(entryStartDate))
                 .add("testCount", "10")
                 .add("entryCount", "10")
-                .add("header", "1")
+                .add("takePP", "1")
                 .build();
 
         Request request = new Request.Builder()

@@ -48,9 +48,8 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //initialising the viewModel object
-        viewModel=new ViewModelProvider(this).get(LoginViewModel.class);
-        //initialising the fragment manager
-        fm=getActivity().getSupportFragmentManager();
+        viewModel=new ViewModelProvider(getActivity()).get(LoginViewModel.class);
+
         //setting the eye icon behaviour
         setShowHidePassword(binding.passwordEditText,binding.showHidePassword);
 
@@ -85,55 +84,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        //observing the login result
-        viewModel.loginResult.observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
-            @Override
-            public void onChanged(LoginResult loginResult) {
-                if(loginResult!=null){
-                    handleResult(loginResult);
-                }
-            }
-        });
-
     }
-
-    private void handleResult(LoginResult loginResult) {
-        final int result=loginResult.getResult();
-        String comment= loginResult.getComment();
-        Toast message=Toast.makeText(getContext(), comment, Toast.LENGTH_SHORT);
-        switch (result){
-            case 0:
-                //login is succesful
-                goToMainActivity();
-                break;
-            case 1:
-                //activation required, open activation fragment
-                String userCode= loginResult.getUserCode();
-                openActivationFragment(userCode);
-                break;
-            default:
-                //there is a problem, show it to the user
-                message.show();
-                break;
-        }
-    }
-
-    private void openActivationFragment(String userCode) {
-        Bundle args=new Bundle();
-        args.putString(BundleKeys.USERCODE, userCode);
-        ActivationFragment activationFragment=new ActivationFragment();
-        activationFragment.setArguments(args);
-        fm=getChildFragmentManager();
-        fm.beginTransaction().replace(R.id.login_fragment_container,activationFragment).commit();
-    }
-
-
-    private void goToMainActivity(){
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
     private void goToActivationActivity(int userCode){
         Intent intent = new Intent(getActivity(), ActivationActivity.class);
         intent.putExtra(BundleKeys.USERCODE,userCode);
