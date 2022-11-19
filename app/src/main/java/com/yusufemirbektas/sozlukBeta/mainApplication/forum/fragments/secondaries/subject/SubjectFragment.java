@@ -52,6 +52,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     private boolean isDecorated = false;
     //this value keeps track of the id of the first entry in the entryModels
     private int startCommentId=1;
+    //current page value
+    private int currentPage=1;
 
 
 
@@ -75,7 +77,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(EntriesViewModel.class);
 
-        binding.swipeRefreshLayout.setRefreshing(false);
+        //binding.swipeRefreshLayout.setRefreshing(false);
 
         bundle = getArguments();
         navController= Navigation.findNavController(view);
@@ -96,17 +98,14 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             @Override
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels=subjectEntryModels;
+
                 binding.swipeRefreshLayout.setRefreshing(false);
                 if(isUiSet){
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
                     if(bundle.getInt(BundleKeys.COMMENT_ID,1)>1){
-                        binding.subjectEntriesRecyclerView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                binding.subjectEntriesRecyclerView.scrollToPosition(recycleViewAdapter.getItemCount()-1);
-                            }
-                        }, 100);
+                        binding.subjectEntriesRecyclerView.scrollToPosition(recycleViewAdapter.getItemCount()-1);
+                        bundle.putInt(BundleKeys.COMMENT_ID,1);
                     }
                 }else {
                     setUpUi();
@@ -128,6 +127,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             }
         });
 
+
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -135,39 +135,42 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             }
         });
 
+
+
         //paging
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             binding.subjectEntriesRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    int pos=layoutManager.findFirstVisibleItemPosition();
-                    binding.pageTexView.setText(String.valueOf(pos/ENTRY_PER_PAGE+1));
-                    Log.i(TAG, "onScrollChange: "+pos);
+                    int pos=layoutManager.findLastVisibleItemPosition();
+                    //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
+                    currentPage=(pos+startCommentId)/ENTRY_PER_PAGE+1;
+                    binding.pageTextView.setText(String.valueOf(currentPage));
+                        if (pos == entryModels.size() - 1) {
+                            //bottom of list!
+                            if(entryModels.size()==0){
+                                return;
+                            }
+                            Log.i(TAG, "onScrollChange: total="+viewModel.getTotalEntries()+" lastIx="+pos+startCommentId);
+                            if (entryModels.get(entryModels.size() - 1) == null || viewModel.getTotalEntries()<=pos+startCommentId) {
+                                //if the user is waiting for update already or this is the end of the feed, return
+                                return;
+                            }
+                            //adding a null reference to the list to make adapter return progress bar
+                            entryModels.add(null);
+                            int testsSize = entryModels.size();
+                            recycleViewAdapter.notifyItemInserted(testsSize - 1);
+                            //load the entry items
+                            viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID),startCommentId+testsSize-1,true);
+                        }
+
                 }
+
             });
+
         }
-
-        binding.subjectNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY >= v.getChildAt(0).getHeight() - v.getHeight()) {
-                    if(entryModels==null || entryModels.size()==0){
-                        return;
-                    }
-
-                    //adding a null reference to the list to make adapter return progress bar
-                    if (entryModels.get(entryModels.size() - 1) == null) {
-                        //if the user is waiting for update already, return
-                        return;
-                    }
-                    entryModels.add(null);
-                    int testsSize = entryModels.size();
-                    recycleViewAdapter.notifyItemInserted(testsSize - 1);
-                    //load the entry items
-                    viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID),startCommentId+testsSize-1,true);
-                }
-            }
-        });
 
     }
 
@@ -192,7 +195,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         binding.subjectTextView.setText(bundle.getString(BundleKeys.SUBJECT_NAME));
         binding.subjectTextView.setVisibility(View.VISIBLE);
         binding.subjectFragmentNewEntry.setOnClickListener(this);
-        binding.pagePicker.setOnClickListener(this);
+        binding.pageTextView.setOnClickListener(this);
         binding.progressBar.setVisibility(View.GONE);
         isUiSet=true;
         if(startCommentId!=1){
@@ -225,9 +228,11 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             outArgs.putString(BundleKeys.SUBJECT_NAME,subjectName);
             outArgs.putInt(BundleKeys.COMMENT_ID,viewModel.getTotalEntries());
             navController.navigate(R.id.action_subjectFragment_to_newEntryFragment,outArgs);
-        }else if(v==binding.pagePicker){
+        }else if(v==binding.pageTextView){
+            Log.i(TAG, "onClick: pagePicker");
             Bundle pageArgs=new Bundle();
-            int maxPage= viewModel.getTotalEntries()/ENTRY_PER_PAGE;
+            int maxPage= viewModel.getTotalEntries()/ENTRY_PER_PAGE+1;
+            pageArgs.putInt(BundleKeys.CURRENT_PAGE,currentPage);
             pageArgs.putInt(BundleKeys.MAX_PAGE,maxPage);
             PagerDialog pagerDialog=new PagerDialog();
             pagerDialog.setArguments(pageArgs);
@@ -238,10 +243,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void onPageSelected(int page) {
-        if (page<0){
+        if (page<1){
             return;
         }
-        startCommentId=(page-1)*10;
+        currentPage=page;
+        binding.pageTextView.setText(String.valueOf(page));
+        startCommentId=(page-1)*10+1;
         viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID),startCommentId,false);
     }
 }

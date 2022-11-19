@@ -56,8 +56,11 @@ public class PagerDialog extends DialogFragment {
         Bundle args = getArguments();
 
         int maxPage = args.getInt(BundleKeys.MAX_PAGE, 1);
+
         pagePicker.setMaxValue(maxPage);
         pagePicker.setMinValue(1);
+        pagePicker.setValue(args.getInt(BundleKeys.CURRENT_PAGE));
+        pageSelected=args.getInt(BundleKeys.CURRENT_PAGE);
         pagePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {

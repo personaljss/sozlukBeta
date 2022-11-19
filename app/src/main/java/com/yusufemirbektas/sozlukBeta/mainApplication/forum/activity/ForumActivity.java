@@ -78,7 +78,12 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
             //fragments to be popped
             //Log.i(TAG, "onBackPressed: "+navController.getCurrentBackStackEntry().getDestination().getDisplayName());
 
+            if(navController.getPreviousBackStackEntry()==null){
+                finish();
+                return;
+            }
             NavDestination destination=navController.getPreviousBackStackEntry().getDestination();
+
             int prevDestId=navController.getPreviousBackStackEntry().getDestination().getId();
             if(prevDestId==R.id.newEntryFragment){
                 navController.popBackStack(prevDestId,true);

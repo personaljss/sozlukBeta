@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment"
-    android:background="@color/background_light_2">
+    android:background="@color/background_light_2"
+    tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -18,57 +17,54 @@
         android:id="@+id/subject_fragment_new_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_post_add_24"
-        android:layout_marginStart="5dp"/>
+        android:layout_marginStart="5dp"
+        android:src="@drawable/ic_baseline_post_add_24" />
+
     <TextView
-        android:background="@drawable/basic_rectangle"
         android:id="@+id/subject_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/subject_fragment_new_entry"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/basic_rectangle"
         android:padding="5dp"
         android:text="some subject"
         android:textAlignment="center"
-        android:textColor="@color/black"/>
-    <LinearLayout
-        android:id="@+id/paging_tool"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/pageTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@+id/subject_textView"
-        android:layout_centerHorizontal="true">
-
-        <NumberPicker
-            android:id="@+id/page_picker"
-            android:layout_width="20dp"
-            android:layout_height="20dp">
-        </NumberPicker>
-
-        <TextView
-            android:id="@+id/pageTexView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="aaaaaaaaaaaaaaa"/>
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/all_items_bg"
+        android:text="1"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/paging_tool">
+        android:layout_below="@id/pageTextView">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subject_entries_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:listitem="@layout/item_entry1_0" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!---
     <androidx.core.widget.NestedScrollView
         android:id="@+id/subject_nested_scroll_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/paging_tool">
     </androidx.core.widget.NestedScrollView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subject_entries_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/subject_textView"
-            tools:listitem="@layout/item_entry1_0"
-            android:orientation="vertical"/>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    -->
 </RelativeLayout>

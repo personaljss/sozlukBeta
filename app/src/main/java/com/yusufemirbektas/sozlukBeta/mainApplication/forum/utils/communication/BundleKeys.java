@@ -12,4 +12,5 @@ public class BundleKeys {
     public static final String TAB_POS="com.yusufemirbektas.sozlukBeta.mainApplication.forum.tabPos";
     public static final String PROFILE_LIST_KEY="com.yusufemirbektas.sozlukBeta.mainApplication.forum.profileList";
     public static final String MAX_PAGE="com.yusufemirbektas.sozlukBeta.mainApplication.forum.maxPage";
+    public static final String CURRENT_PAGE="com.yusufemirbektas.sozlukBeta.mainApplication.forum.currentPage";
 }
