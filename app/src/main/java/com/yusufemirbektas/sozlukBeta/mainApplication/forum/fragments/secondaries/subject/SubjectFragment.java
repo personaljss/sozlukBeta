@@ -11,6 +11,8 @@ import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.paging.PagerDialog;
@@ -41,7 +44,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     private static final String TAG = "SubjectFragment";
     private static final int VERTICAL_ITEM_SPACE = 30;
     public static final int ENTRY_PER_PAGE = 10;
-    public static final int SCROLL_LIMIT=30;
     private FragmentSubjectEntriesBinding binding;
     private LinearLayoutManager layoutManager;
     private RecyclerView.Adapter recycleViewAdapter;
@@ -77,10 +79,14 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(EntriesViewModel.class);
 
-        //binding.swipeRefreshLayout.setRefreshing(false);
+        binding.swipeRefreshLayout.setRefreshing(false);
 
         bundle = getArguments();
         navController = Navigation.findNavController(view);
+
+        Toolbar toolbar=binding.subjectToolBar;
+        toolbar.setTitle("");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         //initialing the id of the top-most entry
         startCommentId = bundle.getInt(BundleKeys.COMMENT_ID, 1);
@@ -98,7 +104,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             @Override
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels = subjectEntryModels;
-
                 binding.swipeRefreshLayout.setRefreshing(false);
                 if (isUiSet) {
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
@@ -136,9 +141,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         });
 
 
+
         //paging
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             binding.subjectEntriesRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
@@ -148,13 +152,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
                     currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
                     Log.i(TAG, "onScrollChange: Y="+scrollY+" oldY="+oldScrollY+" X="+scrollX+" oldX="+oldScrollX);
-                    if(oldScrollY<-SCROLL_LIMIT){
-                        binding.pageTextView.setVisibility(View.GONE);
-                    }else if(oldScrollY>SCROLL_LIMIT){
-                        binding.pageTextView.setVisibility(View.VISIBLE);
-                        binding.pageTextView.setText(String.valueOf(currentPage));
-                    }
-
+                    binding.pageTextView.setText(String.valueOf(currentPage));
                     if (pos == entryModels.size() - 1) {
                         //bottom of list!
                         if (entryModels.size() == 0) {

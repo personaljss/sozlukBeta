@@ -1,70 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_light_2"
-    tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
 
-    <ImageView
-        android:id="@+id/subject_fragment_new_entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_baseline_post_add_24" />
-
-    <TextView
-        android:id="@+id/subject_textView"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/subject_fragment_new_entry"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/basic_rectangle"
-        android:padding="5dp"
-        android:text="some subject"
-        android:textAlignment="center"
-        android:textColor="@color/black" />
+        android:layout_height="match_parent"
+        android:background="@color/background_light_2"
+        tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
 
-    <TextView
-        android:id="@+id/pageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        <ImageView
+            android:id="@+id/subject_fragment_new_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_baseline_post_add_24" />
+
+        <TextView
+            android:id="@+id/subject_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subject_fragment_new_entry"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/basic_rectangle"
+            android:padding="5dp"
+            android:text="some subject"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_below="@+id/subject_textView"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="5dp"
-        android:background="@drawable/all_items_bg"
-        android:text="1"
-        android:textAlignment="center"
-        android:textColor="@color/black" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pageTextView">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subject_entries_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:listitem="@layout/item_entry1_0" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent">
 
-    <!---
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/subject_nested_scroll_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/paging_tool">
-    </androidx.core.widget.NestedScrollView>
-    -->
-</RelativeLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/subjectAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subject_textView">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/subjectToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                    <TextView
+                        android:id="@+id/pageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/all_items_bg"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/black" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/subject_entries_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/subjectAppBarLayout"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_entry1_0"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </RelativeLayout>

@@ -204,9 +204,12 @@ public class User {
                 try {
                     LoginResult result=gson.fromJson(response.body().string(), LoginResult.class);
                     genericResponse.response=result;
+                    setLoginStatus(result.getResult());
                     if(result.getResult()==0){
                         setNickname(result.getNickName());
-                        setLoginStatus(LOGIN_SUCCESSFUL);
+                    }else if(result.getResult()==404){
+                        setLoginStatus(User.AUTO_FAILED);
+                        fetchDeviceToken();
                     }
                 }catch (Exception e){
                     //which means there is something wrong with the server(probably a bug).

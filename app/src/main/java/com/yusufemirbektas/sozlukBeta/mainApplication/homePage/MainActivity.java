@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         user = User.getInstance();
 
-
         //observing the login status of the user to decide where to send him/her/they/them/trans birey
 
         user.loginStatus().observe(this, new Observer<Integer>() {
