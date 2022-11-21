@@ -5,6 +5,7 @@ import static com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.I
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -78,6 +79,28 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.rotatePpCWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix matrix=new Matrix();
+                matrix.postRotate(-90);
+                Bitmap src=ppBitmap;
+                ppBitmap=Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix,false);
+                binding.settingsPpCircleImageView.setImageBitmap(ppBitmap);
+            }
+        });
+
+        binding.rotatePpCCWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Matrix matrix=new Matrix();
+                matrix.postRotate(90);
+                Bitmap src=ppBitmap;
+                ppBitmap=Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix,false);
+                binding.settingsPpCircleImageView.setImageBitmap(ppBitmap);
+            }
+        });
+
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
                             //do something
                         }
                     }
-                    if(user.getNickname()!=nickName.toString()){
+                    if(!user.getNickname().equals(nickName.toString())){
                         viewModel.updateProfile(nickName.toString(),null,imageEncoded);
                     }
                 }
@@ -127,6 +150,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
                             if(selectedImageBitmap!=null){
+                                //making rotation  buttons visible when user picks a photo
+                                binding.rotatePpCCWBtn.setVisibility(View.VISIBLE);
+                                binding.rotatePpCWBtn.setVisibility(View.VISIBLE);
                                 ppBitmap=selectedImageBitmap;
                                 binding.settingsPpCircleImageView.setImageBitmap(selectedImageBitmap);
                             }
