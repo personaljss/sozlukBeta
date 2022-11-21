@@ -1,6 +1,7 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.EntryEventListener;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.ProfileItem;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.image.ImageUtils;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.viewHolders.ProfileItemViewHolder;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.viewHolders.ProgressBarViewHolder;
 
@@ -69,6 +71,11 @@ public class ProfilesRvAdapter extends RecyclerView.Adapter {
             ProfileItem item=profileItems.get(position);
             ((ProfileItemViewHolder) holder).pointsTextView.setText(String.valueOf(item.getLikeStatus()));
             ((ProfileItemViewHolder) holder).nickNameTextView.setText(item.getNickName());
+            if(item.getPhoto()!=null && !item.getPhoto().equals("")){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ((ProfileItemViewHolder) holder).ppImageView.setImageBitmap(ImageUtils.stringToBitmap(item.getPhoto()));
+                }
+            }
         }else{
             //nothing to do
         }

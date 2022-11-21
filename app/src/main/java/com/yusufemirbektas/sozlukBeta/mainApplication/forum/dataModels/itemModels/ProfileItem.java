@@ -12,6 +12,24 @@ public class ProfileItem {
     @SerializedName("usercode")
     private String userCode;
 
+    private String photo;
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public String getNickName() {
         return nickName;
     }

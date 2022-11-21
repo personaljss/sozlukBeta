@@ -141,6 +141,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+
+
         if (v == binding.homeButtonImageView) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
@@ -153,6 +155,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             goToSettings();
         }
     }
+
+
 
     private void goToSettings() {
         Intent i=new Intent(getContext(), SettingsActivity.class);

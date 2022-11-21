@@ -15,6 +15,7 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
 
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
@@ -28,9 +29,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+
                 android:translationZ="90dp"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/TextAppearance.Design.CollapsingToolbar.Expanded">
+                app:popupTheme="@style/Widget.Design.NavigationView">
+
                 <TextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
@@ -42,35 +45,42 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginBottom="10dp"
+                    android:translationZ="1000dp"
                     android:background="@drawable/ic_settings"
-                    android:layout_gravity="start"/>
+                    android:clickable="true"
+                    android:layout_gravity="start"
+                    />
 
                 <ImageView
                     android:id="@+id/home_button_imageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:translationZ="100dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_gravity="end"
-                    app:srcCompat="@drawable/ic_baseline_home_24" />
+                    android:clickable="true"
+                    app:srcCompat="@drawable/ic_baseline_home_24"
+                     />
 
             </androidx.appcompat.widget.Toolbar>
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                >
+                android:layout_height="match_parent">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/profilePpCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/profile_badges_bg"
+                    android:background="@color/background_light_2"
                     app:layout_constraintBottom_toTopOf="@id/profileScoresLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.35">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profilePpImageView"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -84,8 +94,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
-
-
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -115,11 +123,10 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="@id/profileFollowingTextView"
-                    app:layout_constraintTop_toTopOf="@id/profileFollowingTextView"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.1"
-                    />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/profileFollowingTextView" />
 
                 <TextView
                     android:id="@+id/profileFollowingTextView"
@@ -134,8 +141,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profileNickNameTextView"
-                     />
+                    app:layout_constraintTop_toBottomOf="@id/profileNickNameTextView" />
+
                 <TextView
                     android:id="@+id/profileFollowersTextView"
                     android:layout_width="wrap_content"
@@ -147,11 +154,10 @@
                     android:textColor="@color/text_color"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="@id/profileFollowingTextView"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profileFollowingTextView" />
-
 
 
                 <RelativeLayout
@@ -163,8 +169,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profileFollowingTextView"
-                    >
+                    app:layout_constraintTop_toBottomOf="@id/profileFollowingTextView">
 
 
                     <RelativeLayout
@@ -180,11 +185,12 @@
                             android:id="@+id/profileTestsBadge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:text="Testler"
                             android:textColor="@color/white"
                             android:textSize="24sp" />
+
                         <TextView
                             android:id="@+id/profileTestsTextView"
                             android:layout_width="wrap_content"
@@ -203,8 +209,8 @@
                         android:id="@+id/profileSocialsLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:layout_below="@id/profileTestsLayout"
+                        android:layout_margin="10dp"
                         android:background="@drawable/profile_badges_bg"
                         android:padding="10dp">
 
@@ -235,9 +241,12 @@
                         android:id="@+id/profileChallengesLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:layout_below="@id/profileSocialsLayout"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/profile_badges_bg"
                         android:padding="10dp">
 
@@ -264,15 +273,15 @@
 
 
                 </RelativeLayout>
+
                 <ProgressBar
                     android:id="@+id/profile_progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -302,10 +311,10 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
 
-
-
+            >
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

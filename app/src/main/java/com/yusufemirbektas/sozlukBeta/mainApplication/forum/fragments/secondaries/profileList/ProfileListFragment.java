@@ -58,6 +58,14 @@ public class ProfileListFragment extends Fragment {
         }else {
             setUpUi();
         }
+        viewModel.getPhotosLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(!aBoolean){
+                    viewModel.loadProfilePhotos();
+                }
+            }
+        });
         viewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<ProfileItem>>() {
             @Override
             public void onChanged(List<ProfileItem> profileItems) {
@@ -109,5 +117,6 @@ public class ProfileListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         isUiSet=false;
+        binding=null;
     }
 }
