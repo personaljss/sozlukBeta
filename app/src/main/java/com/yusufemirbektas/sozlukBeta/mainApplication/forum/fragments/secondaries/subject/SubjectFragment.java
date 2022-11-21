@@ -84,7 +84,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         bundle = getArguments();
         navController = Navigation.findNavController(view);
 
-        Toolbar toolbar=binding.subjectToolBar;
+        Toolbar toolbar = binding.subjectToolBar;
         toolbar.setTitle("");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -105,11 +105,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             public void onChanged(List<Entry> subjectEntryModels) {
                 entryModels = subjectEntryModels;
                 binding.swipeRefreshLayout.setRefreshing(false);
+                currentPage=(entryModels.size()-startCommentId)/ENTRY_PER_PAGE+1;
                 if (isUiSet) {
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
                     if (bundle.getInt(BundleKeys.COMMENT_ID, 1) > 1) {
-                        binding.subjectEntriesRecyclerView.scrollToPosition(recycleViewAdapter.getItemCount() - 1);
+                        binding.subjectEntriesRecyclerView.scrollToPosition(entryModels.size() - 1);
                         bundle.putInt(BundleKeys.COMMENT_ID, 1);
                     }
                 } else {
@@ -141,7 +142,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         });
 
 
-
         //paging
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             binding.subjectEntriesRecyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -151,7 +151,6 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     int pos = layoutManager.findLastVisibleItemPosition();
                     //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
                     currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
-                    Log.i(TAG, "onScrollChange: Y="+scrollY+" oldY="+oldScrollY+" X="+scrollX+" oldX="+oldScrollX);
                     binding.pageTextView.setText(String.valueOf(currentPage));
                     if (pos == entryModels.size() - 1) {
                         //bottom of list!
@@ -184,7 +183,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         isUiSet = false;
         pointsViewModel.refresh();
         binding = null;
-
+        ((AppCompatActivity) getActivity()).setSupportActionBar(null);
         //startCommentId=1;
     }
 
@@ -251,13 +250,14 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             return;
         }
         int initialPage = (startCommentId - 1) / ENTRY_PER_PAGE + 1;
-        if (initialPage <= page) {
+        int maxPage = entryModels.size() / ENTRY_PER_PAGE + 1;
+        if (page>=initialPage && page<=maxPage) {
+            currentPage = page;
+            binding.pageTextView.setText(String.valueOf(page));
             binding.subjectEntriesRecyclerView.smoothScrollToPosition((page - 1) * ENTRY_PER_PAGE);
-            return;
+        }else{
+            startCommentId = (page - 1) * ENTRY_PER_PAGE + 1;
+            viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID), startCommentId, false);
         }
-        currentPage = page;
-        binding.pageTextView.setText(String.valueOf(page));
-        startCommentId = (page - 1) * ENTRY_PER_PAGE + 1;
-        viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID), startCommentId, false);
     }
 }

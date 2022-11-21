@@ -118,5 +118,6 @@ public class ProfileListFragment extends Fragment {
         super.onDestroyView();
         isUiSet=false;
         binding=null;
+        recyclerViewAdapter=null;
     }
 }

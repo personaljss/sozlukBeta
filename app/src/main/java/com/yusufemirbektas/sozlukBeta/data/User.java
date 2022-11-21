@@ -76,7 +76,10 @@ public class User {
     //checks whether required fields for a profile exits or not
     public boolean doesProfileExist() {
         //boolean res= degree != null && nickname != null;
-        return (nickname != null);
+        if(nickname==null){
+            return false;
+        }
+        return (!nickname.equals("N"));
     }
 
     //Live data of issign in
@@ -172,9 +175,6 @@ public class User {
 
     //automatic login
     public void autoLogin() {
-        MutableLiveData<GenericResponse<LoginResult>> liveResponse = new MutableLiveData<>();
-        GenericResponse<LoginResult> genericResponse = new GenericResponse<>();
-
         if(deviceToken.equals("")){
             //user installed the app for the first time or app data has been deleted
             setLoginStatus(AUTO_FAILED);
@@ -203,17 +203,15 @@ public class User {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
                     LoginResult result=gson.fromJson(response.body().string(), LoginResult.class);
-                    genericResponse.response=result;
-                    setLoginStatus(result.getResult());
                     if(result.getResult()==0){
                         setNickname(result.getNickName());
+                        setLoginStatus(result.getResult());
                     }else if(result.getResult()==404){
                         setLoginStatus(User.AUTO_FAILED);
                         fetchDeviceToken();
                     }
                 }catch (Exception e){
                     //which means there is something wrong with the server(probably a bug).
-                    genericResponse.httpStatus=GenericResponse.SERVER_FAILED;
                 }
 
             }
@@ -328,7 +326,7 @@ public class User {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
+    public synchronized void setNickname(String nickname) {
         this.nickname = nickname;
     }
 

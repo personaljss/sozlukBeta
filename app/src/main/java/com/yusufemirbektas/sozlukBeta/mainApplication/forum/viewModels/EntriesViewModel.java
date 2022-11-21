@@ -147,9 +147,8 @@ public class EntriesViewModel extends ViewModel {
         SubjectEntriesResponse entriesResponse = gson.fromJson(jsonResponse, SubjectEntriesResponse.class);
         totalEntries = entriesResponse.getTotalEntries();
         List<Entry> entryList = this.entries.getValue();
-        if (entryList == null) {
-            entryList = new ArrayList<>();
-        } else if (entryList.size() > 0 && entryList.get(entryList.size() - 1) == null) {
+
+        if (entryList!=null && entryList.size() > 0 && entryList.get(entryList.size() - 1) == null) {
             entryList.remove(entryList.size() - 1);
         }
         Type ListOfSubjectEntries = TypeToken.getParameterized(List.class, Entry.class).getType();
