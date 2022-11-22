@@ -146,14 +146,16 @@ public class EntriesViewModel extends ViewModel {
         Gson gson = new Gson();
         SubjectEntriesResponse entriesResponse = gson.fromJson(jsonResponse, SubjectEntriesResponse.class);
         totalEntries = entriesResponse.getTotalEntries();
-        List<Entry> entryList = this.entries.getValue();
-
-        if (entryList!=null && entryList.size() > 0 && entryList.get(entryList.size() - 1) == null) {
-            entryList.remove(entryList.size() - 1);
-        }
+        List<Entry> entryList = new ArrayList<>();
         Type ListOfSubjectEntries = TypeToken.getParameterized(List.class, Entry.class).getType();
         List<Entry> entriesFromJson = gson.fromJson(entriesResponse.getData(), ListOfSubjectEntries);
-        this.entries.postValue(entriesFromJson);
+        if (entriesFromJson.size() > 0) {
+            for (Entry entry : entriesFromJson) {
+                entry.formatDate(targetDatePattern);
+                entryList.add(entry);
+            }
+        }
+        this.entries.postValue(entryList);
     }
 
     private void setEntries(List<Entry> entries) {

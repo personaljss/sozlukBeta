@@ -92,6 +92,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         entryEventListener=null;
+        binding=null;
     }
 
 

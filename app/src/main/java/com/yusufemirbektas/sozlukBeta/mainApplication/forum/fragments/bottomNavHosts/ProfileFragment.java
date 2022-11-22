@@ -47,8 +47,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private PointsViewModel pointsViewModel;
     //tab titles
     private final String[] TAB_TITLES = {"TESTLER", "ENTRILER"};
-    //Image type constant to get profile picture from server
-    public static final int IMAGE_TYPE_PROFILE = 0;
     private NavController navController;
     private User user;
 
@@ -68,6 +66,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         navController= Navigation.findNavController(view);
         user=User.getInstance();
 
+        //the object is responsible for tracking the user's point
         pointsViewModel=new ViewModelProvider(getActivity()).get(PointsViewModel.class);
         pointsViewModel.getPointsAvailable().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -98,14 +97,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        //binding.viewPagerProfile.setAdapter(new ProfileViewPagerAdapter(this));
+        //fragment manager responsible for inflating tests-entries fragments
         FragmentManager fm = getChildFragmentManager();
+        //Lifecycle object required to pass to the viewpager adapter constructor to prevent memory leaks
         Lifecycle lifecycle = getViewLifecycleOwner().getLifecycle();
+        //creating the adapter and setting to the viewpager
         ProfileViewPagerAdapter adapter=new ProfileViewPagerAdapter(fm, lifecycle);
         adapter.setSelf(true);
-
         binding.viewPagerProfile.setAdapter(adapter);
 
+        //mediator responsible for managing the tabs
         new TabLayoutMediator(binding.tabLayout, binding.viewPagerProfile,true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -113,16 +114,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         }).attach();
 
-
+        //refreshing the page
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 viewModel.loadProfileData();
-                /*
-                int actionId=navController.getCurrentDestination().getId();
-                NavOptions navOptions=new NavOptions.Builder().setPopUpTo(actionId,true).build();
-                navController.navigate(R.id.action_profileFragment_self,null,navOptions);
-                 */
             }
         });
 
@@ -139,10 +135,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         super.onDestroy();
     }
 
+    //click listener implementation
     @Override
     public void onClick(View v) {
-
-
         if (v == binding.homeButtonImageView) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
@@ -153,18 +148,56 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             navController.navigate(R.id.action_profileFragment_to_showPpFragment,args);
         }else if(v==binding.settingsImageButton){
             goToSettings();
+        }else if(v==binding.profileSocialsLayout){
+            //this menu is responsible for navigating the user to the profilelist fragment which shows
+            // followers and followings. You should not use this menu, it is temporary. What you should do is to
+            // implement hte same logic to the click events to the buttons that you create.
+            PopupMenu menu=new PopupMenu(getContext(),v);
+            menu.getMenuInflater().inflate(R.menu.forum_socials_menu,menu.getMenu());
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Bundle args=new Bundle();
+                    args.putString(BundleKeys.USERCODE,user.getUserCode());
+                    switch (item.getItemId()){
+                        case R.id.followers:
+                            args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
+                            break;
+                        case R.id.followedBys:
+                            args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWED_BYs_CODE);
+                            break;
+                        default:
+                            break;
+                    }
+                    navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
+                    return true;
+                }
+            });
+            menu.show();
         }
+        /**The menu's implementation should be done here like this:
+         * if(v==followersButton){
+         *      Bundle args=new Bundle();
+         *      args.putString(BundleKeys.USERCODE,user.getUserCode());
+         *      args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
+         *      navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
+         * }
+         * if(v==followingsButton){
+         *      Bundle args=new Bundle();
+         *      args.putString(BundleKeys.USERCODE,user.getUserCode());
+         *      args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWED_BYs_CODE);
+         *      navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
+         * }
+         * **/
     }
 
-
-
+    //function that navigates to settings activity
     private void goToSettings() {
         Intent i=new Intent(getContext(), SettingsActivity.class);
         startActivity(i);
     }
 
     private void setProgressBarsVisible() {
-
         binding.profileProgressBar.setVisibility(View.VISIBLE);
         binding.profilePpProgressBar.setVisibility(View.VISIBLE);
     }
@@ -178,38 +211,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         binding.profilePpImageView.setOnClickListener(this);
         binding.homeButtonImageView.setOnClickListener(this);
         binding.settingsImageButton.setOnClickListener(this);
-        binding.profileSocialsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "dokundun", Toast.LENGTH_SHORT).show();
-                PopupMenu menu=new PopupMenu(getContext(),v);
-                menu.getMenuInflater().inflate(R.menu.forum_socials_menu,menu.getMenu());
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Bundle args=new Bundle();
-                        args.putString(BundleKeys.USERCODE,user.getUserCode());
-                        switch (item.getItemId()){
-                            case R.id.followers:
-                                Log.i(TAG, "onMenuItemClick: followers");
-                                args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWERS_CODE);
-                                break;
-                            case R.id.followedBys:
-                                Log.i(TAG, "onMenuItemClick: followedbys");
-                                args.putInt(BundleKeys.PROFILE_LIST_KEY, ProfileListFragment.FOLLOWED_BYs_CODE);
-                                break;
-                            default:
-                                break;
-                        }
-                        navController.navigate(R.id.action_profileFragment_to_profileListFragment,args);
-                        return true;
-                    }
-                });
-                menu.show();
-            }
-        });
+        binding.profileSocialsLayout.setOnClickListener(this);
     }
 
+    //function responsible for creating the header part of the fragment like nickname, profile photo etc. It is everything except
+    //tests and entries which are other fragments.
     private void setUpHeaderUi(Header header) {
         //the page is loaded so progress bar is gone
         setProgressBarsGone();
@@ -220,7 +226,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         binding.profilePointsTextView.setText(String.valueOf(header.getTotalPoints()));
         binding.profileSocialsTextView.setText(String.valueOf(header.getSocialEarned()));
         //setting the profile photo
-
         if (!header.getProfilePhoto().equals("1")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if(!(header.getProfilePhoto().equals("0") || header.getProfilePhoto().equals("1")))
