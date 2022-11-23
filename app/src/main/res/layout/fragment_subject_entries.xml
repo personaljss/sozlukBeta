@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light_2"
+    tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <ImageView
+        android:id="@+id/subject_fragment_new_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/ic_baseline_post_add_24" />
+
+    <TextView
+        android:id="@+id/subject_textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_light_2"
-        tools:context=".mainApplication.forum.fragments.secondaries.subject.SubjectFragment">
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
-        <ImageView
-            android:id="@+id/subject_fragment_new_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_post_add_24" />
-
-        <TextView
-            android:id="@+id/subject_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/subject_fragment_new_entry"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/basic_rectangle"
-            android:padding="5dp"
-            android:text="some subject"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subject_fragment_new_entry"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/basic_rectangle"
+        android:padding="5dp"
+        android:text="some subject"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_below="@+id/subject_textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/subject_textView">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/subjectAppBarLayout"
@@ -53,17 +52,37 @@
                 android:layout_height="30dp"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                    <TextView
-                        android:id="@+id/pageTextView"
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/all_items_bg"
-                        android:text="1"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/firstPageTexView"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="5dp"
+                    android:text="ilk"
+                    android:textAlignment="center"
+                    tools:ignore="RtlCompat" />
+
+                <TextView
+                    android:id="@+id/pageTextView"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/all_items_bg"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/lastPageTexView"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:text="son"
+                    android:textAlignment="center"
+                    tools:ignore="RtlCompat" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -81,10 +100,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/subjectAppBarLayout"
                 android:orientation="vertical"
-                tools:listitem="@layout/item_entry1_0"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/item_entry1_0" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </RelativeLayout>
+</RelativeLayout>

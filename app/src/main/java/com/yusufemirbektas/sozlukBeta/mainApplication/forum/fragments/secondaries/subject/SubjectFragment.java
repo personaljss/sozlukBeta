@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -91,12 +92,12 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         //initialing the id of the top-most entry
         startCommentId = bundle.getInt(BundleKeys.COMMENT_ID, 1);
 
-        entryModels=viewModel.getEntries().getValue();
+        entryModels = viewModel.getEntries().getValue();
         if (entryModels == null) {
             viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID, -1), startCommentId, false);
         } else {
-            startCommentId=entryModels.get(0).getCommentID();
-            currentPage=(startCommentId-1)/ENTRY_PER_PAGE+1;
+            startCommentId = entryModels.get(0).getCommentID();
+            currentPage = (startCommentId - 1) / ENTRY_PER_PAGE + 1;
             binding.pageTextView.setText(String.valueOf(currentPage));
             if (!isUiSet) {
                 setUpUi();
@@ -112,8 +113,10 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                 binding.subjectEntriesRecyclerView.setVisibility(View.VISIBLE);
                 if (isUiSet) {
                     int pos = layoutManager.findLastVisibleItemPosition();
+                    startCommentId = subjectEntryModels.get(0).getCommentID();
                     currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
-                    binding.pageTextView.setText(String.valueOf(currentPage));
+                    int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
+                    binding.pageTextView.setText(currentPage + "/" + totalPages);
                     ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
                     recycleViewAdapter.notifyDataSetChanged();
                     if (bundle.getInt(BundleKeys.COMMENT_ID, 1) > 1) {
@@ -157,8 +160,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     //pager visibility check
                     int pos = layoutManager.findLastVisibleItemPosition();
                     //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
-                    currentPage = (pos + startCommentId-1) / ENTRY_PER_PAGE + 1;
-                    binding.pageTextView.setText(String.valueOf(currentPage));
+                    currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
+                    int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
+                    binding.pageTextView.setText(currentPage + "/" + totalPages);
                     if (pos == entryModels.size() - 1) {
                         //bottom of list!
                         if (entryModels.size() == 0) {
@@ -190,9 +194,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         isUiSet = false;
         pointsViewModel.refresh();
         binding = null;
-        recycleViewAdapter=null;
+        recycleViewAdapter = null;
         ((AppCompatActivity) getActivity()).setSupportActionBar(null);
-        layoutManager=null;
+        layoutManager = null;
     }
 
     @Override
@@ -207,6 +211,8 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         binding.subjectTextView.setVisibility(View.VISIBLE);
         binding.subjectFragmentNewEntry.setOnClickListener(this);
         binding.pageTextView.setOnClickListener(this);
+        binding.firstPageTexView.setOnClickListener(this);
+        binding.lastPageTexView.setOnClickListener(this);
         binding.progressBar.setVisibility(View.GONE);
         isUiSet = true;
         if (startCommentId != 1) {
@@ -241,13 +247,18 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             navController.navigate(R.id.action_subjectFragment_to_newEntryFragment, outArgs);
         } else if (v == binding.pageTextView) {
             Bundle pageArgs = new Bundle();
-            int maxPage = (viewModel.getTotalEntries()-1) / ENTRY_PER_PAGE + 1;
+            int maxPage = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
             pageArgs.putInt(BundleKeys.CURRENT_PAGE, currentPage);
             pageArgs.putInt(BundleKeys.MAX_PAGE, maxPage);
             PagerDialog pagerDialog = new PagerDialog();
             pagerDialog.setArguments(pageArgs);
             pagerDialog.setOnPageSelectedListener(this);
             pagerDialog.show(getActivity().getFragmentManager(), null);
+        } else if (v == binding.firstPageTexView) {
+            onPageSelected(1);
+        } else if (v == binding.lastPageTexView) {
+            int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
+            onPageSelected(totalPages);
         }
     }
 
@@ -257,12 +268,13 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
             return;
         }
         int initialPage = (startCommentId - 1) / ENTRY_PER_PAGE + 1;
-        int maxPage = (entryModels.size()-1) / ENTRY_PER_PAGE + 1;
-        if (page>=initialPage && page<maxPage) {
+        int maxPage = (entryModels.size() - 1) / ENTRY_PER_PAGE + 1;
+        if (page >= initialPage && page < maxPage) {
             currentPage = page;
-            binding.pageTextView.setText(String.valueOf(page));
-            binding.subjectEntriesRecyclerView.smoothScrollToPosition((page - 1) * ENTRY_PER_PAGE);
-        }else{
+            int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
+            binding.pageTextView.setText(page + "/" + totalPages);
+            binding.subjectEntriesRecyclerView.smoothScrollToPosition((page - initialPage) * ENTRY_PER_PAGE);
+        } else {
             startCommentId = (page - 1) * ENTRY_PER_PAGE + 1;
             binding.subjectEntriesRecyclerView.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
