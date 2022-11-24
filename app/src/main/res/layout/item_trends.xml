@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/all_items_bg">
+        android:background="@drawable/trend_items_bg">
 
         <TextView
             android:id="@+id/trends_item_title"

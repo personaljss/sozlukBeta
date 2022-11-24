@@ -9,7 +9,7 @@
         android:id="@+id/newSubjectFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts.NewSubjectFragment"
         android:label="fragment_new_subject"
-        tools:layout="@layout/fragment_new_subject" >
+        tools:layout="@layout/fragment_new_subject_1_0" >
         <action
             android:id="@+id/action_newSubjectFragment_to_forum_subject"
             app:destination="@id/forum_subject" />

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewEntry10Binding;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewEntryBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.EntryEventListener;
@@ -28,7 +29,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "NewEntryFragment";
     private static final int LENGTH_LIMIT=500;
     private EntryEventListener entryEventListener;
-    private FragmentNewEntryBinding binding;
+    private FragmentNewEntry10Binding binding;
     private Bundle args;
     private NewEntryViewModel viewModel;
 
@@ -36,7 +37,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentNewEntryBinding.inflate(inflater, container, false);
+        binding = FragmentNewEntry10Binding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

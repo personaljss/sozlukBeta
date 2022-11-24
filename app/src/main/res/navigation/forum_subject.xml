@@ -49,7 +49,7 @@
         android:id="@+id/newEntryFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.newContent.NewEntryFragment"
         android:label="fragment_new_entry"
-        tools:layout="@layout/fragment_new_entry" >
+        tools:layout="@layout/fragment_new_entry_1_0" >
         <action
             android:id="@+id/action_newEntryFragment_to_subjectFragment"
             app:destination="@id/subjectFragment" />

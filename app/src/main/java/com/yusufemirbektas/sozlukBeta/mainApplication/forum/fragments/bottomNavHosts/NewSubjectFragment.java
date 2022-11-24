@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.yusufemirbektas.sozlukBeta.R;
+import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewSubject10Binding;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentNewSubjectBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.communication.BundleKeys;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.serverResponses.NewContentServerResponse;
@@ -38,14 +39,14 @@ public class NewSubjectFragment extends Fragment implements View.OnClickListener
     private static final String TAG = "NewSubjectFragment";
     private final int CHAR_LIMIT = 50;
     private String points = "0";
-    private FragmentNewSubjectBinding binding;
+    private FragmentNewSubject10Binding binding;
     private NavController navController;
     private NewSubjectViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentNewSubjectBinding.inflate(inflater, container, false);
+        binding = FragmentNewSubject10Binding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

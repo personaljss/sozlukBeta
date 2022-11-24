@@ -9,7 +9,7 @@
         android:id="@+id/profileFragment"
         android:name="com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.bottomNavHosts.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile1_1">
+        tools:layout="@layout/fragment_profile_1_1">
         <action
             android:id="@+id/action_profileFragment_to_forum_subject"
             app:destination="@id/forum_subject" />

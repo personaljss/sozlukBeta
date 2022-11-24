@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light_2"
+    tools:context=".mainApplication.forum.fragments.secondaries.newContent.NewEntryFragment">
+
+
+    <RelativeLayout
+        android:id="@+id/new_entry_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/new_entry_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:id="@+id/new_entry_publish_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Gönder"
+            android:paddingHorizontal="13dp"
+            android:paddingVertical="3dp"
+            android:background="@drawable/button_bg"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/new_entry_subject_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_light_2"
+        android:layout_below="@id/new_entry_options"
+        android:textSize="24sp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:textColor="@color/text_color" />
+
+    <EditText
+        android:hint="Entry"
+        android:background="#00000000"
+        android:gravity="top|start"
+        android:id="@+id/new_entry_content_editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/new_entry_subject_textView"
+        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:imeOptions="actionNone"
+        android:padding="5dp"
+        android:maxLength="500"/>
+
+
+</RelativeLayout>
