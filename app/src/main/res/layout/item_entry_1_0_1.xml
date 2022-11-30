@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
                 android:layout_marginTop="2dp"
                 android:layout_alignParentStart="true"
                 android:background="@color/background_light_1">
@@ -66,16 +66,37 @@
                 android:layout_toEndOf="@id/likeButtonsGroup"
                 android:background="@color/background_light_1"
                 app:srcCompat="@drawable/ic_baseline_add_comment_24" />
-            <TextView
-                android:id="@+id/dateTextView"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/moreButton"
-                android:textColor="@color/text_color"
-                android:background="@color/background_light_1"
-                android:textSize="16sp"
+                android:orientation="vertical"
                 android:layout_marginEnd="5dp"
-                android:layout_centerVertical="true"/>
+                android:layout_toStartOf="@id/moreButton">
+                <TextView
+                    android:id="@+id/nickNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_gravity="end"
+                    android:text="kitap kalem ehli bu orrayi"
+                    android:background="@color/background_light_1"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/text_color"
+                    />
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02/04/2001"
+                    android:layout_gravity="end"
+                    android:textColor="@color/text_color"
+                    android:background="@color/background_light_1"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="5dp"
+                    />
+
+            </LinearLayout>
+
             <ImageButton
                 android:id="@+id/moreButton"
                 android:layout_width="wrap_content"
@@ -90,43 +111,23 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/upper_child_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-
-            <TextView
-                android:id="@+id/nickNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:textSize="14sp"
-                android:background="@color/background_light_1"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/text_color"
-                android:layout_centerVertical="true"/>
-
-
-        </RelativeLayout>
-
         <TextView
             android:id="@+id/entryHeaderText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_light_1"
             android:textSize="22sp"
-            android:layout_below="@+id/upper_child_layout"
+            android:layout_alignParentTop="true"
             android:padding="7dp"
             android:textColor="@color/text_color" />
 
         <TextView
-            android:padding="11dp"
+
             android:id="@+id/entryContentText"
-            android:textColor="@color/text_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="@color/text_color"
+            android:padding="11dp"
             android:layout_below="@id/entryHeaderText"
             android:layout_above="@+id/lower_child_layout"
             android:background="@color/background_light_1" />

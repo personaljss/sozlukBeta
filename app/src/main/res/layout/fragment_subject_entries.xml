@@ -16,73 +16,88 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <ImageView
-        android:id="@+id/subject_fragment_new_entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_baseline_post_add_24" />
-
     <TextView
         android:id="@+id/subject_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/subject_fragment_new_entry"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/basic_rectangle"
+        android:background="@drawable/header_rectangle"
         android:padding="5dp"
         android:text="some subject"
-        android:textAlignment="center"
-        android:textColor="@color/black" />
+        android:textSize="24sp"
+        android:textAlignment="textStart"
+        android:textColor="@color/text_color" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/subject_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/subject_textView">
+        android:layout_below="@id/subject_textView">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/subjectAppBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/subject_textView">
+            android:layout_height="35dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/subjectToolBar"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
+                android:background="@color/background_light_2"
                 app:layout_scrollFlags="scroll|enterAlways">
-
+                <ImageView
+                    android:id="@+id/subject_fragment_new_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="start"
+                    android:src="@drawable/ic_baseline_post_add_24" />
                 <TextView
                     android:id="@+id/firstPageTexView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/profile_badges_bg"
                     android:text="ilk"
+                    android:textColor="@color/white"
                     android:textAlignment="center"
                     tools:ignore="RtlCompat" />
 
                 <TextView
                     android:id="@+id/pageTextView"
-                    android:layout_width="40dp"
+                    android:layout_width="55dp"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/all_items_bg"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/profile_badges_bg"
                     android:text="1"
                     android:textAlignment="center"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/lastPageTexView"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/profile_badges_bg"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="20dp"
                     android:text="son"
+                    android:textColor="@color/white"
                     android:textAlignment="center"
                     tools:ignore="RtlCompat" />
+                <ImageView
+                    android:id="@+id/subject_fragment_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_baseline_home_24" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -98,10 +113,10 @@
                 android:id="@+id/subject_entries_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/subjectAppBarLayout"
+                android:layout_below="@id/subject_textView"
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/item_entry1_0" />
+                tools:listitem="@layout/item_entry_1_0_1" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -42,7 +42,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final RecyclerView.ViewHolder viewHolder;
         if (viewType == DONE) {
             //item cardView is inflated here see SubjectFragment for Margin between cardViews at setRv
-            view = LayoutInflater.from(context).inflate(R.layout.item_entry1_0, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.item_entry_1_0_1 , parent, false);
             viewHolder = new EntryViewHolder(view);
             //holder
             //nick
