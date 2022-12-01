@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentProfileTestsBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModels.Test;
+import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.EntriesItemDecoration;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.ProfileDataViewModel;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters.TestsRvAdapter;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class TestsTabFragment extends Fragment {
     private static final String TAG = "TestsTabFragment";
+    private static final int VERTICAL_ITEM_SPACE = 15;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager manager;
     private FragmentProfileTestsBinding binding;
@@ -91,6 +93,7 @@ public class TestsTabFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.addItemDecoration(new EntriesItemDecoration(VERTICAL_ITEM_SPACE));
         isUiSet=true;
     }
 

@@ -41,7 +41,7 @@ public class TestsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             view=LayoutInflater.from(context).inflate(R.layout.item_recycler_view_progress_bar,parent,false);
             return new ProgressBarViewHolder(view);
         }else{
-            view=LayoutInflater.from(context).inflate(R.layout.item_profile_tests, parent, false);
+            view=LayoutInflater.from(context).inflate(R.layout.item_profile_tests_1_0, parent, false);
             return new TestViewHolder(view);
         }
     }
@@ -55,8 +55,8 @@ public class TestsRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((TestViewHolder) holder).dateTextView.setText(currentItem.getDate());
             ((TestViewHolder) holder).courseTextView.setText("ders:" + currentItem.getLessonNo());
             ((TestViewHolder) holder).subjectTextView.setText("konu: " + currentItem.getTestNo());
-            ((TestViewHolder) holder).correctsTextView.setText("doğru:" + currentItem.getCorrectAnswers());
-            ((TestViewHolder) holder).wrongsTextView.setText("yanlış:" + currentItem.getWrongAnswers());
+            ((TestViewHolder) holder).correctsTextView.setText("" + currentItem.getCorrectAnswers());
+            ((TestViewHolder) holder).wrongsTextView.setText("" + currentItem.getWrongAnswers());
         }
     }
 
