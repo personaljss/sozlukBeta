@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="550dp"
         android:background="@color/background_light_2"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
@@ -21,9 +21,9 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.google.android.material.appbar.MaterialToolbar
+            <Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -62,7 +62,7 @@
                     app:srcCompat="@drawable/ic_baseline_home_24"
                      />
 
-            </com.google.android.material.appbar.MaterialToolbar>
+            </Toolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
