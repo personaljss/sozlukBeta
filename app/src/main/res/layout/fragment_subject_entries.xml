@@ -22,11 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/header_rectangle"
+        android:fontFamily="@font/alegreya_sans_medium"
         android:padding="5dp"
         android:text="some subject"
-        android:textSize="24sp"
         android:textAlignment="textStart"
-        android:textColor="@color/text_color" />
+        android:textColor="@color/text_color"
+        android:textSize="24sp" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/subject_coordinator_layout"
@@ -61,6 +62,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/profile_badges_bg"
+                    android:fontFamily="@font/alegreya_sans"
                     android:text="ilk"
                     android:textColor="@color/white"
                     android:textAlignment="center"
@@ -75,6 +77,7 @@
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/profile_badges_bg"
                     android:text="1"
+                    android:fontFamily="@font/alegreya_sans"
                     android:textAlignment="center"
                     android:textColor="@color/white" />
 
@@ -87,6 +90,7 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="20dp"
                     android:text="son"
+                    android:fontFamily="@font/alegreya_sans"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     tools:ignore="RtlCompat" />

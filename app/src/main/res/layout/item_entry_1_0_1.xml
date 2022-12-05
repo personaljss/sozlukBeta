@@ -39,6 +39,7 @@
                     android:id="@+id/subjectEntryLikeCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/alegreya_sans"
                     android:textColor="@color/text_color"
                     android:background="@color/background_light_1"
                     android:layout_toEndOf="@id/likeButton"
@@ -73,17 +74,18 @@
                 android:orientation="vertical"
                 android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@id/moreButton">
+
                 <TextView
                     android:id="@+id/nickNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:layout_gravity="end"
-                    android:text="kitap kalem ehli bu orrayi"
-                    android:background="@color/background_light_1"
                     android:layout_marginBottom="5dp"
+                    android:background="@color/background_light_1"
+                    android:fontFamily="@font/alegreya_sans_medium"
+                    android:text="kitap kalem ehli bu orrayi"
                     android:textColor="@color/text_color"
-                    />
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/dateTextView"
                     android:layout_width="wrap_content"
@@ -92,6 +94,7 @@
                     android:layout_gravity="end"
                     android:textColor="@color/text_color"
                     android:background="@color/background_light_1"
+                    android:fontFamily="@font/alegreya_sans"
                     android:textSize="14sp"
                     android:layout_marginEnd="5dp"
                     />
@@ -117,6 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_light_1"
+            android:fontFamily="@font/alegreya_sans_medium"
             android:textSize="22sp"
             android:layout_alignParentTop="true"
             android:padding="7dp"
@@ -127,6 +131,7 @@
             android:id="@+id/entryContentText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/alegreya_sans"
             android:textColor="@color/text_color"
             android:padding="11dp"
             android:layout_below="@id/entryHeaderText"

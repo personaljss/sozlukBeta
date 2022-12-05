@@ -116,6 +116,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/alegreya_sans"
                                 android:padding="10dp"
                                 android:textAlignment="center"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -131,6 +132,7 @@
                                 android:id="@+id/profilePointsTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/alegreya_sans"
                                 android:padding="10dp"
                                 android:text="Puan:0"
                                 android:textAlignment="viewStart"
@@ -147,6 +149,7 @@
                                 android:id="@+id/profileFollowingTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/alegreya_sans"
                                 android:padding="10dp"
                                 android:text="Takip:0"
                                 android:textAlignment="viewStart"
@@ -162,6 +165,7 @@
                                 android:id="@+id/profileFollowersTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/alegreya_sans"
                                 android:padding="10dp"
                                 android:text="Takipçi:0"
                                 android:textAlignment="viewStart"
@@ -206,8 +210,9 @@
                                     <TextView
                                         android:id="@+id/profileTestsBadge"
                                         android:layout_width="0dp"
-                                        android:layout_weight="2"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="start"
                                         android:text="Testler"
                                         android:textColor="@color/white"
@@ -216,8 +221,9 @@
                                     <TextView
                                         android:id="@+id/profileTestsTextView"
                                         android:layout_width="0dp"
-                                        android:layout_weight="1"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="center"
                                         android:text="0"
                                         android:textColor="@color/white"
@@ -246,22 +252,24 @@
                                     <TextView
                                         android:id="@+id/profileSocialsBadge"
                                         android:layout_width="0dp"
-                                        android:layout_weight="2"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="start"
                                         android:text="Sosyal"
                                         android:textColor="@color/white"
-                                        android:textSize="24sp"/>
+                                        android:textSize="24sp" />
 
                                     <TextView
                                         android:id="@+id/profileSocialsTextView"
                                         android:layout_width="0dp"
-                                        android:layout_weight="1"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="center"
                                         android:text="0"
                                         android:textColor="@color/white"
-                                        android:textSize="24sp"  />
+                                        android:textSize="24sp" />
 
 
                                 </LinearLayout>
@@ -287,8 +295,9 @@
                                     <TextView
                                         android:id="@+id/profileChallengesBadge"
                                         android:layout_width="0dp"
-                                        android:layout_weight="2"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="start"
                                         android:text="Düello"
                                         android:textColor="@color/white"
@@ -297,12 +306,13 @@
                                     <TextView
                                         android:id="@+id/profileChallengesTextView"
                                         android:layout_width="0dp"
-                                        android:layout_weight="1"
                                         android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/alegreya_sans"
                                         android:gravity="center"
                                         android:text="0"
                                         android:textColor="@color/white"
-                                        android:textSize="24sp"   />
+                                        android:textSize="24sp" />
 
                                 </LinearLayout>
 

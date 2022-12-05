@@ -10,6 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_bg"
+        android:fontFamily="@font/alegreya_sans"
         android:hint="mail:"
         android:inputType="text"
         android:paddingLeft="20dp"
@@ -26,19 +27,20 @@
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bg"
+        android:fontFamily="@font/alegreya_sans"
+        android:hint="şifre:"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:hint="şifre:"
-        android:inputType="textPassword"
-        android:background="@drawable/edittext_bg"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintWidth_percent="0.8" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -46,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="GİRİŞ YAP"
-        android:textStyle="bold"
+        android:fontFamily="@font/alegreya_sans_medium"
         android:background="@drawable/button_bg"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,17 +57,19 @@
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintVertical_bias="0.35"
         />
+
     <TextView
         android:id="@+id/forgotpswrd_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sans"
         android:text="Şifreni mi unuttun?"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
         app:layout_constraintBottom_toTopOf="@+id/login_btn"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintHorizontal_bias="0.8"/>
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+        app:layout_constraintVertical_bias="0.1" />
 
     <ImageView
         android:id="@+id/show_hide_password"
@@ -97,9 +101,10 @@
         android:id="@+id/toSignupTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sans"
         android:text="Henüz hesabın yok mu?"
-        android:textSize="15dp"
         android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.883"

@@ -29,15 +29,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="Gönder"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/button_bg"
+            android:fontFamily="@font/alegreya_sans"
             android:paddingHorizontal="13dp"
             android:paddingVertical="3dp"
-            android:background="@drawable/button_bg"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
-            android:layout_marginEnd="5dp"
+            android:text="Gönder"
             android:textColor="@color/white"
-            />
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <EditText
@@ -48,11 +48,12 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/basic_rectangle"
+        android:fontFamily="@font/alegreya_sans"
         android:hint="başlık"
-        android:textSize="24sp"
         android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
         android:maxLength="50"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:textSize="24sp" />
 
     <!--
     <EditText
@@ -85,23 +86,25 @@
             android:id="@+id/new_subject_points_invested"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/likeDialog"
+            android:fontFamily="@font/alegreya_sans"
             android:text="@string/puan_0"
-            android:textSize="20dp"
             android:textColor="@color/white"
-            android:layout_marginTop="8dp"/>
+            android:textSize="20dp" />
     </RelativeLayout>
 
     <EditText
-        android:hint="@string/new_subject_entry"
-        android:background="#00000000"
-        android:gravity="top|start"
         android:id="@+id/new_subject_content_editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/new_subject_title_editText"
-        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:background="#00000000"
+        android:fontFamily="@font/alegreya_sans"
+        android:gravity="top|start"
+        android:hint="@string/new_subject_entry"
         android:imeOptions="actionNone"
-        android:padding="5dp"/>
+        android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+        android:padding="5dp" />
 
 </RelativeLayout>

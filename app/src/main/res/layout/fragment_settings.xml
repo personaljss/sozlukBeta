@@ -9,8 +9,9 @@
         android:id="@+id/uploadPpTexView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="profil fotoğrafını değiştir"
+        android:fontFamily="@font/alegreya_sans"
         android:padding="10dp"
-        android:textColor="@color/teal_700"/>
+        android:text="profil fotoğrafını değiştir"
+        android:textColor="@color/teal_700" />
 
 </RelativeLayout>

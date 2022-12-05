@@ -9,15 +9,15 @@
         android:id="@+id/activation_code_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="aktivasyon kodu:"
-        ></EditText>
+        android:fontFamily="@font/alegreya_sans"
+        android:hint="aktivasyon kodu:"></EditText>
 
     <TextView
         android:id="@+id/activation_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="mail adresinize gönderilen kodu girip onayla butonuna tıklayın.">
-    </TextView>
+        android:fontFamily="@font/alegreya_sans"
+        android:text="mail adresinize gönderilen kodu girip onayla butonuna tıklayın."></TextView>
 
     <ProgressBar
         android:id="@+id/progressBarActivation"
