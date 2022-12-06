@@ -14,6 +14,13 @@ public class ProfileItem {
 
     private String photo;
 
+    public ProfileItem(ProfileItem item) {
+        this.nickName=item.nickName;
+        this.likeStatus=item.likeStatus;
+        this.userCode=item.getUserCode();
+        this.photo=item.getPhoto();
+    }
+
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }

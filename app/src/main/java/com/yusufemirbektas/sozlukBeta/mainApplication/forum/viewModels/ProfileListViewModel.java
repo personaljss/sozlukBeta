@@ -100,15 +100,19 @@ public class ProfileListViewModel extends ViewModel {
                     Type ListOfUsers = TypeToken.getParameterized(List.class, ProfileItem.class).getType();
                     List<ProfileItem> likedUserData = gson.fromJson(sr.data, ListOfUsers);
                     users.postValue(likedUserData);
+                    photosLoaded.postValue(true);
                 }
             }
         });
     }
 
     public void loadProfilePhotos() {
+        /*
         if(users.getValue()==null){
             return;
         }
+
+         */
         StringBuilder sb=new StringBuilder();
         for(ProfileItem item : users.getValue()){
             sb.append(item.getUserCode()+",");

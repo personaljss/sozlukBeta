@@ -51,6 +51,7 @@ public class ProfileListFragment extends Fragment {
         viewModel=new ViewModelProvider(this).get(ProfileListViewModel.class);
         profileItemList=viewModel.getUsers().getValue();
         Bundle args=getArguments();
+
         final int aim=args.getInt(BundleKeys.PROFILE_LIST_KEY);
 
         if(profileItemList==null){
@@ -66,6 +67,7 @@ public class ProfileListFragment extends Fragment {
                 }
             }
         });
+
         viewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<ProfileItem>>() {
             @Override
             public void onChanged(List<ProfileItem> profileItems) {
@@ -84,6 +86,7 @@ public class ProfileListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadUsers(aim,args);
+                isUiSet=false;
             }
         });
     }
