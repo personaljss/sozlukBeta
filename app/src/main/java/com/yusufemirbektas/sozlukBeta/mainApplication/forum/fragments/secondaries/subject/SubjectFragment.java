@@ -2,32 +2,28 @@ package com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondari
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
-import android.widget.Toast;
+
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
-import androidx.core.widget.NestedScrollView;
+
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
+
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.yusufemirbektas.sozlukBeta.R;
 import com.yusufemirbektas.sozlukBeta.databinding.FragmentSubjectEntriesBinding;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.fragments.secondaries.paging.PagerDialog;
@@ -38,7 +34,6 @@ import com.yusufemirbektas.sozlukBeta.mainApplication.forum.dataModels.itemModel
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.utils.recyclerView.adapters.EntriesRvAdapter;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.viewModels.EntriesViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectFragment extends Fragment implements View.OnClickListener, PagerDialog.OnPageSelectedListener {
@@ -47,7 +42,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     public static final int ENTRY_PER_PAGE = 10;
     private FragmentSubjectEntriesBinding binding;
     private LinearLayoutManager layoutManager;
-    private RecyclerView.Adapter recycleViewAdapter;
+    private RecyclerView.Adapter recyclerViewAdapter;
     private List<Entry> entryModels;
     private EntriesViewModel viewModel;
     private Bundle bundle;
@@ -91,6 +86,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
 
         //initialing the id of the top-most entry
         startCommentId = bundle.getInt(BundleKeys.COMMENT_ID, 1);
+        if(startCommentId>1){
+            viewModel.setTotalEntries(startCommentId+9);
+        }
 
         entryModels = viewModel.getEntries().getValue();
         if (entryModels == null) {
@@ -117,12 +115,15 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
                     int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
                     binding.pageTextView.setText(currentPage + "/" + totalPages);
-                    ((EntriesRvAdapter) recycleViewAdapter).setEntries(subjectEntryModels);
-                    recycleViewAdapter.notifyDataSetChanged();
+                    ((EntriesRvAdapter) recyclerViewAdapter).setEntries(subjectEntryModels);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                    /*
                     if (bundle.getInt(BundleKeys.COMMENT_ID, 1) > 1) {
                         binding.subjectEntriesRecyclerView.scrollToPosition(entryModels.size() - 1);
                         bundle.putInt(BundleKeys.COMMENT_ID, 1);
                     }
+
+                     */
                 } else {
                     setUpUi();
                 }
@@ -138,7 +139,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     updatedEntry.setLikeStatus(updatedEntry.getLikeStatus() + pointsViewModel.getEntryItemLikeStatus().getValue());
                     updatedEntry.setLikePoint(updatedEntry.getLikePoint() + pointsViewModel.getEntryItemLikeStatus().getValue());
                     entryModels.set(integer, updatedEntry);
-                    recycleViewAdapter.notifyItemChanged(integer);
+                    recyclerViewAdapter.notifyItemChanged(integer);
                 }
             }
         });
@@ -161,8 +162,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                     int pos = layoutManager.findLastVisibleItemPosition();
                     //Log.i(TAG, "onScrollChange: pos="+pos+" size="+entryModels.size());
                     currentPage = (pos + startCommentId) / ENTRY_PER_PAGE + 1;
-                    int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
-                    binding.pageTextView.setText(currentPage + "/" + totalPages);
+                    setUpPageTextView();
                     if (pos == entryModels.size() - 1) {
                         //bottom of list!
                         if (entryModels.size() == 0) {
@@ -175,7 +175,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                         //adding a null reference to the list to make adapter return progress bar
                         entryModels.add(null);
                         int testsSize = entryModels.size();
-                        recycleViewAdapter.notifyItemInserted(testsSize - 1);
+                        recyclerViewAdapter.notifyItemInserted(testsSize - 1);
                         //load the entry items
                         viewModel.loadSubjectEntries(bundle.getInt(BundleKeys.SUBJECT_ID), startCommentId + testsSize - 1, true);
                     }
@@ -183,9 +183,15 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
                 }
 
             });
-
+        }else {
+            //will be imlemented later
         }
 
+    }
+
+    private void setUpPageTextView() {
+        int totalPages = (viewModel.getTotalEntries() - 1) / ENTRY_PER_PAGE + 1;
+        binding.pageTextView.setText(currentPage + "/" + totalPages);
     }
 
     @Override
@@ -194,7 +200,7 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         isUiSet = false;
         pointsViewModel.refresh();
         binding = null;
-        recycleViewAdapter = null;
+        recyclerViewAdapter = null;
         ((AppCompatActivity) getActivity()).setSupportActionBar(null);
         layoutManager = null;
     }
@@ -214,10 +220,11 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
         binding.firstPageTexView.setOnClickListener(this);
         binding.lastPageTexView.setOnClickListener(this);
         binding.progressBar.setVisibility(View.GONE);
+        setUpPageTextView();
         isUiSet = true;
         if (startCommentId != 1) {
             RecyclerView rv = (RecyclerView) binding.subjectEntriesRecyclerView;
-            rv.smoothScrollToPosition(recycleViewAdapter.getItemCount() - 1);
+            rv.smoothScrollToPosition(recyclerViewAdapter.getItemCount() - 1);
         }
     }
 
@@ -226,9 +233,9 @@ public class SubjectFragment extends Fragment implements View.OnClickListener, P
     // bool is for to not add any item decoration more than one
     private void setUpRecyclerView() {
         layoutManager = new LinearLayoutManager(getContext());
-        recycleViewAdapter = new EntriesRvAdapter(entryModels, getContext());
+        recyclerViewAdapter = new EntriesRvAdapter(entryModels, getContext());
         binding.subjectEntriesRecyclerView.setLayoutManager(layoutManager);
-        binding.subjectEntriesRecyclerView.setAdapter(recycleViewAdapter);
+        binding.subjectEntriesRecyclerView.setAdapter(recyclerViewAdapter);
         binding.subjectEntriesRecyclerView.addItemDecoration(new EntriesItemDecoration(VERTICAL_ITEM_SPACE));
         binding.subjectEntriesRecyclerView.setHasFixedSize(true);
         binding.subjectEntriesRecyclerView.setVisibility(View.VISIBLE);

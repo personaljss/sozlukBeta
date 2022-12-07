@@ -109,13 +109,14 @@ public class ForumActivity extends AppCompatActivity implements EntryEventListen
 
     //Entry events
     @Override
-    public void onLiked(String userCode, int subjectId,int commentId, int likeStatus, int adapterPosition) {
+    public void onLiked(String userCode, int subjectId,int commentId, int likeStatus, int adapterPosition, boolean isLike) {
         Bundle args=new Bundle();
         args.putString(BundleKeys.USERCODE,userCode);
         args.putInt(BundleKeys.SUBJECT_ID,subjectId);
         args.putInt(BundleKeys.COMMENT_ID,commentId);
         args.putInt(BundleKeys.LIKE_STATUS,likeStatus);
         args.putInt(BundleKeys.ADAPTER_POSITION,adapterPosition);
+        args.putBoolean(BundleKeys.LIKE_DISLIKE,isLike);
         LikeDialog likeDialog=new LikeDialog();
         likeDialog.setArguments(args);
         likeDialog.show(getSupportFragmentManager(),null);

@@ -74,7 +74,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         Toast.makeText(context, "kendi paylaşımızı beğenemezsiniz", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos);
+                    ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos, true);
                 }
             });
             //dislike button
@@ -87,7 +87,7 @@ public class EntriesRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         Toast.makeText(context, "kendi paylaşımızı beğenemezsiniz", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos);
+                    ((EntryEventListener) context).onLiked(entryModel.getUserCode(), entryModel.getSubjectID(), entryModel.getCommentID(), entryModel.getLikeStatus(), pos, false);
                 }
             });
 

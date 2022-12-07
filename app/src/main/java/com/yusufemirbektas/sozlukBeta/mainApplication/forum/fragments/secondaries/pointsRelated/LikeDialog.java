@@ -39,6 +39,7 @@ public class LikeDialog extends DialogFragment {
         int commentId = args.getInt(BundleKeys.COMMENT_ID);
         int likeStatus = args.getInt(BundleKeys.LIKE_STATUS);
         int adapterPos = args.getInt(BundleKeys.ADAPTER_POSITION);
+        boolean isLike = args.getBoolean(BundleKeys.LIKE_DISLIKE,true);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
@@ -60,6 +61,11 @@ public class LikeDialog extends DialogFragment {
 
         int min = Math.max(-127,likeStatus-points);
         int max = Math.min(127,likeStatus+points);
+        if(isLike){
+            min=likeStatus;
+        }else{
+            max=likeStatus;
+        }
         String[] nums = new String[max - min+1];
 
         for (int i = max-min; i >=0  ; i--) {

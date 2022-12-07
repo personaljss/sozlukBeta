@@ -170,6 +170,10 @@ public class EntriesViewModel extends ViewModel {
         return totalEntries;
     }
 
+    public void setTotalEntries(int totalEntries) {
+        this.totalEntries = totalEntries;
+    }
+
     public LiveData<List<Entry>> getEntries() {
         return entries;
     }

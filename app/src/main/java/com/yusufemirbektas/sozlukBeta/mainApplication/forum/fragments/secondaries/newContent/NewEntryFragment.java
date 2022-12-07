@@ -60,7 +60,8 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
                     if(!stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY).equals("")){
                         int subjectId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.SUBJECT_ID_KEY));
                         int commentId=Integer.parseInt(stringStringHashMap.get(NewEntryViewModel.COMMENT_ID_KEY));
-                        int newLoc=(commentId-9<1)?1:commentId-9;
+                        //int newLoc=(commentId-9<1)?1:commentId-9;
+                        int newLoc=((commentId-1)/10)*10+1;
                         entryEventListener.onSubjectClicked(subjectId,newLoc,subjectName);
                     }
                 }else {
