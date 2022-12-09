@@ -5,6 +5,7 @@ package com.yusufemirbektas.sozlukBeta.data;
 import static com.yusufemirbektas.sozlukBeta.data.GenericResponse.CONNECTION_FAILED;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -33,6 +34,7 @@ import okhttp3.Response;
  * this singleton class is responsible for holding the current user's data.
  **/
 public class User {
+    private static final String TAG = "User";
     //login constants
     public static final int AUTO_FAILED=-1;
     public static final int LOGIN_SUCCESSFUL=0;
@@ -181,6 +183,7 @@ public class User {
             fetchDeviceToken();
             return;
         }
+        Log.i(TAG, "token: "+deviceToken);
         OkHttpClient client = ApiClientOkhttp.getInstance();
 
         RequestBody requestBody = new FormBody.Builder()

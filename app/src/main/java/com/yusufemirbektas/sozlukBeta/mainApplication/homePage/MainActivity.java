@@ -1,8 +1,11 @@
 package com.yusufemirbektas.sozlukBeta.mainApplication.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Observer;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import com.yusufemirbektas.sozlukBeta.data.User;
 
 import com.yusufemirbektas.sozlukBeta.databinding.ActivityMainBinding;
 import com.yusufemirbektas.sozlukBeta.loginPage.LoginActivity;
+import com.yusufemirbektas.sozlukBeta.mainApplication.chatAndNotifications.ChatActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.forum.activity.ForumActivity;
 import com.yusufemirbektas.sozlukBeta.mainApplication.settings.SettingsActivity;
 
@@ -31,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         user = User.getInstance();
 
         //observing the login status of the user to decide where to send him/her/they/them/trans birey
-
         user.loginStatus().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -42,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        binding.chatActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToChats();
+            }
+        });
 
         binding.mainActivitySettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void goToChats() {
+        Intent i=new Intent(this, ChatActivity.class);
+        startActivity(i);
     }
 
     private void handleLogInStatus(int status) {
