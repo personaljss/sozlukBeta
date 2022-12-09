@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/basic_rectangle"
+    android:layout_margin="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginLeft="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/contactPp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:id="@+id/contactNameTextView"
+            android:textColor="#363866"
+            android:layout_toRightOf="@id/contactPp"
+            android:layout_toEndOf="@id/contactPp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/contactMessageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contactNameTextView"
+            android:text="text"
+            android:layout_toRightOf="@id/contactPp"
+            android:layout_toEndOf="@id/contactPp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/contactDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="date">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/unseenMessagesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="message count"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/contactNameTextView">
+        </TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

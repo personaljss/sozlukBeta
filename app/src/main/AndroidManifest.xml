@@ -19,6 +19,20 @@
         android:theme="@style/Theme.SozlukBeta"
         tools:targetApi="31">
         <activity
+            android:name=".mainApplication.chatAndNotifications.activities.ChatActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".mainApplication.chatAndNotifications.activities.ContactsNotificationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".mainApplication.settings.SettingsActivity"
             android:exported="false">
             <meta-data
@@ -40,15 +54,16 @@
         <activity
             android:name=".loginPage.LoginActivity"
             android:exported="true"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
 
         <service
-            android:name=".services.NotificationService"
+            android:name=".services.FbMessageService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

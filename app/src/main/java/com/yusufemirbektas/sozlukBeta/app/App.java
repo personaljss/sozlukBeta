@@ -15,5 +15,6 @@ public class App extends Application{
         User.init(this);
         user=User.getInstance();
         user.autoLogin();
+        Log.i(TAG, "device token onCreate:"+user.getDeviceToken());
     }
 }

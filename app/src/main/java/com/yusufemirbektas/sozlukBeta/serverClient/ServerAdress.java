@@ -22,4 +22,8 @@ public class ServerAdress {
     public static final String MAIN_FEED = "forumfiles/showfeed/";
     public static final String FOLLOW_USER = "forumfiles/followuser/";
     public static final String FOLLOWERS = "forumfiles/showfollowdetails/";
+    public static final String CONTACTS="messaging/readpreview/";
+    public static final String CHAT="messaging/readdialogue/";
+    public static final String SEND_CHAT_MESSAGE="messaging/sendmessage/";
+    public static final String SEEN_INFO="messaging/seemessage/";
 }

@@ -3,6 +3,7 @@ package com.yusufemirbektas.sozlukBeta.data;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 
 public class SharedPrefs {
     private static SharedPreferences mSharedPref;

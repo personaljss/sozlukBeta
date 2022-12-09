@@ -243,6 +243,7 @@ public class ProfileDataViewModel extends ViewModel {
                 .add("userCode", user.getUserCode())
                 .add("followed", userCode)
                 .add("operation",operation)
+                .add("nickname",user.getNickname())
                 .build();
 
         Request request = new Request.Builder()
